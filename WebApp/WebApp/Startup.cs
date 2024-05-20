@@ -15,13 +15,14 @@ public class Startup()
     {
         services.AddControllers();
 
+        // TODO: db 컨텍스트 연결은 어떤 식으로 해야 하는가?
         // DB Context TODO: 이곳에 오는 것이 맞는가??
         // InMemmoryDB 를 사용할지 mysql을 사용할지?
         // services.AddDbContext<ItemContext>(opt =>
         //     opt.UseMySql());
 
-        services.AddDbContext<ItemContext>(opt =>
-            opt.UseInMemoryDatabase("ToDoList"))
+        // services.AddDbContext<ItemContext>(opt =>
+        //     opt.UseInMemoryDatabase("ToDoList"))
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
