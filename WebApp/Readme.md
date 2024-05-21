@@ -21,7 +21,6 @@ dotnet new mvc -o WebApp
 또는
 dotnet build
 
-TODO:
 여기 기본 프로젝트에서 불필요한 코드 제거 (필요한가?)
 - mvc의 모든 구성 요소가 필요하진 않다?
 
@@ -44,4 +43,24 @@ dotnet add reference ../../CoreSystem/CoreLibrary/CoreLibrary.csproj
 2024.04.08
 코어 프로젝트가 제공할 기능 정리해보기.
 서버 공용의 기능이 어떤 것이 있는가?
+
+
+2024.05.21
+4단계 레이어 구조와 각 폴더 역활 초안 작성
+
+Presentation Layer
+Controller : 사용자(클라이언트)의 입력을 받고 응답 값을 반환 합니다.
+DtoModel : 서버와 db 간의 데이터 정보를 모델링
+ViewModel : 클라이언트와 서버간의 payload 데이터를 모델링
+
+
+Business Logic Layer
+Service : 비즈니스 로직을 처리하는 단계
+
+Data Access Layer
+Repository : 데이터 베이스 접근 및 비즈니스 로직을 처리하는 쿼리.
+
+Database Layer
+DbContext : 실제 데이터베이스 접근
+
 
