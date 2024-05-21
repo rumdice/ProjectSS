@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using CoreLibrary;
 using WebApp.Models;
 using WepApp.DtoModels;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers;
 
@@ -33,7 +34,8 @@ public class HomeController : Controller
         _logger.LogInformation("인포 로깅");
         _logger.LogCritical("크리티컬한 로그 - 시스템 에러");
         
-        // TODO : 기본 성공 viewModel 필요
-        return null;
+        return new CodeResponseViewModel<ServiceResponseCode>(
+                ServiceResponseCode.Success
+            ).GetActionResult(this);
     }
 }
