@@ -64,3 +64,46 @@ Database Layer
 DbContext : 실제 데이터베이스 접근
 
 
+2024.05.22
+1. repository 와 entity 그리고 Dto Model에 대하어 정립
+
+repository : 비즈리스 로직 처리를 위한 쿼리 
+entity : orm에서 쓰이는 DB에 바로맵펭되는 테이블 정보 
+dbcontext : 데이터베이스 직접 접근
+dto Model : 프레젠테이션 레이어와 서비스 계층 간에 데이터를 전달 목적의 모델링. 
+
+
+2. 이전에 쿠버네티스에 (로컬 미니쿠베)에 생성해둔 db 사용 및 데이터베이스 생성 (db_WebApp)
+관련 이전에 작성했던 블로그 포스팅
+https://blog.naver.com/muzinmind/223447482635
+
+appsettings에 관련 DB 정보 입력 -> 나중에 따로 빼자. 
+
+에러 로그
+
+예외 발생: 'MySqlConnector.MySqlException'(System.Private.CoreLib.dll)
+crit: WebApp.Controllers.ItemController[0]
+      Table 'db_WebApp.ItemSimpleEntity' doesn't exist
+WebApp.Controllers.ItemController: Critical: Table 'db_WebApp.ItemSimpleEntity' doesn't exist
+
+테이블 직접 생성 초기니까 일단 직접 생성함
+(EF에서 생성하도록 하기)
+
+create table ItemSimpleEntity
+
+예외 발생: 'MySqlConnector.MySqlException'(System.Private.CoreLib.dll)
+crit: WebApp.Controllers.ItemController[0]
+      Unknown column 'i.UserUid' in 'field list'
+WebApp.Controllers.ItemController: Critical: Unknown column 'i.UserUid' in 'field list'
+
+테이블 모양이 entity와 일치 해야 함
+
+
+CREATE TABLE `ItemSimpleEntity` (
+  `UserUid` bigint(11) NOT NULL,
+  `ItemTid` bigint(11) DEFAULT NULL,
+  `Name` varchar(45) DEFAULT NULL,
+  `Grade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`UserUid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
