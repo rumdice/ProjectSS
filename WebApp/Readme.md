@@ -62,6 +62,7 @@ Repository : 데이터 베이스 접근 및 비즈니스 로직을 처리하는 
 
 Database Layer
 DbContext : 실제 데이터베이스 접근
+Entity : 실제 데이터 테이블의 모델링.
 
 
 2024.05.22
@@ -86,19 +87,19 @@ crit: WebApp.Controllers.ItemController[0]
       Table 'db_WebApp.ItemSimpleEntity' doesn't exist
 WebApp.Controllers.ItemController: Critical: Table 'db_WebApp.ItemSimpleEntity' doesn't exist
 
+해결 :
 테이블 직접 생성 초기니까 일단 직접 생성함
-(EF에서 생성하도록 하기)
-
+(나중에 EF에서 생성하도록 하기)
 create table ItemSimpleEntity
+
 
 예외 발생: 'MySqlConnector.MySqlException'(System.Private.CoreLib.dll)
 crit: WebApp.Controllers.ItemController[0]
       Unknown column 'i.UserUid' in 'field list'
 WebApp.Controllers.ItemController: Critical: Unknown column 'i.UserUid' in 'field list'
 
+해결 : 
 테이블 모양이 entity와 일치 해야 함
-
-
 CREATE TABLE `ItemSimpleEntity` (
   `UserUid` bigint(11) NOT NULL,
   `ItemTid` bigint(11) DEFAULT NULL,
@@ -106,4 +107,52 @@ CREATE TABLE `ItemSimpleEntity` (
   `Grade` int(11) DEFAULT NULL,
   PRIMARY KEY (`UserUid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+2024.05.23
+서비스 레이어 추가 및 레이어 계층 다시 정리 하기
+
+표현 레이어
+Controller, Model(view, dto)
+접근 가능한 것 - Service, Model(view, dto)
+
+Business Logic Layer
+Service
+접근 가능 한 것 - repository
+
+Data Access Layer
+Repository
+접근 가능 한 것 - DBContext, Entity
+
+Database Layer
+DBContext, Entity
+접근 가능한 것 - x 
+
+특징
+각 레이어마다 접근 가능한 순서대로 넘어가야한다. 
+2단계 3단계 넘어가서 바로 접근 불가능하게 하기.
+이 접근 단계 제한을 일단 의존성 주입으로 하고 나중에 코드에서 강제할 방법 찾아보기.
+
+같은 레이어 레벨에서는 상호 접근은 가능하다.
+ex) 
+controller - model
+dbContext - entity
+
+
+아이템 테이블 모델링 수정 (ORM을 통하여 테이블 생성 및 변경이 되도록 해야 한다!)
+- 유저가 어려가지 아이템을 소유 할 수 있음.
+
+CREATE TABLE `ItemSimpleEntity` (
+  `ItemUid` bigint(11) NOT NULL AUTO_INCREMENT,
+  `UserUid` bigint(11) DEFAULT NULL,
+  `ItemTid` bigint(11) DEFAULT NULL,
+  `Name` varchar(45) DEFAULT NULL,
+  `Grade` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ItemUid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+테이블과 entity 간의 nullable도 신경 쓰기.
+
 

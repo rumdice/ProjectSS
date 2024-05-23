@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Database;
 using WebApp.Models;
 using WebApp.ViewModels;
 using WepApp.DtoModels;
@@ -14,14 +15,15 @@ namespace WebApp.Controllers;
 public class ItemController : ControllerBase
 {
     private readonly ILogger<ItemController> _logger;
-    private readonly ItemRepository _itemRepository;
+    private readonly ItemService _itemService;
 
     public ItemController(
         ILogger<ItemController> logger,
-        ItemRepository itemRepository)
+        ItemService itemService        
+    )
     {
         _logger = logger;
-        _itemRepository = itemRepository;
+        _itemService = itemService;
     }
 
     [HttpPost( "[action]" )]
@@ -48,7 +50,7 @@ public class ItemController : ControllerBase
             // TODO : Entity Frame work 연동 및 repository 관련 작업 후 db에서 정보를 가져오기
             // 가져왔다고 치고 일단 아이템 데이터의 하드코딩. DDD 설계 관점에서 이건 entity가 된다.
             // 컨트롤러 - 서비스 레벨은 Dto를 사용해야 한다 (Entity는 사용하면 안된다.)
-            var itemInfo = new ItemSimpleInfoDto
+            var itemSimpleInfoDto = new ItemSimpleInfoDto
             {
                 ItemTid = 1001,
                 Name = "세계를 가르는 슈퍼 필살 어쩌구 검",
@@ -56,18 +58,34 @@ public class ItemController : ControllerBase
             };
 
             // TODO: 작업 마무리
-            var itemInfoByRepository = await _itemRepository.GetSimpleItemInfoByItemTId(1001);
-            if (itemInfoByRepository == null)
+            long itemTid = 1002;
+            var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
+            if (itemSimpleEntity == null)
             {
-               _logger.LogInformation("itemRepo is NULL!"); // 의도한대로 동작은 확인
+               //_logger.LogInformation("itemRepo is NULL!"); // 의도한대로 동작은 확인
+                throw new Exception("itemSimpleEntity Result is null");
             }
+            
+            // itemSimpleInfoDto = itemSimpleEntity;
+            
+            // 이곳은 표현 레이어 이므로 Entity를 직접 다루면 안된다.
+            // TODO 컨버팅 작업이 필요함. 일단 직접 컨버팅
+            // TODO: 컨버팅은 Entity 와 DtoModel간의 전환. 레이어는 어디에?
+        
+            var itemDto = new ItemSimpleInfoDto
+            {
+                ItemTid = itemSimpleEntity.ItemTid,
+                Name = itemSimpleEntity.Name,
+                Grade = itemSimpleEntity.Grade
+            };
 
-            // API 경로가 다르지만 기반 기능 추가 후 분산 시키기 
+            itemSimpleInfoDto = itemDto; // 
+
             _logger.LogInformation("아이템을 가져온다");
 
             return new GetItemSimpleInfoViewModelResponse(
                 ServiceResponseCode.Success,
-                itemInfo
+                itemSimpleInfoDto
             ).GetActionResult(this);  
         }
         catch (Exception e)
