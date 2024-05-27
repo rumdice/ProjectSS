@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Converter;
 using WebApp.Database;
 using WebApp.Models;
 using WebApp.ViewModels;
@@ -57,29 +58,17 @@ public class ItemController : ControllerBase
                 Grade = 1, // Enum으로 처리하면 좋을 듯 1:회색 똥템 ~ 5:레어 6:유물 7:전설 등.
             };
 
-            // TODO: 작업 마무리
             long itemTid = 1002;
             var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
             if (itemSimpleEntity == null)
             {
-               //_logger.LogInformation("itemRepo is NULL!"); // 의도한대로 동작은 확인
                 throw new Exception("itemSimpleEntity Result is null");
             }
             
-            // itemSimpleInfoDto = itemSimpleEntity;
-            
             // 이곳은 표현 레이어 이므로 Entity를 직접 다루면 안된다.
-            // TODO 컨버팅 작업이 필요함. 일단 직접 컨버팅
-            // TODO: 컨버팅은 Entity 와 DtoModel간의 전환. 레이어는 어디에?
-        
-            var itemDto = new ItemSimpleInfoDto
-            {
-                ItemTid = itemSimpleEntity.ItemTid,
-                Name = itemSimpleEntity.Name,
-                Grade = itemSimpleEntity.Grade
-            };
+            // Entity를 직접 가져와서 편집등을 하면 안된다.
 
-            itemSimpleInfoDto = itemDto; // 
+            itemSimpleInfoDto = itemSimpleEntity.EntityToDto();
 
             _logger.LogInformation("아이템을 가져온다");
 

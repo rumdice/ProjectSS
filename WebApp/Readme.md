@@ -156,3 +156,38 @@ CREATE TABLE `ItemSimpleEntity` (
 테이블과 entity 간의 nullable도 신경 쓰기.
 
 
+2024.05.27
+4계층 레이어를 다시 설정 및 정리. (구성 요소 까지)
+각 역활을 명확하게 해야 한다.
+
+Presentation Layer (프레젠테이션 계층):
+역활
+사용자 인터페이스를 담당하며, 사용자의 요청을 처리하고, 결과를 표시합니다.
+구성요소 
+ViewModel, DtoModel, Controller  (DtoModel은 걸쳐 있다)
+
+Application Layer (애플리케이션 계층):
+역할
+비즈니스 로직을 담당합니다. 요청을 처리하고, 도메인 로직을 실행하며, 결과를 Presentation Layer에 전달합니다.
+구성요소
+Service, Converter
+
+Domain Layer (도메인 계층):
+역할
+애플리케이션의 핵심 비즈니스 로직과 규칙을 담고 있습니다.
+구성요소
+Entity, Repository 
+
+Infrastructure/Data Access Layer (인프라/데이터 접근 계층):
+역할
+데이터의 영속성을 관리하며, 데이터베이스와 상호작용합니다.
+구성요소
+DBContext
+
+현재 배치한 구성요소가 적합한가? 아직 확신 하기는 어렵다.
+
+MVC 패턴과 4Layered 아키텍쳐에 관하여.
+MVC와 4 Layered Architecture는 서로 배타적인 패턴이 아니며, 조합하여 사용할 수 있습니다. 예를 들어, ASP.NET MVC 프로젝트에서 프레젠테이션 계층(Presentation Layer)을 MVC 패턴으로 구성하고, 비즈니스 로직(Application Layer), 도메인 로직(Domain Layer), 데이터 접근 계층(Data Access Layer)을 별도로 분리하여 4 Layered Architecture로 설계할 수 있습니다.
+
+DTOModel의 4계층 설계 위치
+DTO (Data Transfer Object) 모델은 4 Layered Architecture에서 주로 Application Layer와 Presentation Layer 사이의 데이터를 전달하는 데 사용됩니다. 이를 통해 각 계층 간의 데이터 통신을 용이하게 하고, 데이터의 형식을 명확히 정의할 수 있습니다.

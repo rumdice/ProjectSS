@@ -25,7 +25,7 @@ public class ItemRepository
             .AsNoTracking()
             .Where(n => n.Name == name)
             .ToListAsync();
-}
+    }
 
     // 특정 아이템 간단 정보 단일
     public Task<ItemSimpleEntity?> GetSimpleItemInfoByItemTId(long itemTid)

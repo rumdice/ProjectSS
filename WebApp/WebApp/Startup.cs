@@ -24,14 +24,19 @@ public class Startup
         services.AddControllers();
 
         // TODO: 코드 중복 줄이기. 컨텍스트가 계속 늘어남. 추상화 레벨 올리기
+        
+        // Add DB Context
         services.AddDbContext<ItemContext>(options =>
             options.UseMySql(
                 Configuration.GetConnectionString("DefaultConnection"),
                 new MySqlServerVersion(new Version(11, 3, 2))
             ));
         
-        // Add Repositorys
+        // Add Repository
         services.AddTransient<ItemRepository>();
+
+        // Add Service
+        services.AddTransient<ItemService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
