@@ -38,7 +38,6 @@ public class CommonResponseViewModel
 
     public CommonResponseViewModel()
     {
-
     }
 }
 

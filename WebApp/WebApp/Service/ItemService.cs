@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Database;
 
+// Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
+
 public class ItemService
 {
     private readonly ItemRepository _itemRepository;
@@ -15,19 +17,18 @@ public class ItemService
         _logger = logger;
     }
 
-    // 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
-    // TODO : 결과값 은 어떤 자료형이 맞는가?
     public async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
     {
-        var itemSimpleEntity = await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
-        if (itemSimpleEntity == null)
-        {
-            _logger.LogInformation("itemRepo is NULL!"); // 의도한대로 동작은 확인
-            return null; 
-            // TODO: 에러처리를 하고 예외를 던지는게 좋을까?
-            // 에러처리를 일관되게 하고 싶음.
-        }
+        // 경우에 따라선 단순 쿼리 실행이 아닌 복잡한 비즈니스 로직이 들어갈 수 있다.
+        // 혹은 여러가지 repository 쿼리의 연계는 보통 이곳 service에서 진행 하자.
 
-        return itemSimpleEntity; 
+        return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
+
+    public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByNameAsync(string name)
+    {
+        return await _itemRepository.GetItemSimpleInfoListByName(name);
+    }
+
+
 }

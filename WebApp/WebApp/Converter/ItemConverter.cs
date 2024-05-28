@@ -19,4 +19,13 @@ public static class ItemConverter
             Grade = itemSimpleEntity.Grade
         };
     }
+
+    // 반대로 필요하지 않을까...?
+    // TODO : 프로그램의 요구 사항에 따라 반드시 Entity와 DTO가 1:1 맵핑 되는 것은 아니다.
+    // public static ItemSimpleEntity DtoToEntity(this ItemSimpleInfoDto itemSimpleDto)
+    // {
+    //     return new ItemSimpleEntity
+    //     {
+    //     };
+    // }
 }

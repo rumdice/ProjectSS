@@ -27,6 +27,7 @@ public class GetItemSimpleInfoViewModelResponse : CodeResponseViewModel<ServiceR
     //     ServiceResponseCode code,
     //     Exception e ) : base( code, e )
     // {
+        
     // }
 }
 

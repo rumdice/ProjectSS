@@ -48,7 +48,6 @@ public class ItemController : ControllerBase
                 .GetActionResult(this);
             }
 
-            // TODO : Entity Frame work 연동 및 repository 관련 작업 후 db에서 정보를 가져오기
             // 가져왔다고 치고 일단 아이템 데이터의 하드코딩. DDD 설계 관점에서 이건 entity가 된다.
             // 컨트롤러 - 서비스 레벨은 Dto를 사용해야 한다 (Entity는 사용하면 안된다.)
             var itemSimpleInfoDto = new ItemSimpleInfoDto
@@ -62,6 +61,14 @@ public class ItemController : ControllerBase
             var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
             if (itemSimpleEntity == null)
             {
+                throw new Exception("itemSimpleEntity Result is null");
+            }
+
+            string itemName = "평범검";
+            var itemSimpleEntityList = await _itemService.GetItemSimpleInfoListByNameAsync(itemName);
+            if (itemSimpleEntityList == null)
+            {
+                // TODO: 이름으로 찾는데 목록으로 결과를 내는게 조금 어색하다.
                 throw new Exception("itemSimpleEntity Result is null");
             }
             
