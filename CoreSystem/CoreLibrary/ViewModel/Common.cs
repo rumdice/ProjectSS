@@ -1,9 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.ViewModels;
-
-// TODO: coreSystem 혹은 상위 클래스로 이동시키기?
+namespace CoreLibrary.ViewModels;
 
 /// <summary>
 /// 일반적인 에러코드. 성공. 실패

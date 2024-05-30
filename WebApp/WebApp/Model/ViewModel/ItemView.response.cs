@@ -1,6 +1,5 @@
 
-using Microsoft.AspNetCore.Mvc;
-using WebApp.ViewModels;
+using CoreLibrary.ViewModels;
 using WepApp.DtoModels;
 
 namespace WebApp.Models;
@@ -19,16 +18,6 @@ public class GetItemSimpleInfoViewModelResponse : CodeResponseViewModel<ServiceR
     {
         this.ItemSimpleInfo = itemSimpleInfo;
     }
-
-    // TODO: 사용자 contoller 레벨에서 ExceptionResponseViewModel를 그냥 쓰면 되지 않을까?
-    // 컨텐츠 특화의 예외에 대한 viewModel이 필요할 수는 있다.
-    
-    // public GetItemSimpleInfoViewModelResponse(
-    //     ServiceResponseCode code,
-    //     Exception e ) : base( code, e )
-    // {
-        
-    // }
 }
 
 

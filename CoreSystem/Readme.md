@@ -61,3 +61,18 @@ CoreLibrary.dll 생성.
 - ef core 기능
 - 유틸리티 기능?
 - 코어 시스템은 어떤 구조로 설계를 해야 하나?
+
+
+2024.05.31
+코어 시스템에 필요할 것 같은 코드 추가
+- 모든 API 요청에 대한 응답처리
+
+필요한 패키지 추가
+dotnet add package Microsoft.AspNetCore.Mvc
+dotnet add package Microsoft.AspNetCore.App
+
+코드 추가
+
+빌드하여 라이브러리를 사용하는 시스템 (~App에 대하여 적용)
+dotnet build
+
