@@ -82,3 +82,24 @@ DB 처리 하는 부분의 별도 프로젝트 분리 및 사용 필요
 1. Code First 
 2. Database First 
 두 가지 방법 다 시도 하기
+
+
+데이터 베이스 퍼스트 시도
+필요 도구 설치
+dotnet tool install --global dotnet-ef
+
+프로젝트 경로에 필요 페키지 설치 및 버전 확인
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Pomelo.EntityFrameworkCore.MySql
+
+
+스케폴드 명령어 수행
+dotnet ef dbcontext scaffold "Name=DefaultConnection" Pomelo.EntityFrameworkCore.MySql -o Models
+-> 실패
+
+dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234" Pomelo.EntityFrameworkCore.MySql -o Models
+-> 성공
+
+스케폴딩 명령어를 bash 파일로 빼야 하겠다.
+
+dotnet build를 수행하여 하위 클래스에 사용 할 수 있게 하기
