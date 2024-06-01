@@ -76,3 +76,9 @@ dotnet add package Microsoft.AspNetCore.App
 빌드하여 라이브러리를 사용하는 시스템 (~App에 대하여 적용)
 dotnet build
 
+2024.06.01
+DB 처리 하는 부분의 별도 프로젝트 분리 및 사용 필요
+해당 프로젝트에서 DBContext를 생성하는 역활을 담당하도록 하기.
+1. Code First 
+2. Database First 
+두 가지 방법 다 시도 하기

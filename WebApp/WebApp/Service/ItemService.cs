@@ -27,7 +27,12 @@ public class ItemService
 
     public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByNameAsync(string name)
     {
-        return await _itemRepository.GetItemSimpleInfoListByName(name);
+        return await _itemRepository.GetItemSimpleInfoByNameList(name);
+    }
+
+    public async Task<ItemSimpleEntity?> GetItemSimpleResultByName(string name)
+    {
+        return await _itemRepository.GetItemSimpleEntityByName(name);
     }
 
 

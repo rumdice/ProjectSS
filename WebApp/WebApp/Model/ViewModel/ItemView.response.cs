@@ -1,4 +1,3 @@
-
 using CoreLibrary.ViewModels;
 using WepApp.DtoModels;
 
@@ -18,6 +17,8 @@ public class GetItemSimpleInfoViewModelResponse : CodeResponseViewModel<ServiceR
     {
         this.ItemSimpleInfo = itemSimpleInfo;
     }
+
+
 }
 
 
