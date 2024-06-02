@@ -18,6 +18,8 @@ public partial class DbWebAppContext : DbContext
 
     public virtual DbSet<ItemSimpleEntity> ItemSimpleEntities { get; set; }
 
+    public virtual DbSet<UserEntity> UserEntities { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=localhost;port=3306;database=db_WebApp;user=root;password=pass1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("11.3.2-mariadb"));
@@ -39,6 +41,17 @@ public partial class DbWebAppContext : DbContext
             entity.Property(e => e.ItemTid).HasColumnType("bigint(11)");
             entity.Property(e => e.Name).HasMaxLength(45);
             entity.Property(e => e.UserUid).HasColumnType("bigint(11)");
+        });
+
+        modelBuilder.Entity<UserEntity>(entity =>
+        {
+            entity.HasKey(e => e.UserUid).HasName("PRIMARY");
+
+            entity.ToTable("UserEntity");
+
+            entity.Property(e => e.UserUid).HasColumnType("int(11)");
+            entity.Property(e => e.Level).HasColumnType("int(11)");
+            entity.Property(e => e.Name).HasMaxLength(45);
         });
 
         OnModelCreatingPartial(modelBuilder);

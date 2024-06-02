@@ -103,3 +103,12 @@ dotnet ef dbcontext scaffold "Server=localhost;Port=3306;Database=db_WebApp;User
 스케폴딩 명령어를 bash 파일로 빼야 하겠다.
 
 dotnet build를 수행하여 하위 클래스에 사용 할 수 있게 하기
+
+
+2024.06.03
+
+DDD와 EF 의 개념 연관을 위해
+database 이름은 dbWebContext (~Context)
+테이블 이름은 (~Entity)로 결정
+
+
