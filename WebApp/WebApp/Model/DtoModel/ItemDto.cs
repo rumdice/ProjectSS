@@ -7,9 +7,11 @@ namespace WepApp.DtoModels;
 /// </summary>
 public class ItemSimpleInfoDto
 {
-    public long ItemTid { get; set; } // 아이템 고유 기획 테이블 ID
+    public long? ItemTid { get; set; } // 아이템 고유 기획 테이블 ID
     
     public string? Name { get; set; } // 아이템 이름
     
-    public int Grade { get; set; } // 아이템 등급
+    public int? Grade { get; set; } // 아이템 등급
 }
+
+// Dto 와 Entity 간의 관계에서 nullable이 중요함.

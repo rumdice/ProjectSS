@@ -57,6 +57,8 @@ public class CodeResponseViewModel<T> : CommonResponseViewModel where T: Enum
 
             return (T)Enum.ToObject(typeof(T), code);
         }
+
+
     }
 
     [JsonConstructor]

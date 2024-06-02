@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-namespace CoreLibrary.Models;
+namespace CoreLibrary.Database;
 
 public partial class DbWebAppContext : DbContext
 {

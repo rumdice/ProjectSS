@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Database;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
+using CoreLibrary.Database;
 
 
 namespace WebApp;
@@ -26,13 +27,8 @@ public class Startup
         // TODO: 코드 중복 줄이기. 컨텍스트가 계속 늘어남. 추상화 레벨 올리기
         
         // Add DB Context
-        services.AddDbContext<ItemContext>(options =>
-            options.UseMySql(
-                Configuration.GetConnectionString("DefaultConnection"),
-                new MySqlServerVersion(new Version(11, 3, 2))
-            ));
-
-        // TODO: 중복되는 옵션
+        services.AddDbContext<DbWebAppContext>();
+  
         services.AddDbContext<UserContext>(options =>
             options.UseMySql(
                 Configuration.GetConnectionString("DefaultConnection"),

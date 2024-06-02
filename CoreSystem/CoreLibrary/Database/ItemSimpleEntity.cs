@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreLibrary.Models;
+namespace CoreLibrary.Database;
 
 public partial class ItemSimpleEntity
 {

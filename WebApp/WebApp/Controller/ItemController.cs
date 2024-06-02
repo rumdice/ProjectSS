@@ -65,17 +65,18 @@ public class ItemController : ControllerBase
                 throw new Exception("itemSimpleEntity Result is null");
             }
 
-            string itemName = "평범검";
-            var itemSimpleEntityList = await _itemService.GetItemSimpleInfoListByNameAsync(itemName);
-            if (itemSimpleEntityList == null)
-            {
-                // TODO: 이름으로 찾는데 목록으로 결과를 내는게 조금 어색하다.
-                throw new Exception("itemSimpleEntity Result is null");
-            }
+            // string itemName = "평범검";
+            // var itemSimpleEntityList = await _itemService.GetItemSimpleInfoListByNameAsync(itemName);
+            // if (itemSimpleEntityList == null)
+            // {
+            //     // TODO: 이름으로 찾는데 목록으로 결과를 내는게 조금 어색하다.
+            //     throw new Exception("itemSimpleEntity Result is null");
+            // }
             
             // 이곳은 표현 레이어 이므로 Entity를 직접 다루면 안된다.
             // Entity를 직접 가져와서 편집등을 하면 안된다.
 
+            // 컨버팅 작업
             itemSimpleInfoDto = itemSimpleEntity.EntityToDto();
 
             _logger.LogInformation("아이템을 가져온다");

@@ -1,13 +1,12 @@
+using CoreLibrary.Database;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Database;
 
 public class ItemRepository
 {
-    private readonly ItemContext _itemContext;
-
+    private readonly DbWebAppContext _itemContext;
 
     public ItemRepository(
-        ItemContext context
+        DbWebAppContext context
     )
     {
         _itemContext = context;
@@ -16,15 +15,23 @@ public class ItemRepository
     // 모든 아이템 간단 정보를 리스트로 
     public Task<List<ItemSimpleEntity>> GetItemSimpleInfoByNameList(string name)
     {
-        return _itemContext.ItemSimpleEntity
+        return _itemContext.ItemSimpleEntities
             .AsNoTracking()
             .Where(n => n.Name == name)
             .ToListAsync();
     }
 
+    public Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByUserId(long userId)
+    {
+        return _itemContext.ItemSimpleEntities
+            .AsNoTracking()
+            .Where(n => n.UserUid == userId)
+            .ToListAsync();
+    }
+
     public Task<ItemSimpleEntity?> GetItemSimpleEntityByName(string name)
     {
-        return _itemContext.ItemSimpleEntity
+        return _itemContext.ItemSimpleEntities
             .AsNoTracking()
             .Where(n => n.Name == name)
             .SingleOrDefaultAsync();
@@ -33,7 +40,7 @@ public class ItemRepository
     // 특정 아이템 간단 정보 단일
     public Task<ItemSimpleEntity?> GetSimpleItemInfoByItemTId(long itemTid)
     {
-        return _itemContext.ItemSimpleEntity
+        return _itemContext.ItemSimpleEntities
             .AsNoTracking()
             .Where(i => i.ItemTid == itemTid)
             .SingleOrDefaultAsync();
@@ -43,7 +50,7 @@ public class ItemRepository
     // 이 쿼리의 경우 가져와서 가공해서 사용하는 식으로?
     public Task<List<ItemSimpleEntity>> GetSimpleItemAllList()
     {
-        return _itemContext.ItemSimpleEntity
+        return _itemContext.ItemSimpleEntities
             .AsNoTracking()
             .ToListAsync();
     }
