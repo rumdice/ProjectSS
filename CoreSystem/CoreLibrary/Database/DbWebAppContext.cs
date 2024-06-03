@@ -49,7 +49,7 @@ public partial class DbWebAppContext : DbContext
 
             entity.ToTable("UserEntity");
 
-            entity.Property(e => e.UserUid).HasColumnType("bigint(11)");
+            entity.Property(e => e.UserUid).HasColumnType("bigint(11)"); // 컬럼 수정
             entity.Property(e => e.Level).HasColumnType("int(11)");
             entity.Property(e => e.Name).HasMaxLength(45);
         });
