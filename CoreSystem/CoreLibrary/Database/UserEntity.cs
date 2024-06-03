@@ -5,7 +5,7 @@ namespace CoreLibrary.Database;
 
 public partial class UserEntity
 {
-    public int UserUid { get; set; }
+    public long UserUid { get; set; }
 
     public int? Level { get; set; }
 
