@@ -1,26 +1,26 @@
+using CoreLibrary.Database;
 using Microsoft.EntityFrameworkCore;
-using WebApp.Database;
 
 
 public class UserRepository
 {
-    private readonly UserContext _userContext;
+    private readonly DbWebAppContext _webContext;
 
     public UserRepository(
-        UserContext context
+        DbWebAppContext context
     )
     {
-        _userContext = context;
+        _webContext = context;
     }
 
     /// <summary>
-    /// 유저에 대한 정보
+    /// 유저에 대한 단일 정보를 유저 이름 기반으로 가져오기
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
     public Task<UserEntity?> GetUserInfoByName(string name)
     {
-        return _userContext.UserEntity
+        return _webContext.UserEntities
             .AsNoTracking()
             .Where(e => e.Name == name)
             .SingleOrDefaultAsync();

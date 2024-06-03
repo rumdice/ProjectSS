@@ -1,7 +1,6 @@
 using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
-using WepApp.DtoModels;
 
 namespace WebApp.Controllers;
 
@@ -30,7 +29,7 @@ public class UserController : ControllerBase
         try
         {
             string searchName = "가나다라";
-            // ...
+            
             var userEntity = await _userService.GetUserInfoByName(searchName);
             if (userEntity == null)
             {
@@ -57,8 +56,4 @@ public class UserController : ControllerBase
         }
 
     }
-
-
-
-
 }

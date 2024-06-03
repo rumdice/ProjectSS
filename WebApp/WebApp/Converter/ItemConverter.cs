@@ -20,7 +20,6 @@ public static class ItemConverter
         };
     }
 
-    // TODO: 역방향 컨버터도 추가 하기
     // 빠진 자료는 어떻게 처리 해야 하나? 
     // 역방햐야 컨버터는 저장시 사용.
     // 보통은 entity가 dto 보다 가지고 있는 자료 형이 더 많다.

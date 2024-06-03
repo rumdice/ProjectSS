@@ -191,3 +191,35 @@ MVC와 4 Layered Architecture는 서로 배타적인 패턴이 아니며, 조합
 
 DTOModel의 4계층 설계 위치
 DTO (Data Transfer Object) 모델은 4 Layered Architecture에서 주로 Application Layer와 Presentation Layer 사이의 데이터를 전달하는 데 사용됩니다. 이를 통해 각 계층 간의 데이터 통신을 용이하게 하고, 데이터의 형식을 명확히 정의할 수 있습니다.
+
+
+2024.06.04
+
+오늘 트러블 슈팅 노트 기록
+
+db 접근이 안되는 이슈
+db를 쿠버네티스를 통해 db 서비스를 띄운다.
+미니쿠베 확인
+
+minikube start
+minikube dashboard
+
+서비스 연결이 안된다면 터널링 확인
+minikube tunnel
+
+실행이 안되는 원인?
+예외가 발생했습니다. CLR/System.Reflection.ReflectionTypeLoadException
+'System.Reflection.ReflectionTypeLoadException' 형식의 예외가 Microsoft.AspNetCore.Mvc.Core.dll에서 발생했지만 사용자 코드에서 처리되지 않았습니다.: 'Unable to load one or more of the requested types.'
+
+[해결]프로젝트 참조에 코어 시스템에 있는 것 전부 추가
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+  </ItemGroup>

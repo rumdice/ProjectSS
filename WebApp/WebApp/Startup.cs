@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using WebApp.Database;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
 using CoreLibrary.Database;
@@ -29,12 +28,6 @@ public class Startup
         // Add DB Context
         services.AddDbContext<DbWebAppContext>();
   
-        services.AddDbContext<UserContext>(options =>
-            options.UseMySql(
-                Configuration.GetConnectionString("DefaultConnection"),
-                new MySqlServerVersion(new Version(11, 3, 2))
-            ));
-        
         // Add Repository
         services.AddTransient<ItemRepository>();
         services.AddTransient<UserRepository>();

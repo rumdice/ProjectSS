@@ -4,7 +4,6 @@ using System.Diagnostics;
 using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Converter;
-using WebApp.Database;
 using WebApp.Models;
 using WebApp.ViewModels;
 using WepApp.DtoModels;
@@ -21,14 +20,14 @@ public class ItemController : ControllerBase
 
     public ItemController(
         ILogger<ItemController> logger,
-        ItemService itemService        
+        ItemService itemService
     )
     {
         _logger = logger;
         _itemService = itemService;
     }
 
-    [HttpPost( "[action]" )]
+    [HttpPost("[action]")]
     public async Task<IActionResult> GetItemSimpleInfoAsync(GetItemSimpleInfoViewModelRequest request)
     {
         try
@@ -72,7 +71,7 @@ public class ItemController : ControllerBase
             //     // TODO: 이름으로 찾는데 목록으로 결과를 내는게 조금 어색하다.
             //     throw new Exception("itemSimpleEntity Result is null");
             // }
-            
+
             // 이곳은 표현 레이어 이므로 Entity를 직접 다루면 안된다.
             // Entity를 직접 가져와서 편집등을 하면 안된다.
 
@@ -84,15 +83,15 @@ public class ItemController : ControllerBase
             return new GetItemSimpleInfoViewModelResponse(
                 ServiceResponseCode.Success,
                 itemSimpleInfoDto
-            ).GetActionResult(this);  
+            ).GetActionResult(this);
         }
         catch (Exception e)
         {
             _logger.LogCritical(e.Message);
-            
+
             // 일반적인 에러에 대한 viewModel 처리
             return ExceptionResponseViewModel.GetActionResult(this, e);
         }
-        
+
     }
 }
