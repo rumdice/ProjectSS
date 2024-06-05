@@ -56,4 +56,50 @@ public class UserController : ControllerBase
         }
 
     }
+
+
+    [HttpPost( "[action]" )]
+    public async Task<IActionResult> SetUserName(SetUserNameViewModelRequest request)
+    {
+        try
+        {
+            await _userService.UpdateUserName(request.UserUid, request.UserName);
+            
+            return new GetUserInfoViewModelResponse(
+                ServiceResponseCode.Success
+            ).GetActionResult(this);
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical(e.Message);
+            return ExceptionResponseViewModel.GetActionResult(this, e);
+        }
+
+    }
+
+    [HttpPost( "[action]" )]
+    public async Task<IActionResult> AddNewUser(AddNewUserViewModelRequest request)
+    {
+        try
+        {
+            // TODO: 유저 키 값은 AI라서 수정 필요 할듯..
+            await _userService.AddNewUser(
+                request.UserUid,
+                request.UserName,
+                request.UserLevel
+            );
+            
+            return new GetUserInfoViewModelResponse(
+                ServiceResponseCode.Success
+            ).GetActionResult(this);
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical(e.Message);
+            return ExceptionResponseViewModel.GetActionResult(this, e);
+        }
+    }
+
 }

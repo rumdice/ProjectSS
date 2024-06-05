@@ -14,7 +14,16 @@ public class GetUserInfoViewModelResponse : CodeResponseViewModel<ServiceRespons
     {
         this.userInfo = userInfo;
     }
+}
 
+
+public class SetUserNameViewModelResponse : CodeResponseViewModel<ServiceResponseCode>
+{
+    public SetUserNameViewModelResponse(
+        ServiceResponseCode code
+    ) : base(code)
+    {
+    }
 }
 
 

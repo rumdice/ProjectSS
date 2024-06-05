@@ -26,5 +26,28 @@ public class UserRepository
             .SingleOrDefaultAsync();
     }
 
+    public Task<UserEntity?> GetUserInfoByUserId(long userId)
+    {
+        return _webContext.UserEntities
+            .AsNoTracking()
+            .Where(e => e.UserUid == userId)
+            .SingleOrDefaultAsync();
+    }
+
+    
+    public async Task UpdateAsync(UserEntity entity)
+    {
+        _webContext.Update(entity);
+        await _webContext.SaveChangesAsync();
+    }
+
+    public async Task InsertAsync(UserEntity entity)
+    {
+        _webContext.Add(entity);
+        await _webContext.SaveChangesAsync();
+    }
+    
+    // TODO: 다수, 삭제, 업데이트 인서트 로직 추가
+    // 비동기 처리
 
 }
