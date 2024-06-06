@@ -23,8 +23,6 @@ public class Startup
     {
         services.AddControllers();
 
-        // TODO: 코드 중복 줄이기. 컨텍스트가 계속 늘어남. 추상화 레벨 올리기
-        
         // Add DB Context
         services.AddDbContext<DbWebAppContext>();
   

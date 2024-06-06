@@ -1,6 +1,7 @@
 using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using WepApp.DtoModels;
 
 namespace WebApp.Controllers;
 
@@ -36,7 +37,6 @@ public class UserController : ControllerBase
                 throw new Exception("db reuslt is empty");
             }
 
-            // TODO: 컨버터 사용 (Entity to Dto)
             var userDto = userEntity.EntityToDto();
 
             _logger.LogInformation("GetUserInfo() API Called");
@@ -75,8 +75,8 @@ public class UserController : ControllerBase
             _logger.LogCritical(e.Message);
             return ExceptionResponseViewModel.GetActionResult(this, e);
         }
-
     }
+
 
     [HttpPost( "[action]" )]
     public async Task<IActionResult> AddNewUser(AddNewUserViewModelRequest request)
@@ -84,11 +84,15 @@ public class UserController : ControllerBase
         try
         {
             // TODO: 유저 키 값은 AI라서 수정 필요 할듯..
-            await _userService.AddNewUser(
-                request.UserUid,
-                request.UserName,
-                request.UserLevel
-            );
+            var userDto = new UserDto 
+            {
+                Id = request.UserUid,
+                Name = request.UserName,
+                Level = request.UserLevel
+            };
+
+            // 컨버터 사용 : TODO: 컨트롤러 및 표현 레이어에서 쓰는게 맞는 걸까?
+            await _userService.AddNewUser(userDto.DtoToEntity());
             
             return new GetUserInfoViewModelResponse(
                 ServiceResponseCode.Success
