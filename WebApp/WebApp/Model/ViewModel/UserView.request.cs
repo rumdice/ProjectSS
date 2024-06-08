@@ -31,3 +31,10 @@ public class AddNewUserViewModelRequest
     [Required]
     public int UserLevel { get; set; }
 }
+
+public class DeleteUserViewModelRequest
+{
+    [Required]
+    public long UserUid { get; set; }
+}
+

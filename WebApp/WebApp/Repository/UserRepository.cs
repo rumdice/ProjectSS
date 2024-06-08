@@ -47,5 +47,10 @@ public class UserRepository
         await _webContext.SaveChangesAsync();
     }
     
+    public async Task DeleteAsync(UserEntity entity)
+    {
+        _webContext.Remove(entity);
+        await _webContext.SaveChangesAsync();
+    }
 
 }

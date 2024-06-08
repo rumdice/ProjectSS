@@ -27,3 +27,13 @@ public class SetUserNameViewModelResponse : CodeResponseViewModel<ServiceRespons
 }
 
 
+public class DeleteUserViewModelResponse : CodeResponseViewModel<ServiceResponseCode>
+{
+    public DeleteUserViewModelResponse(
+        ServiceResponseCode code
+    ) : base(code)
+    {
+    }
+}
+
+

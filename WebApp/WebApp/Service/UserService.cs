@@ -2,6 +2,7 @@
 
 
 
+using System.Transactions;
 using CoreLibrary.Database;
 
 public class UserService
@@ -28,25 +29,40 @@ public class UserService
         return await _userRepository.GetUserInfoByName(name);
     }
 
+    public async Task<UserEntity?> GetUserInfoByUserUid(long userUid)
+    {
+        return await _userRepository.GetUserInfoByUserId(userUid);
+    }
+
     public async Task UpdateUserName(long userId, string name)
     {
         var userEntity = await _userRepository.GetUserInfoByUserId(userId);
-        
         if (userEntity == null)
         {
             throw new Exception("user Entity is Null");
         }
 
-        // 데이터를 업데이트 한다 엔티티의 값을 변경
         userEntity.Name = name;
 
-        // DB에 적용 한다.
         await _userRepository.UpdateAsync(userEntity);
     }
 
     public async Task AddNewUser(UserEntity userEntity)
     {   
         await _userRepository.InsertAsync(userEntity);
+    }
+
+    public async Task DeleteUser(UserEntity userEntity, IEnumerable<ItemSimpleEntity> itemEntity)
+    {
+        using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+        // 이 사이에서 트렌젝션 작업을 한다. 예를들어 유저를 삭제시 아이템도 삭제한다.
+        await _userRepository.DeleteAsync(userEntity);
+
+        // 아이템 엔티티를 찾아서 셋팅하나? 아니면 찾아서 넘거야 하나?
+        await _itemRepository.RemoveRangeAsync(itemEntity);
+
+        scope.Complete();
     }
 
 }

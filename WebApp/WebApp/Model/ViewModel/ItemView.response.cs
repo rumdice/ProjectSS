@@ -17,8 +17,4 @@ public class GetItemSimpleInfoViewModelResponse : CodeResponseViewModel<ServiceR
     {
         this.ItemSimpleInfo = itemSimpleInfo;
     }
-
-
 }
-
-

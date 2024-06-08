@@ -223,3 +223,17 @@ minikube tunnel
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
   </ItemGroup>
+
+
+
+
+2024.06.08
+Service 와 Repository
+
+Repository : 쿼리 하나에 대한 명령처리
+Service : 컨텐츠의 속성에 따라 여러 reposotory를 연계하여 처리한다.
+
+// 경우에 따라선 단순 쿼리 실행이 아닌 복잡한 비즈니스 로직이 들어갈 수 있다.
+// 혹은 여러가지 repository 쿼리의 연계는 보통 이곳 service에서 진행 하자.
+
+// 스코프 처리는 Service에 두는게 좋겠다. 컨트롤러 레벨에 두는건 이상하다.

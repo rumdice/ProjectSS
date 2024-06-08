@@ -1,6 +1,3 @@
-
-
-using System.Diagnostics;
 using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Converter;

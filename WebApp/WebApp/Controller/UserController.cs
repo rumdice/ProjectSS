@@ -14,14 +14,17 @@ public class UserController : ControllerBase
     private readonly ILogger<UserController> _logger; // 필요한가?
 
     private readonly UserService _userService;
+    private readonly ItemService _itemService;
 
     public UserController(
         ILogger<UserController> logger,
-        UserService userService
+        UserService userService,
+        ItemService itemService
     )
     {
         _logger = logger;
         _userService = userService;
+        _itemService = itemService;
     }
 
     [HttpPost( "[action]" )]
@@ -30,6 +33,7 @@ public class UserController : ControllerBase
         try
         {
             string searchName = "가나다라";
+            long searchUserUid = request.UserUid;
             
             var userEntity = await _userService.GetUserInfoByName(searchName);
             if (userEntity == null)
@@ -106,4 +110,36 @@ public class UserController : ControllerBase
         }
     }
 
+    [HttpPost( "[action]" )]
+    public async Task<IActionResult> DeleteUser(DeleteUserViewModelRequest request)
+    {
+        // 유저 삭제시 관련 아이템도 삭제한다고 가정한다.
+        try
+        {
+            // 유저 id 기반으로 유저 정보를 찾는다.
+            var userEntity = await _userService.GetUserInfoByUserUid(request.UserUid);
+            if (userEntity == null) 
+            {
+                throw new Exception("Uesr Entity is Null");
+            }
+
+            // 유저 id 기반으로 아이템 정보를 찾는다.
+            var itemEntityList = await _itemService.GetItemSimpleInfoListByUserIdAsync(request.UserUid);
+            
+            // 찾은 정보를 넘기기 - 이 구조가 좋은걸까?
+            // 아니면 하위 구조에서 아이템 목록을 찾아서 처리 해야 되나?
+            // 내부에서 스코프 처리 함.
+            await _userService.DeleteUser(userEntity, itemEntityList);
+
+            return new DeleteUserViewModelResponse(
+                ServiceResponseCode.Success
+            ).GetActionResult(this);
+        } 
+        catch (Exception e)
+        {
+            _logger.LogCritical(e.Message);
+            return ExceptionResponseViewModel.GetActionResult(this, e);
+        }
+
+    }
 }
