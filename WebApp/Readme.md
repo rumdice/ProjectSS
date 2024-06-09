@@ -229,11 +229,39 @@ minikube tunnel
 
 2024.06.08
 Service 와 Repository
-
 Repository : 쿼리 하나에 대한 명령처리
 Service : 컨텐츠의 속성에 따라 여러 reposotory를 연계하여 처리한다.
-
 // 경우에 따라선 단순 쿼리 실행이 아닌 복잡한 비즈니스 로직이 들어갈 수 있다.
 // 혹은 여러가지 repository 쿼리의 연계는 보통 이곳 service에서 진행 하자.
-
 // 스코프 처리는 Service에 두는게 좋겠다. 컨트롤러 레벨에 두는건 이상하다.
+
+도커 파일 만들기
+과거 했던 방법 
+쿠버네티스 배포 환경 추가하기 (DockerFile)
+
+도커 이미지 파일 만들기
+.csproj 파일이 있는 폴더 위치로 이동하여
+vi Dockerfile
+
+도커 파일 예시
+
+그리고 쿠버네티스에 어떻게 배포?
+
+도커 빌드
+docker build -f webapp:latest -f Dockerfile ..
+
+
+2024.06.09
+
+프로젝트 참조에서 빌드된 dll 참조 형식으로 변경.
+코어 프로젝트가 최신으로 빌드가 잘 되는 상태여야 함.
+
+docker build cmd
+docker build -t webapp:latest -f Dockerfile ..  
+
+restore 하는데 시간이 너무 오래 걸리는데 문제가 뭔가?
+
+되긴 했는데 문제가 좀 있다. dll 사용이 불편해짐?
+- 일단 쉘 스크립트로 해결하자.
+
+

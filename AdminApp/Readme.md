@@ -41,3 +41,7 @@ cmd + shift + p
 OS 선택 : Linux
 포트 번호 입럭 : 5114
 Docker Compose 파일은 일단 미포함 : No
+
+
+도커 빌드 
+docker build -f Dockerfile ..
