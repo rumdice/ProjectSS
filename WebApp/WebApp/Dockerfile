@@ -2,11 +2,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
+# 실행 포트 지정
+EXPOSE 7002
+ENV ASPNETCORE_URLS=http://+:7002
+
 # 프로젝트 파일 복사 및 복구
 COPY ["WebApp/WebApp.csproj", "WebApp/"]
-#COPY ["CoreSystem/CoreLibrary/bin/Debug/net8.0/CoreLibrary.dll", "WebApp/bin/Debug/net8.0/"]
 
-# dll 복사
+#COPY ["CoreSystem/CoreLibrary/bin/Debug/net8.0/CoreLibrary.dll", "WebApp/bin/Debug/net8.0/"]
+# dll 복사 (같은 경로에 있는 것으로 사용)
 COPY ["WebApp/Dll/CoreLibrary.dll", "WebApp/Dll/"]
 
 RUN dotnet restore "WebApp/WebApp.csproj"
