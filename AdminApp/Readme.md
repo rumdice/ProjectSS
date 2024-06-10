@@ -45,3 +45,10 @@ Docker Compose 파일은 일단 미포함 : No
 
 도커 빌드 
 docker build -f Dockerfile ..
+
+
+2024.06.11
+코어 시스템 적용 하기
+- DockerFile 수정 필요
+- yaml 스크립트 수정 필요
+쿠버네티스에 배포하기

@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Docker 빌드를 위해 참조디는 DLL을 상위 프로젝트에서 하위로 강제 복사로 내림 -->
+  <ItemGroup>
+    <Reference Include="CoreSystem">
+      <HintPath>.\Dll\CoreLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
 </Project>
