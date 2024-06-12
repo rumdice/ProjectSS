@@ -53,7 +53,6 @@ public class ItemRepository
             .ToListAsync();
     }
 
-    // TODO: 범위 처리에 대하여
     public Task UpdateRangeAsync( IEnumerable<ItemSimpleEntity> entities )
     {
         _webContext.ItemSimpleEntities.UpdateRange( entities );
