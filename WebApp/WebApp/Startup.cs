@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
 using CoreLibrary.Database;
+using WebApp.Repository;
+using WebApp.Service;
+using WebApp.MessageHub;
 
 
 namespace WebApp;
@@ -37,6 +40,8 @@ public class Startup
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+        // Add SignalR
+        services.AddSignalR();
     } 
 
 
@@ -60,6 +65,8 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            // Map SignalR Hubs
+            endpoints.MapHub<ChatHub>("/MessageHub"); // 체팅 메시지헙
         });  
     }
 

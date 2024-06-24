@@ -7,9 +7,9 @@ using WepApp.DtoModels;
 using WebApp.ViewModels;
 using CoreLibrary.ViewModels;
 
-namespace WebApp.Controllers;
+namespace WebApp.Controller;
 
-public class HomeController : Controller
+public class HomeController : ControllerBase
 {
     private readonly ILogger<HomeController> _logger;
 

@@ -1,6 +1,7 @@
 using CoreLibrary.Database;
 using Microsoft.EntityFrameworkCore;
 
+namespace WebApp.Repository;
 
 public class UserRepository
 {

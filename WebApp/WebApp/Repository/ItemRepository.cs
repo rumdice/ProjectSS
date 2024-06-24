@@ -1,6 +1,9 @@
 using CoreLibrary.Database;
 using Microsoft.EntityFrameworkCore;
 
+namespace WebApp.Repository;
+
+
 public class ItemRepository
 {
     private readonly DbWebAppContext _webContext;
