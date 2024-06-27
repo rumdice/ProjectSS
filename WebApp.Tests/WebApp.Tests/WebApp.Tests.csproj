@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\WebApp\WebApp\WebApp.csproj" />
+    <ProjectReference Include="..\..\CoreSystem\CoreLibrary\CoreLibrary.csproj" />
   </ItemGroup>
 
 </Project>

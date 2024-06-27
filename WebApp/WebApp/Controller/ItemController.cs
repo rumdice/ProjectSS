@@ -1,3 +1,4 @@
+using CoreLibrary.Database;
 using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Converter;
@@ -23,6 +24,17 @@ public class ItemController : ControllerBase
     {
         _logger = logger;
         _itemService = itemService;
+    }
+
+    //[HttpGet("[action]")]
+    public async Task<ItemSimpleEntity?> GetAsync(long itemTid)
+    {
+        var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
+        if (itemSimpleEntity == null)
+        {
+            throw new Exception("itemSimpleEntity Result is null");
+        }
+        return itemSimpleEntity;
     }
 
     [HttpPost("[action]")]

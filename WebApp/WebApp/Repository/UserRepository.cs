@@ -35,7 +35,6 @@ public class UserRepository
             .SingleOrDefaultAsync();
     }
 
-    
     public async Task UpdateAsync(UserEntity entity)
     {
         _webContext.Update(entity);
