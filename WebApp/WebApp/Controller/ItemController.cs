@@ -10,24 +10,28 @@ using WepApp.DtoModels;
 namespace WebApp.Controller;
 
 
-[Route("[Controller]")]
+[Route("[Controller]/[action]")]
 [ApiController]
-public class ItemController : ControllerBase
+public class ItemController : BaseController
 {
-    private readonly ILogger<ItemController> _logger;
+    // TODO: 필요한 Service만 종속성 주입한다.
     private readonly ItemService _itemService;
 
+    // 로거는 어쩔 수 없이 선언해야 하나?
+    private readonly ILogger<ItemController> _logger;
+
     public ItemController(
-        ILogger<ItemController> logger,
-        ItemService itemService
-    )
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<ItemController> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
+        _itemService = serviceProvider.GetService<ItemService>();
         _logger = logger;
-        _itemService = itemService;
     }
 
-    //[HttpGet("[action]")]
-    public async Task<ItemSimpleEntity?> GetAsync(long itemTid)
+    [HttpGet]
+    public async Task<ItemSimpleEntity?> Get(long itemTid)
     {
         var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
         if (itemSimpleEntity == null)
@@ -37,8 +41,8 @@ public class ItemController : ControllerBase
         return itemSimpleEntity;
     }
 
-    [HttpPost("[action]")]
-    public async Task<IActionResult> GetItemSimpleInfoAsync(GetItemSimpleInfoViewModelRequest request)
+    [HttpPost]
+    public async Task<IActionResult> GetItemSimpleInfo(GetItemSimpleInfoViewModelRequest request)
     {
         try
         {

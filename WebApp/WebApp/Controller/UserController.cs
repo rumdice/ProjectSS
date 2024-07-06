@@ -7,28 +7,26 @@ using WepApp.DtoModels;
 namespace WebApp.Controller;
 
 
-
-[Route("[Controller]")]
+[Route("[Controller]/[action]")]
 [ApiController]
-public class UserController : ControllerBase
+public class UserController : BaseController
 {
-    private readonly ILogger<UserController> _logger; // 필요한가?
-
     private readonly UserService _userService;
     private readonly ItemService _itemService;
+    private readonly ILogger<UserController> _logger; // 필요한가?
 
     public UserController(
-        ILogger<UserController> logger,
-        UserService userService,
-        ItemService itemService
-    )
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<UserController> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
+        _userService = serviceProvider.GetService<UserService>();
+        _itemService = serviceProvider.GetService<ItemService>();
         _logger = logger;
-        _userService = userService;
-        _itemService = itemService;
     }
 
-    [HttpPost( "[action]" )]
+    [HttpPost]
     public async Task<IActionResult> GetUserInfo(GetUserInfoViewModelRequest request)
     {
         try
@@ -59,11 +57,10 @@ public class UserController : ControllerBase
             // 일반적인 에러에 대한 viewModel 처리
             return ExceptionResponseViewModel.GetActionResult(this, e);
         }
-
     }
 
 
-    [HttpPost( "[action]" )]
+    [HttpPost]
     public async Task<IActionResult> SetUserName(SetUserNameViewModelRequest request)
     {
         try
@@ -83,7 +80,7 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpPost( "[action]" )]
+    [HttpPost]
     public async Task<IActionResult> AddNewUser(AddNewUserViewModelRequest request)
     {
         try
@@ -111,7 +108,8 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPost( "[action]" )]
+
+    [HttpPost]
     public async Task<IActionResult> DeleteUser(DeleteUserViewModelRequest request)
     {
         // 유저 삭제시 관련 아이템도 삭제한다고 가정한다.

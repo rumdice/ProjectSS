@@ -25,6 +25,7 @@ public class Startup
     public void ConfigureServices( IServiceCollection services )
     {
         services.AddControllers();
+        services.AddHttpContextAccessor();
 
         // Add DB Context
         services.AddDbContext<DbWebAppContext>();
