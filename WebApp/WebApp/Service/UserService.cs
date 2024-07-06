@@ -5,7 +5,7 @@ using WebApp.Repository;
 namespace WebApp.Service;
 
 
-public class UserService
+public class UserService : BaseService
 {
     // TODO: 경우에 따라선 서비스가 여러가지 종류의 repository 를 들고 있을 수 있다.
     private readonly UserRepository _userRepository;
@@ -14,13 +14,13 @@ public class UserService
     private readonly ILogger<UserService> _logger;
 
     public UserService(
-        UserRepository userRepository,
-        ItemRepository itemRepository,
-        ILogger<UserService> logger
-    )
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<UserService> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
-        _userRepository = userRepository;
-        _itemRepository = itemRepository;
+        _userRepository = serviceProvider.GetService<UserRepository>();
+        _itemRepository = serviceProvider.GetService<ItemRepository>();
         _logger = logger;
     }
 

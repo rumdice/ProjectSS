@@ -7,17 +7,18 @@ using WebApp.Repository;
 namespace WebApp.Service;
 
 
-public class ItemService
+public class ItemService : BaseService
 {
     private readonly ItemRepository _itemRepository;
     private readonly ILogger<ItemService> _logger;
 
     public ItemService( 
-        ItemRepository itemRepository,
-        ILogger<ItemService> logger
-    )
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<ItemService> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
-        _itemRepository = itemRepository;
+        _itemRepository = serviceProvider.GetService<ItemRepository>();
         _logger = logger;
     }
 

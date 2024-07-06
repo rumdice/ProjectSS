@@ -35,6 +35,7 @@ public class Startup
         services.AddTransient<UserRepository>();
 
         // Add Service
+        services.AddTransient<BaseService>();
         services.AddTransient<ItemService>();
         services.AddTransient<UserService>();
         
