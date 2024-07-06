@@ -31,6 +31,7 @@ public class Startup
         services.AddDbContext<DbWebAppContext>();
   
         // Add Repository
+        services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
         services.AddTransient<UserRepository>();
 

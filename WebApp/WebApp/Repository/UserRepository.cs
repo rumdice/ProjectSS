@@ -3,15 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApp.Repository;
 
-public class UserRepository
+public class UserRepository : BaseRepository
 {
-    private readonly DbWebAppContext _webContext;
-
     public UserRepository(
-        DbWebAppContext context
-    )
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<UserRepository> logger,
+        DbWebAppContext webAppContext)
+        : base (serviceProvider, httpContextAccessor, logger, webAppContext)
     {
-        _webContext = context;
     }
 
     /// <summary>
@@ -21,7 +21,7 @@ public class UserRepository
     /// <returns></returns>
     public Task<UserEntity?> GetUserInfoByName(string name)
     {
-        return _webContext.UserEntities
+        return _webDbContext.UserEntities
             .AsNoTracking()
             .Where(e => e.Name == name)
             .SingleOrDefaultAsync();
@@ -29,7 +29,7 @@ public class UserRepository
 
     public Task<UserEntity?> GetUserInfoByUserId(long userId)
     {
-        return _webContext.UserEntities
+        return _webDbContext.UserEntities
             .AsNoTracking()
             .Where(e => e.UserUid == userId)
             .SingleOrDefaultAsync();
@@ -37,20 +37,20 @@ public class UserRepository
 
     public async Task UpdateAsync(UserEntity entity)
     {
-        _webContext.Update(entity);
-        await _webContext.SaveChangesAsync();
+        _webDbContext.Update(entity);
+        await _webDbContext.SaveChangesAsync();
     }
 
     public async Task InsertAsync(UserEntity entity)
     {
-        _webContext.Add(entity);
-        await _webContext.SaveChangesAsync();
+        _webDbContext.Add(entity);
+        await _webDbContext.SaveChangesAsync();
     }
     
     public async Task DeleteAsync(UserEntity entity)
     {
-        _webContext.Remove(entity);
-        await _webContext.SaveChangesAsync();
+        _webDbContext.Remove(entity);
+        await _webDbContext.SaveChangesAsync();
     }
 
 }
