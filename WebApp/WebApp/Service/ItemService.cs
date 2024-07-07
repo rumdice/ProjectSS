@@ -22,7 +22,7 @@ public class ItemService : BaseService
         _logger = logger;
     }
 
-    public async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
+    public virtual async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
     {
         return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
