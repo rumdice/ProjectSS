@@ -282,3 +282,44 @@ nginx 는 80
 
 의문점 : 쿠버네티스에서 서비스 실행은 잘 되는데 왜 스웨거 페이지는 안뜨지?
 https://127.0.0.1:7002/swagger/index.html
+
+
+2024.07.06
+BaseController 
+BaseService
+BaseRepository 
+도입으로 종속성 주입 생성자 방식의 파라메터가 고정되도록 수정
+
+
+
+유닛테스트 내용 수정 및 버그 수정
+
+[주요 부분 설명]
+	1.	Mock 객체 생성:
+	•	ItemService, IHttpContextAccessor, ILogger의 Mock 객체를 생성합니다.
+	2.	ServiceCollection 사용:
+	•	의존성 주입을 위한 ServiceCollection을 사용하여 ItemService를 서비스 프로바이더에 등록합니다.
+	3.	테스트 메서드 작성:
+	•	GetItemSimpleInfo_ReturnsExpectedResult 메서드를 작성하여 ItemController의 GetItemSimpleInfo 메서드를 테스트합니다.
+	4.	Mock 설정:
+	•	GetSimpleItemResultAsync 메서드가 호출될 때, 예상되는 결과를 반환하도록 설정합니다.
+	5.	컨트롤러 인스턴스화:
+	•	Mock 객체와 서비스 프로바이더를 사용하여 ItemController의 인스턴스를 생성합니다.
+	6.	테스트 실행 및 결과 검증:
+	•	GetItemSimpleInfo 메서드를 호출하고, 결과를 검증합니다.
+
+이 예제는 ItemService의 GetSimpleItemResultAsync 메서드가 예상되는 값을 반환하도록 설정하고, 이를 통해 ItemController의 메서드가 올바르게 동작하는지 검증합니다.
+
+[에러 발생]
+Non-overridable members (here: ItemService.GetSimpleItemResultAsync) may not be used in setup / verification expressions.
+...
+
+[에러 내용]
+해당 문제가 발생하는 이유는 ItemService.GetSimpleItemResultAsync 메서드가 가상 메서드(virtual)가 아니기 때문입니다. Moq 라이브러리는 가상 메서드만을 모킹할 수 있습니다.
+Moq는 비가상 메서드를 오버라이드 할 수 없으므로, 해당 메서드를 모킹하려고 하면 오류가 발생합니다. 따라서, ItemService의 메서드를 가상 메서드로 선언해야 합니다.
+
+
+[해결 방법]
+ItemService 클래스의 메서드에 virtual 키워드를 추가하여 가상 메서드로 만듭니다.
+
+
