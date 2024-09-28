@@ -34,11 +34,13 @@ public class Startup
         services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
         services.AddTransient<UserRepository>();
+        services.AddTransient<ShopRepository>();
 
         // Add Service
         services.AddTransient<BaseService>();
         services.AddTransient<ItemService>();
         services.AddTransient<UserService>();
+        services.AddTransient<ShopService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
