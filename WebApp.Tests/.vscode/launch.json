@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug WebApp.Tests",
+        "type": "coreclr",
+        "request": "launch",
+        "program": "/usr/local/share/dotnet/dotnet",  // dotnet 실행 파일 경로
+        "args": [
+          "test",  // dotnet test 명령어로 유닛 테스트 실행
+          "${workspaceFolder}/WebApp.Tests.csproj" // 유닛 테스트 프로젝트 경로
+        ],
+        "cwd": "${workspaceFolder}",
+        "stopAtEntry": false,
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        }
+      }
+    ]
+  }

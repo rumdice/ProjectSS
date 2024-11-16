@@ -23,9 +23,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <!--유닛 프로젝트의 테스트 대상 프로젝트와 포함 코어 라이브러리 -->
   <ItemGroup>
-    <ProjectReference Include="..\..\WebApp\WebApp\WebApp.csproj" />
-    <ProjectReference Include="..\..\CoreSystem\CoreLibrary\CoreLibrary.csproj" />
+    <ProjectReference Include="..\WebApp\WebApp.csproj" />
+    <ProjectReference Include="..\CoreLib\CoreLibrary.csproj" />
   </ItemGroup>
 
 </Project>
