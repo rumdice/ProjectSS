@@ -1,91 +1,111 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "name": "Debug WebApp",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/WebApp/bin/Debug/net8.0/WebApp.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/WebApp",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      {
-        "name": "Debug WebApp Start Swagger",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/WebApp/bin/Debug/net8.0/WebApp.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/WebApp",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "serverReadyAction": {
-          "action": "openExternally",
-          "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
-          "uriFormat": "%s/swagger"
-        }
-      },
-      {
-        "name": "Debug PushApp",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/PushApp/bin/Debug/net8.0/PushApp.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/PushApp",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      {
-        "name": "Debug BackOfficeApp",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/BackOfficeApp/bin/Debug/net8.0/BackOfficeApp.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/BackOfficeApp",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      {
-        "name": "Debug WebApp.Tests",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/WebApp.Tests/bin/Debug/net8.0/WebApp.Tests.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/WebApp.Tests",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      {
-        "name": "Debug ChatConsoleApp",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/ChatConsoleApp/bin/Debug/net8.0/ChatConsoleApp.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/ChatConsoleApp",
-        "stopAtEntry": false,
-        "env": {
-          "ASPNETCORE_ENVIRONMENT": "Development"
-        }
-      },
-      {
-        "name": "Debug CoreLibrary",
-        "type": "coreclr",
-        "request": "launch",
-        "program": "${workspaceFolder}/CoreLibrary/bin/Debug/net8.0/CoreLibrary.dll",
-        "args": [],
-        "cwd": "${workspaceFolder}/CoreLibrary",
-        "stopAtEntry": false
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug WebApp",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/WebApp/bin/Debug/net8.0/WebApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    ]
-  }
+    },
+    {
+      "name": "Debug WebApp Start Swagger",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/WebApp/bin/Debug/net8.0/WebApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/swagger"
+      }
+    },
+    {
+      "name": "Debug PushApp",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/PushApp/bin/Debug/net8.0/PushApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Debug PushApp Start Web",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/PushApp/bin/Debug/net8.0/PushApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/"
+      }
+    },
+    {
+      "name": "Debug Blazor WebAssembly WEB",
+      "type": "blazorwasm",
+      "request": "launch",
+      "program": "${workspaceFolder}/BackOfficeApp/bin/Debug/net8.0/BlazorApp.dll",  // 프로젝트 DLL 경로
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s"
+      }
+    },
+    {
+      "name": "Debug WebApp.Tests",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "/usr/local/share/dotnet/dotnet",  // dotnet 실행 파일 경로
+      "args": [
+        "test",  // dotnet test 명령어로 유닛 테스트 실행
+        "${workspaceFolder}/WebApp.Tests/WebApp.Tests.csproj" // 유닛 테스트 프로젝트 경로
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+    {
+      "name": "Debug ChatConsoleApp",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/ChatConsoleApp/bin/Debug/net8.0/ChatConsoleApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+
+  ]
+}
+
