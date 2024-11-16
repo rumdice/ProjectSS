@@ -12,8 +12,9 @@
 
   <ItemGroup>
     <Reference Include="CoreSystem">
-      <HintPath>.\Dll\CoreLibrary.dll</HintPath>
+      <HintPath> Dll\CoreLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 
+  
 </Project>
