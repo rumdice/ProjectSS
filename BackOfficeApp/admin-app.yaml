@@ -20,7 +20,7 @@ spec:
       - name: admin-app-container
         image: rumdice/admin-app:latest # docker hub 아이디/repository경로
         ports:
-        - containerPort: 8080 # 컨테이너의 포트
+        - containerPort: 7188 # 컨테이너의 포트
       imagePullSecrets:
       - name: rumdice-dockerhub-secret # docker hub private에 접근 하기 위한 kubectl secret 이름
         
@@ -37,6 +37,6 @@ spec:
   ports:
   - protocol: TCP
     port: 7188 # 로컬 포트
-    targetPort: 8080 # 포트포워딩할 타겟 컨테이너의 포트
+    targetPort: 7188 # 포트포워딩할 타겟 컨테이너의 포트
   type: LoadBalancer
 

@@ -1,6 +1,9 @@
-# 원버튼 빌드를 위하여 이곳에서 카피 쉘 스크립트 수행
-sh copyDll.sh
+# 코어 빌드를 하여 dll을 갱신 받는다
+cd ../CoreLib/
+dotnet build CoreLibrary.csproj
 
+
+cd ../WebApp/
 # 도커 빌드를 하여 이미지 생성
 docker build -t webapp:latest -f Dockerfile ..  
 

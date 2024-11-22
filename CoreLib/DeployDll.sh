@@ -3,3 +3,4 @@
 #ls
 cp bin/Debug/net8.0/CoreLibrary.dll ../PushApp/Dll/
 cp bin/Debug/net8.0/CoreLibrary.dll ../WebApp/Dll/
+cp bin/Debug/net8.0/CoreLibrary.dll ../BackOfficeApp/Dll/

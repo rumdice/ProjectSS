@@ -1,8 +1,12 @@
-# 원버튼 빌드를 위하여 이곳에서 카피 쉘 스크립트 수행
-sh copyDll.sh
+# 코어 빌드를 하여 dll을 갱신 받는다
+cd ../CoreLib/
+dotnet build CoreLibrary.csproj
+
+
+cd ../BackOfficeApp/
 
 # 도커 빌드를 하여 이미지 생성
-docker build -t adminapp:latest -f Dockerfile ..  
+docker build -t adminapp:latest -f Dockerfile ..
 
 # 도커 hub로 push 하기전 올바른 경로 형태로 빌드된 이미지에 대하여 태깅
 docker tag adminapp:latest rumdice/admin-app:latest 

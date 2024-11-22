@@ -20,7 +20,7 @@ spec:
       - name: web-app-container
         image: rumdice/web-app:latest # docker hub 아이디/repository경로, docker build 시 tag로 지정합니다.
         ports:
-        - containerPort: 8080 # 컨테이너의 포트 Dockerfile Expose로 명시
+        - containerPort: 7002 # 컨테이너의 포트 Dockerfile Expose로 명시
       imagePullSecrets:
       - name: rumdice-dockerhub-secret # docker hub private에 접근 하기 위한 kubectl secret 이름
         
@@ -37,6 +37,6 @@ spec:
   ports:
   - protocol: TCP
     port: 7002 # 로컬 포트(appsetting.json에 기록된 정보)
-    targetPort: 8080 # 포트포워딩할 타겟 컨테이너의 포트, ContatinerPort와 일치 시킵니다.
+    targetPort: 7002 # 포트포워딩할 타겟 컨테이너의 포트, ContatinerPort와 일치 시킵니다.
   type: LoadBalancer
 
