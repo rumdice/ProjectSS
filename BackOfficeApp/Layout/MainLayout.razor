@@ -1,10 +1,16 @@
-﻿@inherits LayoutComponentBase
+﻿<HeadContent>
+    <RadzenTheme Theme="material" />
+</HeadContent>
+
+@inherits LayoutComponentBase
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
     <main>
+        <RadzenComponents /> <!-- Radzen 전역 컴포넌트 추가 -->
         <div class="top-row px-4">
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>

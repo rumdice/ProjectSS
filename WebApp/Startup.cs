@@ -57,12 +57,21 @@ public class Startup
     /// <param name="env"></param>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if(env.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+        // 개발환경에서만 스웨거 사용
+        //if(env.IsDevelopment())
+        // {
+        //     app.UseSwagger();
+        //     app.UseSwaggerUI();
+        // }
 
+        // 모든 환경에서 스웨거 사용
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp API V1");
+        });
+
+        
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseRouting();
@@ -73,6 +82,8 @@ public class Startup
             // Map SignalR Hubs
             endpoints.MapHub<ChatHub>("/MessageHub"); // 체팅 메시지헙
         });  
+
+        
     }
 
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BackOfficeApp;
 using Microsoft.AspNetCore;
+using Radzen;
 
 public class Startup
 {
@@ -18,16 +19,23 @@ public class Startup
     {
         this.Builder = builder;
 
+        // 루트 컴포넌트 등록
         this.Builder.RootComponents.Add<App>("#app");
         this.Builder.RootComponents.Add<HeadOutlet>("head::after");
 
+        // HttpClient 서비스 등록
         this.Builder.Services.AddScoped(sp => 
             new HttpClient 
             { 
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) 
             }
         );
+
+        // Radzen 구성 요소 등록
+        this.Builder.Services.AddRadzenComponents();
     }
+
+    
 
     public WebAssemblyHost BuildApp()
     {

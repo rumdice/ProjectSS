@@ -63,8 +63,6 @@
       "name": "Debug Blazor WebAssembly WEB",
       "type": "blazorwasm",
       "request": "launch",
-      "program": "${workspaceFolder}/BackOfficeApp/bin/Debug/net8.0/BlazorApp.dll",  // 프로젝트 DLL 경로
-      "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "env": {
