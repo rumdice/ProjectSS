@@ -60,6 +60,35 @@
       }
     },
     {
+      "name": "Debug LogApp",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/LogApp/bin/Debug/net8.0/LogApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    {
+      "name": "Debug LogApp Start Web",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/LogApp/bin/Debug/net8.0/LogApp.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+        "uriFormat": "%s/"
+      }
+    },
+    {
       "name": "Debug Blazor WebAssembly WEB",
       "type": "blazorwasm",
       "request": "launch",
