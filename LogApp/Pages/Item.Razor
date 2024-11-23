@@ -1,0 +1,19 @@
+@page "/item"
+@using CoreLibrary.Repository
+@inject ItemRepository ItemRepository
+
+<h3>ItemRepository Example</h3>
+
+<p>Item: @itemName</p>
+<button @onclick="GetItem">Fetch Item</button>
+
+@code {
+    private string itemName;
+
+    private async Task GetItem()
+    {
+        // ItemRepository를 통해 데이터 가져오기
+        var item = await ItemRepository.GetSimpleItemInfoByItemTId(1002);
+        itemName = item?.Name ?? "No item found";
+    }
+}

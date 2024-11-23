@@ -8,17 +8,20 @@ using CoreLibrary.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add IHttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddRadzenComponents();
 
-builder.Services.AddTransient<BaseService>();
-builder.Services.AddTransient<BaseRepository>();
-builder.Services.AddTransient<ItemRepository>();
-builder.Services.AddTransient<UserRepository>();
-builder.Services.AddTransient<ShopRepository>();
+builder.Services.AddScoped<DbWebAppContext>();
+  
+builder.Services.AddScoped<BaseService>();
+builder.Services.AddScoped<BaseRepository>();
+builder.Services.AddScoped<ItemRepository>();
 
 var app = builder.Build();
 
