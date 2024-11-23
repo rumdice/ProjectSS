@@ -2,7 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
 using CoreLibrary.Database;
-using WebApp.Repository;
+using CoreLibrary.Repository;
+using CoreLibrary.Service;
+
+
 using WebApp.Service;
 using WebApp.MessageHub;
 
@@ -30,6 +33,7 @@ public class Startup
         // Add DB Context
         services.AddDbContext<DbWebAppContext>();
   
+        // BASE
         // Add Repository
         services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
@@ -38,6 +42,7 @@ public class Startup
 
         // Add Service
         services.AddTransient<BaseService>();
+        
         services.AddTransient<ItemService>();
         services.AddTransient<UserService>();
         services.AddTransient<ShopService>();

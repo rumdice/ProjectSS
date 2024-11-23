@@ -1,8 +1,10 @@
 using CoreLibrary.Database;
+using CoreLibrary.Service;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-using WebApp.Service;
 
-namespace WebApp.Repository;
+namespace CoreLibrary.Repository;
 
 
 public class BaseRepository : BaseService

@@ -1,7 +1,9 @@
 using CoreLibrary.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace WebApp.Repository;
+namespace CoreLibrary.Repository;
 
 public class UserRepository : BaseRepository
 {

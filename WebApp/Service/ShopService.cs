@@ -1,6 +1,7 @@
 using CoreLibrary.Database;
+using CoreLibrary.Repository;
+using CoreLibrary.Service;
 using Microsoft.AspNetCore.JsonPatch.Internal;
-using WebApp.Repository;
 
 namespace WebApp.Service;
 
