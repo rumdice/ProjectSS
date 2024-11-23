@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using LogApp.Data;
-using Radzen;;
+using Radzen;
+using CoreLibrary.Database;
+using CoreLibrary.Repository;
+using CoreLibrary.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddRadzenComponents();
+
+builder.Services.AddTransient<BaseService>();
+builder.Services.AddTransient<BaseRepository>();
+builder.Services.AddTransient<ItemRepository>();
+builder.Services.AddTransient<UserRepository>();
+builder.Services.AddTransient<ShopRepository>();
 
 var app = builder.Build();
 
