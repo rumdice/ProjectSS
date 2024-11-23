@@ -69,7 +69,8 @@
       "stopAtEntry": false,
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "preLaunchTask": "build LogApp"
     },
     {
       "name": "Debug LogApp Start Web",
