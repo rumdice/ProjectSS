@@ -18,6 +18,7 @@ public class Program
         // webBuilder.UseStartup<Startup>();
         // webBuilder.UseUrls( $"http://0.0.0.0:{port}" );
 
+        var a = 1;
         var builder = WebAssemblyHostBuilder.CreateDefault(args);
         var startUp = new Startup(builder);
         return startUp.BuildApp();

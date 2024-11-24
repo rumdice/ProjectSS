@@ -1,4 +1,4 @@
-@page "/item"
+@* @page "/item"
 @using CoreLibrary.Repository
 @inject ItemRepository ItemRepository
 
@@ -16,4 +16,4 @@
         var item = await ItemRepository.GetSimpleItemInfoByItemTId(1002);
         itemName = item?.Name ?? "No item found";
     }
-}
+} *@
