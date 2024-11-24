@@ -36,7 +36,7 @@ spec:
     app: web-app
   ports:
   - protocol: TCP
-    port: 5000 # 로컬 포트(appsetting.json에 기록된 정보)
+    port: 7100 # 로컬 포트(appsetting.json에 기록된 정보)
     targetPort: 8080 # 포트포워딩할 타겟 컨테이너의 포트, ContatinerPort와 일치 시킵니다.
   type: LoadBalancer
 

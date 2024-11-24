@@ -25,6 +25,7 @@ public class ItemService : BaseService
 
     public virtual async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
     {
+        // 서비스의 역활
         return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
 
