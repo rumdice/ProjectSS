@@ -87,7 +87,8 @@
         "action": "openExternally",
         "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
         "uriFormat": "%s/"
-      }
+      },
+      "preLaunchTask": "build LogApp"
     },
     {
       "name": "Debug Blazor WebAssembly WEB",
