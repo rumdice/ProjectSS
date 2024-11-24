@@ -18,5 +18,5 @@ docker login
 docker push rumdice/log-app:latest 
 
 # docker hub에 올라갔으니 로컬에 생성된 docker image 정리하기
-# docker rmi logapp
-# docker rmi rumdice/log-app
+docker rmi logapp
+docker rmi rumdice/log-app
