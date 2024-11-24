@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # 실행 포트 지정
-EXPOSE 7002
-ENV ASPNETCORE_URLS=http://+:7002
+EXPOSE 5000
+ENV ASPNETCORE_URLS=http://+:5000
 
 # 프로젝트 파일 복사 및 복구
 COPY ["WebApp/WebApp.csproj", "WebApp/"]

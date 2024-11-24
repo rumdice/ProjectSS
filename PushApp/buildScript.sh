@@ -17,6 +17,10 @@ docker login
 # 지정된 docker hub으로 이미지 푸쉬
 docker push rumdice/push-app:latest 
 
+# 쿠버네티스 배포 강제 적용
+kubectl rollout restart deployment/push-app-deployment
+kubectl apply -f push-app.yaml      
+
 # docker hub에 올라갔으니 로컬에 생성된 docker image 정리하기
-# docker rmi logapp
-# docker rmi rumdice/log-app
+docker rmi pushapp
+docker rmi rumdice/push-app

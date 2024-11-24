@@ -131,7 +131,8 @@
       "stopAtEntry": false,
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "preLaunchTask": "build ChatConsoleApp"
     },
 
 

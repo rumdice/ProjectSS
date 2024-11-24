@@ -17,6 +17,10 @@ docker login
 # 지정된 docker hub으로 이미지 푸쉬
 docker push rumdice/admin-app:latest 
 
+# 쿠버네티스 배포 강제 적용
+kubectl rollout restart deployment/admin-app-deployment
+kubectl apply -f admin-app.yaml      
+
 # docker hub에 올라갔으니 로컬에 생성된 docker image 정리하기
 docker rmi adminapp
 docker rmi rumdice/admin-app

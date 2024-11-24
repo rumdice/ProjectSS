@@ -10,7 +10,7 @@ class Program
     {
         // SignalR 허브에 대한 연결 설정
         var connection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5081/MessageHub") // 실제 서버를 띄우고나오는 웹페이지 주소가 아닌 리스닝 주소
+            .WithUrl("http://localhost:5000/MessageHub") // 실제 서버를 띄우고나오는 웹페이지 주소가 아닌 리스닝 주소
             .Build();
 
         // 허브로부터 메시지를 수신할 때 실행될 이벤트 핸들러 등록

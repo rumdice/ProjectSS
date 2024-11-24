@@ -17,6 +17,14 @@
         "problemMatcher": ["$msCompile"],
         "group": "build",
         "detail": "빌드 LogApp"
+      },
+      {
+        "label": "build ChatConsoleApp",
+        "type": "shell",
+        "command": "dotnet build ${workspaceFolder}/ChatConsoleApp/ChatConsoleApp.csproj",
+        "problemMatcher": ["$msCompile"],
+        "group": "build",
+        "detail": "빌드 ChatConsole"
       }
     ]
   }
