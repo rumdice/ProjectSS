@@ -14,6 +14,9 @@ builder.Services.AddHttpContextAccessor();
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddHttpClient();
+
+
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddRadzenComponents();
 
@@ -41,5 +44,6 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
 
 app.Run();

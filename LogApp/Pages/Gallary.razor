@@ -1,0 +1,101 @@
+@page "/gallery"
+@inject IHttpClientFactory HttpClientFactory
+
+<PageTitle>Photo Gallery</PageTitle>
+
+<h1>Photo Gallery</h1>
+
+<RadzenCard Style="max-width: 1000px; margin: auto;">
+    <RadzenPanelMenu>
+        <Items>
+            <RadzenPanelMenuItem Text="Refresh" Icon="refresh" Click="@LoadImages" />
+        </Items>
+    </RadzenPanelMenu>
+
+    @if (isLoading)
+    {
+        <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
+    }
+    else if (errorMessage != null)
+    {
+        <RadzenAlert Severity="Error" Summary="Error" Detail="@errorMessage" />
+    }
+    else if (imageUrls.Any())
+    {
+        <div class="image-gallery">
+            @foreach (var imageUrl in imageUrls)
+            {
+                <div class="image-item">
+                    <img src="@imageUrl" alt="Uploaded Image" style="max-width: 100%; height: auto;" />
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <RadzenAlert Severity="Info" Summary="No Images" Detail="No images to display." />
+    }
+</RadzenCard>
+
+<style>
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .image-item img {
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+@code {
+    private List<string> imageUrls = new();
+    private bool isLoading = false;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadImages();
+    }
+
+    private async Task LoadImages()
+    {
+        isLoading = true;
+        errorMessage = null;
+        imageUrls.Clear();
+
+        try
+        {
+            var imageUrl = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/bike.jpeg";
+            imageUrls.Add(imageUrl);
+            
+            //이미지를 보내주는 api 서버 통신인데 일단 s3으로 대체 
+            @* var client = HttpClientFactory.CreateClient();
+            var response = await client.GetAsync(imageUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var images = await response.Content.ReadFromJsonAsync<List<string>>();
+                if (images != null)
+                {
+                    imageUrls.AddRange(images);
+                }
+            }
+            else
+            {
+                errorMessage = $"Failed to load images: {response.StatusCode} - {response.ReasonPhrase}";
+            } *@
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
