@@ -1,19 +1,28 @@
-﻿
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<RadzenTheme Theme="material" />
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<RadzenLayout>
+    <ChildContent>
+        <RadzenSidebar>
+            <RadzenPanelMenu Style="width: 100%;">
+                @foreach (var item in SideMenu.menuItems)
+                {
+                    <RadzenPanelMenuItem Text="@item.Text" Path="@item.Path" Icon="@item.Icon" />
+                }
+            </RadzenPanelMenu>
+        </RadzenSidebar>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
+        <RadzenHeader>
+            <h1>My Application</h1>
+        </RadzenHeader>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        <main>
+            <div class="content px-4">
+                @Body
+            </div>
+        </main>
+    </ChildContent>
+</RadzenLayout>
+
+@code {
+    
+}
