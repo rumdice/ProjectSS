@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using LogApp.Data;
+using LogApp.Service;
 using Radzen;
 using CoreLibrary.Database;
 using CoreLibrary.Repository;
@@ -23,6 +24,7 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<DbWebAppContext>();
   
 builder.Services.AddScoped<BaseService>();
+builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<BaseRepository>();
 builder.Services.AddScoped<ItemRepository>();
 
