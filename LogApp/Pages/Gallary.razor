@@ -1,6 +1,7 @@
 @page "/gallery"
 @using Radzen.Blazor
 @using LogApp.Service
+@using System.Threading.Tasks
 @inject ImageService ImageService
 
 <PageTitle>Photo Gallery</PageTitle>
@@ -12,11 +13,11 @@
     {
         <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
     }
-    else if (ImageService.ErrorMessage != null)
+    else if (!string.IsNullOrEmpty(ImageService.ErrorMessage))
     {
         <RadzenAlert Severity="Error" Summary="Error" Detail="@ImageService.ErrorMessage" />
     }
-    else if (ImageService.ImageUrls.Any())
+    if (ImageService.ImageUrls.Any())
     {
         <div class="image-grid">
             @foreach (var imageUrl in ImageService.ImageUrls)
@@ -51,9 +52,21 @@
 </style>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         // 페이지가 초기화 될 때 이미지 로드
-        ImageService.LoadImagesByS3();
+        //ImageService.LoadImages();
+        try
+        {
+            await ImageService.LoadImagesByS3();
+            StateHasChanged();
+        }
+        catch(Exception e)
+        {
+            var msg = e.Message;
+        }
+
+        
+        
     }
 }

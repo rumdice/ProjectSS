@@ -7,50 +7,7 @@
 
 <h1>Photo Gallery</h1>
 
-<RadzenCard Style="max-width: 1000px; margin: auto;">
-    <RadzenPanelMenu>
-        <Items>
-            <RadzenPanelMenuItem Text="Refresh" Icon="refresh" Click="@RefreshImages" />
-        </Items>
-    </RadzenPanelMenu>
-
-    @if (ImageService.IsLoading)
-    {
-        <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
-    }
-    else if (ImageService.ErrorMessage != null)
-    {
-        <RadzenAlert Severity="Error" Summary="Error" Detail="@ImageService.ErrorMessage" />
-    }
-    else if (ImageService.ImageUrls.Any())
-    {
-        <div class="image-gallery">
-            @foreach (var imageUrl in ImageService.ImageUrls)
-            {
-                <div class="image-item">
-                    <img src="@imageUrl" alt="Uploaded Image" />
-                </div>
-            }
-        </div>
-    }
-    else
-    {
-        <RadzenAlert Severity="Info" Summary="No Images" Detail="No images to display." />
-    }
-</RadzenCard>
 
 @code {
-
-    private async Task RefreshImages()
-    {
-        await ImageService.LoadImages();
-        StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await ImageService.LoadImages();
-    }
-
 
 }
