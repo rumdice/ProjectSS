@@ -5,6 +5,9 @@ using Radzen;
 using CoreLibrary.Database;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
+using Amazon;
+using Amazon.S3;
+using Amazon.Extensions.NETCore.Setup;   
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +23,13 @@ builder.Services.AddHttpClient();
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddScoped<DbWebAppContext>();
-  
+
+// AWS S3 클라이언트 등록
+//builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+var awsOptions = builder.Configuration.GetAWSOptions();
+builder.Services.AddDefaultAWSOptions(awsOptions);
+builder.Services.AddAWSService<IAmazonS3>();
+
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<BaseRepository>();
