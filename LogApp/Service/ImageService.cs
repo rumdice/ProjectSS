@@ -6,7 +6,7 @@ using CoreLibrary.Service;
 
 // Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
 
-
+namespace LogApp.Service;                  
 
 public class ImageService : BaseService
 {
@@ -46,16 +46,29 @@ public class ImageService : BaseService
 
         try
         {
+            
+
             var imageUrl = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/bike.jpeg";
             var imageUrl2 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/light.jpeg";
             var imageUrl3 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/river.jpeg";
             var imageUrl4 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/tower.jpeg";
+            var imageUrl5 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/cake.jpeg";
+            var imageUrl6 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/river2.jpeg";
+            var imageUrl7 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/latke1.jpeg";
+            var imageUrl8 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/lake2.jpeg";
+            var imageUrl9 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/me.jpeg";
             
             
             ImageUrls.Add(imageUrl);
             ImageUrls.Add(imageUrl2);
             ImageUrls.Add(imageUrl3);
             ImageUrls.Add(imageUrl4);
+            ImageUrls.Add(imageUrl5);
+            ImageUrls.Add(imageUrl6);
+            ImageUrls.Add(imageUrl7);
+            ImageUrls.Add(imageUrl8);
+            ImageUrls.Add(imageUrl9);
+            
             
             
             //이미지를 보내주는 api 서버 통신인데 일단 s3으로 대체 

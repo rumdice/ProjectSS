@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using LogApp.Data;
 using LogApp.Service;
 using Radzen;
 using CoreLibrary.Database;
@@ -18,14 +17,12 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 
 
-builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddScoped<DbWebAppContext>();
   
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<ImageService>();
-builder.Services.AddScoped<PersonService>();
 builder.Services.AddScoped<BaseRepository>();
 builder.Services.AddScoped<ItemRepository>();
 
