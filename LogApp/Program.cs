@@ -25,6 +25,7 @@ builder.Services.AddScoped<DbWebAppContext>();
   
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<PersonService>();
 builder.Services.AddScoped<BaseRepository>();
 builder.Services.AddScoped<ItemRepository>();
 

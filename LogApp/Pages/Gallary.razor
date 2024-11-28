@@ -1,72 +1,32 @@
 @page "/gallery"
+@using Radzen.Blazor
 @using LogApp.Service
 @inject ImageService ImageService
-
 
 <PageTitle>Photo Gallery</PageTitle>
 
 <h1>Photo Gallery</h1>
 
-<RadzenCard Style="max-width: 1000px; margin: auto;">
-    <RadzenPanelMenu>
-        <Items>
-            <RadzenPanelMenuItem Text="Refresh" Icon="refresh" Click="@RefreshImages" />
-        </Items>
-    </RadzenPanelMenu>
+<button @onclick="RefreshImages">Refresh Images</button>
 
-    @if (ImageService.IsLoading)
+<div class="image-gallery">
+    @foreach (var imageUrl in ImageService.ImageUrls)
     {
-        <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
-    }
-    else if (ImageService.ErrorMessage != null)
-    {
-        <RadzenAlert Severity="Error" Summary="Error" Detail="@ImageService.ErrorMessage" />
-    }
-    else if (ImageService.ImageUrls.Any())
-    {
-        <div class="image-gallery">
-            @foreach (var imageUrl in ImageService.ImageUrls)
-            {
-                <div class="image-item">
-                    <img src="@imageUrl" alt="Uploaded Image" style="max-width: 100%; height: auto;" />
-                </div>
-            }
+        <div class="image-item">
+            <img src="@imageUrl" alt="Image" class="image" />
         </div>
     }
-    else
-    {
-        <RadzenAlert Severity="Info" Summary="No Images" Detail="No images to display." />
-    }
-</RadzenCard>
+</div>
 
-<style>
-    .image-gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .image-item img {
-
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-
-    }
-</style>
 @code {
-
-   private async Task RefreshImages()
+    private async Task RefreshImages()
     {
         await ImageService.LoadImages();
         StateHasChanged();
-    }         
+    }
 
     protected override async Task OnInitializedAsync()
     {
         await ImageService.LoadImages();
     }
-
-    
 }

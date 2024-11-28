@@ -66,3 +66,33 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+
+
+
+/* 이미지 그리드 설정 */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3개의 컬럼으로 변경 */
+    gap: 10px; /* 이미지 간격 */
+    width: 80%; /* 그리드의 너비를 80%로 설정 */
+    height: 80vh; /* 화면 높이의 80%로 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+/* 각 이미지 항목 */
+.image-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden; /* 이미지를 잘라서 표시하지 않도록 설정 */
+}
+
+/* 이미지 크기 조정 */
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하면서 크기에 맞게 자름 */
+}

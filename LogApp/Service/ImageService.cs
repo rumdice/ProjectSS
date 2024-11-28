@@ -6,7 +6,6 @@ using CoreLibrary.Service;
 
 // Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
 
-namespace LogApp.Service;
 
 
 public class ImageService : BaseService
@@ -47,8 +46,17 @@ public class ImageService : BaseService
 
         try
         {
-             var imageUrl = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/bike.jpeg";
+            var imageUrl = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/bike.jpeg";
+            var imageUrl2 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/light.jpeg";
+            var imageUrl3 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/river.jpeg";
+            var imageUrl4 = "https://rumdice-project-ss.s3.ap-northeast-1.amazonaws.com/images/tower.jpeg";
+            
+            
             ImageUrls.Add(imageUrl);
+            ImageUrls.Add(imageUrl2);
+            ImageUrls.Add(imageUrl3);
+            ImageUrls.Add(imageUrl4);
+            
             
             //이미지를 보내주는 api 서버 통신인데 일단 s3으로 대체 
             // var client = HttpClientFactory.CreateClient();
