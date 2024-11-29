@@ -141,6 +141,11 @@ public class ImageService : BaseService
         }
     }
 
+    public async Task<string> UploadFileAsync()
+    {
+        return string.Empty;
+    }
+
     public async Task<string> UploadFileAsync(IBrowserFile file)
     {
         var keyName = $"images/{Guid.NewGuid()}_{file.Name}";

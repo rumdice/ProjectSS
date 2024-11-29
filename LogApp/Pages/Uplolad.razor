@@ -22,7 +22,11 @@
                 Url="upload/single" 
                 Progress="@(args => OnProgress(args))" 
                 Style="width: 100%;" 
-                InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })">
+                InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })"
+                Auto="true"
+                Accept="image/*"
+                @bind-Value="files" 
+                UploadComplete="OnUploadCompleteAsync">
             </RadzenUpload>
         </RadzenCard>
     </RadzenColumn>
@@ -33,10 +37,25 @@
 
 @code {
     private int progress = 0;
+    private List<IBrowserFile> files = new List<IBrowserFile>();
 
     // 업로드 진행 상태
     private void OnProgress(UploadProgressArgs args)
     {
         progress = args.Progress;
+    } 
+
+    // 업로드 완료 후 호출되는 메서드
+    private async Task OnUploadCompleteAsync(UploadCompleteEventArgs args)
+    {
+        // TODO: 호출이 안되는 이유?
+        await ImageService.UploadFileAsync();
+        // 업로드가 완료되면, 업로드된 파일의 URL을 가져오고 싶다면
+        @* if (args.Files != null && args.Files.Count > 0)
+        {
+            var uploadedFile = args.Files[0]; // 업로드된 첫 번째 파일
+            var fileUrl = await ImageService.UploadFileAsync(uploadedFile);
+            Console.WriteLine($"File uploaded successfully. URL: {fileUrl}");
+        } *@
     }
 }
