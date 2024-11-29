@@ -20,7 +20,7 @@ public class UploadController : BaseController
         ILogger<UploadController> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
-        _imageService = serviceProvider.GetService<ImageService>();
+        _imageService = serviceProvider.GetRequiredService<ImageService>();
         _logger = logger;
     }
 

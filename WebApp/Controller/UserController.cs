@@ -22,8 +22,8 @@ public class UserController : BaseController
         ILogger<UserController> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
-        _userService = serviceProvider.GetService<UserService>();
-        _itemService = serviceProvider.GetService<ItemService>();
+        _userService = serviceProvider.GetRequiredService<UserService>();
+        _itemService = serviceProvider.GetRequiredService<ItemService>();
         _logger = logger;
     }
 

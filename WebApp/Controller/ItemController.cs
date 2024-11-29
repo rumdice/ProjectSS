@@ -28,7 +28,7 @@ public class ItemController : BaseController
         ILogger<ItemController> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
-        _itemService = serviceProvider.GetService<ItemService>();
+        _itemService = serviceProvider.GetRequiredService<ItemService>();
         _logger = logger;
     }
 
@@ -73,7 +73,7 @@ public class ItemController : BaseController
                 Grade = 1, // Enum으로 처리하면 좋을 듯 1:회색 똥템 ~ 5:레어 6:유물 7:전설 등.
             };
 
-            long itemTid = 1002;
+            long itemTid = 1002; // tid가 잘못 입력 될 가능성이 있다.
             var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
             if (itemSimpleEntity == null)
             {

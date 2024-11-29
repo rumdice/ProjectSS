@@ -20,8 +20,8 @@ public class UserService : BaseService
         ILogger<UserService> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
-        _userRepository = serviceProvider.GetService<UserRepository>();
-        _itemRepository = serviceProvider.GetService<ItemRepository>();
+        _userRepository = serviceProvider.GetRequiredService<UserRepository>();
+        _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;
     }
 

@@ -40,7 +40,7 @@ public class ImageService : BaseService
         IConfiguration configuration)
         : base(serviceProvider, httpContextAccessor, logger)
     {
-        _itemRepository = serviceProvider.GetService<ItemRepository>();
+        _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;
         _s3Client = s3Client;
         _configuration = configuration;

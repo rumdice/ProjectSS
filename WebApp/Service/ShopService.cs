@@ -16,7 +16,7 @@ public class ShopService : BaseService
         ILogger<ShopService> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
-        _itemRepository = serviceProvider.GetService<ItemRepository>();
+        _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;
     }
 
