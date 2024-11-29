@@ -4,10 +4,12 @@ using System.IO;
 using System.Threading.Tasks;
 using LogApp.Service;
 using System;
+using CoreLibrary.Controller;
+
 
 [Route("upload")]
 [ApiController]
-public class UploadController : ControllerBase
+public class UploadController : BaseController
 {
     private readonly IWebHostEnvironment _environment;
     private readonly ImageService _imageService;
@@ -33,9 +35,10 @@ public class UploadController : ControllerBase
 
             // S3에 업로드
         _imageService.UploadFileAsync(file);
+        return Ok();
      
 
-
+        // 로컬에 로직 복사하는것 수정
         try
         {
             // 파일 저장 경로 설정 (예: wwwroot/uploads)

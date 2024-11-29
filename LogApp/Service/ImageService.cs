@@ -145,20 +145,24 @@ public class ImageService : BaseService
     {
         try
         {
-            var keyName = $"images/{Guid.NewGuid()}_{file.Name}";
+            var keyName = $"images/{Guid.NewGuid()}_{file.Name}.jpeg";
 
-
-            using (var stream = file.OpenReadStream())
+            // 스트림 관리
+            using (var memoryStream = new MemoryStream())
             {
+                await file.CopyToAsync(memoryStream);
+                memoryStream.Position = 0; // 스트림 포인터 초기화
+
                 var request = new PutObjectRequest
                 {
                     BucketName = "rumdice-projectss",
                     Key = keyName,
-                    InputStream = stream,
+                    InputStream = memoryStream,
                     ContentType = file.ContentType,
                 };
 
                 var response = await _s3Client.PutObjectAsync(request);
+
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
                     return $"https://{request.BucketName}.s3.{RegionEndpoint.APNortheast2.SystemName}.amazonaws.com/{keyName}";
@@ -168,8 +172,6 @@ public class ImageService : BaseService
                     throw new Exception($"Failed to upload file. HTTP {response.HttpStatusCode}");
                 }
             }
-
- 
         }
         catch (AmazonS3Exception ex)
         {
@@ -179,7 +181,7 @@ public class ImageService : BaseService
         {
             Console.WriteLine($"Unexpected error: {ex.Message}");
         }
-        
+
         return "";
     }
 

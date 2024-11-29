@@ -1,8 +1,10 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace WebApp.Controller;
+namespace CoreLibrary.Controller;
 
 public class BaseController : ControllerBase
 {
