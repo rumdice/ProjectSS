@@ -141,35 +141,46 @@ public class ImageService : BaseService
         }
     }
 
-    public async Task<string> UploadFileAsync()
+    public async Task<string> UploadFileAsync(IFormFile file)
     {
-        return string.Empty;
-    }
-
-    public async Task<string> UploadFileAsync(IBrowserFile file)
-    {
-        var keyName = $"images/{Guid.NewGuid()}_{file.Name}";
-
-        using var stream = file.OpenReadStream();
-        var request = new PutObjectRequest
+        try
         {
-            BucketName = "rumdice-projectss",
-            Key = keyName,
-            InputStream = stream,
-            ContentType = file.ContentType,
-            CannedACL = S3CannedACL.PublicRead
-        };
+            var keyName = $"images/{Guid.NewGuid()}_{file.Name}";
 
-        var response = await _s3Client.PutObjectAsync(request);
 
-        if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
-        {
-            return $"https://{request.BucketName}.s3.{"ap-northeast-2"}.amazonaws.com/{keyName}";
+            using (var stream = file.OpenReadStream())
+            {
+                var request = new PutObjectRequest
+                {
+                    BucketName = "rumdice-projectss",
+                    Key = keyName,
+                    InputStream = stream,
+                    ContentType = file.ContentType,
+                };
+
+                var response = await _s3Client.PutObjectAsync(request);
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return $"https://{request.BucketName}.s3.{RegionEndpoint.APNortheast2.SystemName}.amazonaws.com/{keyName}";
+                }
+                else
+                {
+                    throw new Exception($"Failed to upload file. HTTP {response.HttpStatusCode}");
+                }
+            }
+
+ 
         }
-        else
+        catch (AmazonS3Exception ex)
         {
-            throw new Exception($"Failed to upload file. HTTP {response.HttpStatusCode}");
+            Console.WriteLine($"Error encountered: {ex.Message}");
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
+        
+        return "";
     }
 
 }

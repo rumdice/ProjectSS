@@ -8,8 +8,15 @@ using CoreLibrary.Service;
 using Amazon;
 using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;   
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-var builder = WebApplication.CreateBuilder(args);
+// var builder = WebApplication.CreateBuilder(args);
+// builder.WebHost.UseWebRoot("wwwroot"); // 웹루트 파일 지정
+
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    WebRootPath = "wwwroot"
+});
 
 // Add IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -22,6 +29,11 @@ builder.Services.AddHttpClient();
 builder.Services.AddServerSideBlazor(options =>
 {
     options.DetailedErrors = true;
+});
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 100 * 1024 * 1024; // 100MB
 });
 
 
@@ -59,6 +71,5 @@ app.MapControllers();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
 
 app.Run();
