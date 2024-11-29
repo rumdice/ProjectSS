@@ -11,22 +11,22 @@ using CoreLibrary.Controller;
 [ApiController]
 public class UploadController : BaseController
 {
-    private readonly IWebHostEnvironment _environment;
     private readonly ImageService _imageService;
+    private readonly ILogger<UploadController> _logger;
 
     public UploadController(
-        IWebHostEnvironment environment,
-        ImageService imageService)
-        
+        IServiceProvider serviceProvider,
+        IHttpContextAccessor httpContextAccessor,
+        ILogger<UploadController> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
-        _environment = environment;
-        _imageService = imageService;
+        _imageService = serviceProvider.GetService<ImageService>();
+        _logger = logger;
     }
 
     [HttpPost("single")]
     public async Task<IActionResult> UploadSingle(IFormFile file)
     {
-        Console.WriteLine("Call!!!!");
 
         if (file == null || file.Length == 0)
         {
@@ -39,42 +39,42 @@ public class UploadController : BaseController
      
 
         // 로컬에 로직 복사하는것 수정
-        try
-        {
-            // 파일 저장 경로 설정 (예: wwwroot/uploads)
-            var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
-            if (!Directory.Exists(uploadsFolder))
-            {
-                Directory.CreateDirectory(uploadsFolder);
-            }
+        // try
+        // {
+        //     // 파일 저장 경로 설정 (예: wwwroot/uploads)
+        //     var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads");
+        //     if (!Directory.Exists(uploadsFolder))
+        //     {
+        //         Directory.CreateDirectory(uploadsFolder);
+        //     }
 
-            // 고유 파일명 생성
-            var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //     // 고유 파일명 생성
+        //     var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+        //     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            // 파일 저장
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
+        //     // 파일 저장
+        //     using (var stream = new FileStream(filePath, FileMode.Create))
+        //     {
+        //         await file.CopyToAsync(stream);
+        //     }
             
 
-            // 업로드된 파일 URL 생성
-            var fileUrl = $"/uploads/{uniqueFileName}";
+        //     // 업로드된 파일 URL 생성
+        //     var fileUrl = $"/uploads/{uniqueFileName}";
 
            
 
-            // 결과값은 리턴 (추후 삭제)
-            return Ok(new
-            {
-                Uploaded = true,
-                FileName = file.FileName,
-                Url = fileUrl
-            });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Internal server error: {ex.Message}");
-        }
+        //     // 결과값은 리턴 (추후 삭제)
+        //     return Ok(new
+        //     {
+        //         Uploaded = true,
+        //         FileName = file.FileName,
+        //         Url = fileUrl
+        //     });
+        // }
+        // catch (Exception ex)
+        // {
+        //     return StatusCode(500, $"Internal server error: {ex.Message}");
+        // }
     }
 }
