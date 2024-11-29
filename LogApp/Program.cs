@@ -16,8 +16,13 @@ builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+//builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
+
+builder.Services.AddServerSideBlazor(options =>
+{
+    options.DetailedErrors = true;
+});
 
 
 builder.Services.AddRadzenComponents();

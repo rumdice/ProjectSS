@@ -12,6 +12,7 @@ using CoreLibrary.Repository;
 using Microsoft.Extensions.Configuration;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
+using Microsoft.AspNetCore.Components.Forms;
 //inject IHttpClientFactory HttpClientFactory
 
 // Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
@@ -22,7 +23,7 @@ public class ImageService : BaseService
 {
     private readonly ItemRepository _itemRepository;
     private readonly ILogger<ImageService> _logger;
-    private IAmazonS3 _s3Client {get; set; }  // S3 클라이언트 추가
+    private IAmazonS3 _s3Client { get; set; }  // S3 클라이언트 추가
     private readonly IConfiguration _configuration;
 
     public List<string> ImageUrls { get; private set; } = new();
@@ -75,8 +76,8 @@ public class ImageService : BaseService
         // JSON 파싱
         var secret = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(response.SecretString);
 
-        if (secret == null || 
-            !secret.ContainsKey("aws_access_key_id") || 
+        if (secret == null ||
+            !secret.ContainsKey("aws_access_key_id") ||
             !secret.ContainsKey("aws_secret_access_key"))
         {
             throw new Exception("Secrets JSON is missing required keys.");
@@ -93,7 +94,8 @@ public class ImageService : BaseService
         ErrorMessage = "";
         ImageUrls.Clear();
 
-        var credentials = await ImageService.GetSecret();    
+        // 가져온 엑세스 키와 시크릿 키로 s3 접근
+        var credentials = await ImageService.GetSecret();
         var clientConfig = new AmazonS3Config
         {
             RegionEndpoint = RegionEndpoint.GetBySystemName("ap-northeast-2")
@@ -116,11 +118,11 @@ public class ImageService : BaseService
             {
                 // S3 객체의 URL 생성
                 var imageUrl = $"https://{request.BucketName}.s3.{_region.SystemName}.amazonaws.com/{s3Object.Key}";
-                
+
                 var imageName = s3Object.Key.Split("/");
                 if (string.IsNullOrEmpty(imageName[1]))
                     continue;
-                
+
                 ImageUrls.Add(imageUrl);
             }
         }
@@ -136,6 +138,32 @@ public class ImageService : BaseService
         finally
         {
             IsLoading = false;
+        }
+    }
+
+    public async Task<string> UploadFileAsync(IBrowserFile file)
+    {
+        var keyName = $"images/{Guid.NewGuid()}_{file.Name}";
+
+        using var stream = file.OpenReadStream();
+        var request = new PutObjectRequest
+        {
+            BucketName = "rumdice-projectss",
+            Key = keyName,
+            InputStream = stream,
+            ContentType = file.ContentType,
+            CannedACL = S3CannedACL.PublicRead
+        };
+
+        var response = await _s3Client.PutObjectAsync(request);
+
+        if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
+        {
+            return $"https://{request.BucketName}.s3.{"ap-northeast-2"}.amazonaws.com/{keyName}";
+        }
+        else
+        {
+            throw new Exception($"Failed to upload file. HTTP {response.HttpStatusCode}");
         }
     }
 
