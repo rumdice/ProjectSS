@@ -1,4 +1,4 @@
-using CoreLibrary.Database;
+using CoreDB.Database;
 using CoreLibrary.ViewModels;
 using CoreLibrary.Controller;
 using Microsoft.AspNetCore.Mvc;

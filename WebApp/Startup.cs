@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
-using CoreLibrary.Database;
+using CoreDB.Database;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 

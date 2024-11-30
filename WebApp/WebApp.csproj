@@ -23,6 +23,9 @@
     <Reference Include="CoreSystem">
       <HintPath>.\Dll\CoreLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CoreDB">
+        <HintPath>.\Dll\CoreDB.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

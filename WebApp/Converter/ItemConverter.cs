@@ -3,7 +3,7 @@
 // DtoModel은 어플리케이션과 표현계층 둘다.
 // 일단 확장 메서드 방식으로 구현한다.
 
-using CoreLibrary.Database;
+using CoreDB.Database;
 using WepApp.DtoModels;
 
 namespace WebApp.Converter;
