@@ -5,12 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreLibrary.Repository;
 
-public class AccoutRepository : BaseRepository
+public class AccountRepository : BaseRepository
 {
-    public AccoutRepository(
+    public AccountRepository(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
-        ILogger<AccoutRepository> logger)
+        ILogger<AccountRepository> logger)
         : base (serviceProvider, httpContextAccessor, logger)
     {
     }
@@ -28,14 +28,14 @@ public class AccoutRepository : BaseRepository
             .SingleOrDefaultAsync();
     }
 
-    public Task<AccountEntity?> GetByUserId(string aid)
+    public async Task<AccountEntity?> GetById(string aid)
     {
-        return _logDbContext.AccountEntities
+        return await _logDbContext.AccountEntities
             .AsNoTracking()
             .Where(e => e.Aid == aid)
-            .SingleOrDefaultAsync();
+            .FirstOrDefaultAsync();
     }
-
+    
     public async Task UpdateAsync(AccountEntity entity)
     {
         _logDbContext.Update(entity);

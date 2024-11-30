@@ -34,7 +34,7 @@ public class UploadController : BaseController
         }
 
         // S3에 업로드
-        _imageService.UploadFileAsync(file);
+        await _imageService.UploadFileAsync(file);
         return Ok();
     }
 }

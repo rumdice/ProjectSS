@@ -10,6 +10,7 @@ using Amazon;
 using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;   
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using LogApp.Service;
 
 // 웹루트 파일 지정
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -46,8 +47,12 @@ builder.Services.AddAWSService<IAmazonS3>();
 
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<AccountService>();
+
 builder.Services.AddScoped<BaseRepository>();
 builder.Services.AddScoped<ItemRepository>();
+builder.Services.AddScoped<AccountRepository>();
+
 
 var app = builder.Build();
 

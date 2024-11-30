@@ -1,8 +1,12 @@
 @page "/login"
+@using Radzen.Blazor
+@using LogApp.Service
+@using System.Threading.Tasks
+@inject AccountService AccountService
 
 <RadzenCard class="rz-my-12 rz-mx-auto rz-p-4 rz-p-md-12" style="max-width: 600px;">
     <RadzenTemplateForm Data=@("LoginWithDefaultValues")>
-        <RadzenLogin AllowRegister="true" AllowResetPassword="true" Username=@userName Password=@password
+        <RadzenLogin AllowRegister="true" AllowResetPassword="true" Username=@username Password=@password
                     AllowRememberMe="true" RememberMe="@rememberMe"
                     Login=@(args => OnLogin(args, "Login with default values"))
                     ResetPassword=@(args => OnResetPassword(args, "Login with default values"))
@@ -12,13 +16,23 @@
 
 
 @code {
-    string userName = "admin";
+    
+    // 기본 계정 정보 셋팅
+    string username = "admin";
     string password = "admin";
     bool rememberMe = true;
 
-    void OnLogin(LoginArgs args, string name)
+    private async Task OnLogin(LoginArgs args, string name)
     {
         Console.WriteLine($"{name} -> Username: {args.Username}, password: {args.Password}, remember me: {args.RememberMe}");
+
+        var result = await AccountService.CheckAccountPassword(args.Username, args.Password);
+
+        // TODO: 로그인 체크 후 전역변수에 적용
+        if (result)
+        {
+
+        }
     }
 
     void OnRegister(string name)

@@ -2,25 +2,17 @@ using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.Runtime;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CoreLibrary.Service;
 using CoreLibrary.Repository;
-using Microsoft.Extensions.Configuration;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace LogApp.Service;
 
 public class ImageService : BaseService
 {
-    private readonly ItemRepository _itemRepository;
     private readonly ILogger<ImageService> _logger;
     private IAmazonS3 _s3Client { get; set; }  // S3 클라이언트 추가
-    private readonly IConfiguration _configuration;
 
     public List<string> ImageUrls { get; private set; } = new();
     public bool IsLoading { get; private set; } = false;
@@ -36,10 +28,8 @@ public class ImageService : BaseService
         IConfiguration configuration)
         : base(serviceProvider, httpContextAccessor, logger)
     {
-        _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;
         _s3Client = s3Client;
-        _configuration = configuration;
     }
 
     ///
