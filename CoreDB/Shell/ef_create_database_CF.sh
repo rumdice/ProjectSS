@@ -1,4 +1,4 @@
-cd ../CoreLibrary
+cd ../CoreDB
 pwd
 
 rm -rf Migrations/
