@@ -11,6 +11,21 @@
 @code {
     private string itemName;
 
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 인증 상태 확인 (예시로 false 설정)
+        bool isAuthenticated = false;
+
+        if (!isAuthenticated)
+        {
+            // 로그인 페이지로 이동
+            Navigation.NavigateTo("/login");
+        }
+    }
+
     private async Task GetItem()
     {
         // ItemRepository를 통해 데이터 가져오기

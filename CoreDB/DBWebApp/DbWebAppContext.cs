@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-namespace CoreDB.Database;
+namespace CoreDB.DBWebApp;
 
 public partial class DbWebAppContext : DbContext
 {
@@ -16,19 +16,31 @@ public partial class DbWebAppContext : DbContext
     {
     }
 
+    public virtual DbSet<EfmigrationsHistory> EfmigrationsHistories { get; set; }
+
     public virtual DbSet<ItemSimpleEntity> ItemSimpleEntities { get; set; }
 
     public virtual DbSet<UserEntity> UserEntities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=db_WebApp;user=root;password=pass1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("11.3.2-mariadb"));
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=db_WebApp;user=root;password=pass1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("11.5.2-mariadb"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
             .UseCollation("utf8mb4_general_ci")
             .HasCharSet("utf8mb4");
+
+        modelBuilder.Entity<EfmigrationsHistory>(entity =>
+        {
+            entity.HasKey(e => e.MigrationId).HasName("PRIMARY");
+
+            entity.ToTable("__EFMigrationsHistory");
+
+            entity.Property(e => e.MigrationId).HasMaxLength(150);
+            entity.Property(e => e.ProductVersion).HasMaxLength(32);
+        });
 
         modelBuilder.Entity<ItemSimpleEntity>(entity =>
         {
@@ -49,7 +61,7 @@ public partial class DbWebAppContext : DbContext
 
             entity.ToTable("UserEntity");
 
-            entity.Property(e => e.UserUid).HasColumnType("bigint(11)"); // 컬럼 수정
+            entity.Property(e => e.UserUid).HasColumnType("bigint(11)");
             entity.Property(e => e.Level).HasColumnType("int(11)");
             entity.Property(e => e.Name).HasMaxLength(45);
         });

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CoreDB.Database;
+namespace CoreDB.DBWebApp;
 
 public partial class UserEntity
 {

@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@using LogApp.Service                 
+@using LogApp.Service
 @inject ImageService ImageService
 
 <PageTitle>Photo Gallery</PageTitle>
@@ -8,12 +8,24 @@
 <h1>Photo Gallery</h1>
 
 <RadzenStack AlignItems="AlignItems.Center" class="rz-mx-auto rz-my-12">
-    <RadzenImage 
-        Path="https://rumdice-projectss.s3.ap-northeast-2.amazonaws.com/images/bike.jpeg" 
-        Style="width: 15rem;" 
+    <RadzenImage Path="https://rumdice-projectss.s3.ap-northeast-2.amazonaws.com/images/bike.jpeg" Style="width: 15rem;"
         AlternateText="bike" />
 </RadzenStack>
 
 @code {
+    [Inject]
+    private NavigationManager Navigation { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        // 인증 상태 확인 (예시로 false 설정)
+        bool isAuthenticated = false;
+
+        if (!isAuthenticated)
+        {
+            // 로그인 페이지로 이동
+            Navigation.NavigateTo("/login");
+        }
+    }
 }
+

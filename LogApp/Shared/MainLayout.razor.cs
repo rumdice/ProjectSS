@@ -15,7 +15,7 @@ public static class SideMenu
         new MenuItem { Text = "Image", Path = "/image", Icon = "photo" },
         new MenuItem { Text = "Upload", Path = "/upload", Icon = "photo" },
         new MenuItem { Text = "Item", Path = "/item", Icon = "photo" },
-        new MenuItem { Text = "Temp", Path = "/temp", Icon = "photo" },
+        new MenuItem { Text = "Table", Path = "/table", Icon = "photo" },
         new MenuItem { Text = "Test", Path = "/test", Icon = "photo" },
         new MenuItem { Text = "About", Path = "/about", Icon = "info" }
     };
