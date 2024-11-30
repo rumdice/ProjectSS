@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoreLibrary.Service;
-using CoreLibrary.Database;
 using CoreLibrary.Repository;
 using Microsoft.Extensions.Configuration;
 using Amazon.SecretsManager;

@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WebApp\WebApp.csproj" />
     <ProjectReference Include="..\CoreLib\CoreLibrary.csproj" />
+    <ProjectReference Include="..\CoreDB\CoreDB.csproj" />
   </ItemGroup>
 
 </Project>

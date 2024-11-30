@@ -1,4 +1,4 @@
-using CoreLibrary.Database;
+using CoreDB.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
