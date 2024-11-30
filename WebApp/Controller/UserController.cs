@@ -143,10 +143,4 @@ public class UserController : BaseController
 
     }
 
-    [HttpPost]
-    public async Task<IActionResult> UpdateUser(DeleteUserViewModelRequest request)
-    {
-        return null;
-    }
-
 }

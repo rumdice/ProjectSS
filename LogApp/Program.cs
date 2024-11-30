@@ -10,20 +10,16 @@ using Amazon.S3;
 using Amazon.Extensions.NETCore.Setup;   
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-// var builder = WebApplication.CreateBuilder(args);
-// builder.WebHost.UseWebRoot("wwwroot"); // 웹루트 파일 지정
-
+// 웹루트 파일 지정
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     WebRootPath = "wwwroot"
 });
 
-// Add IHttpContextAccessor
 builder.Services.AddHttpContextAccessor();
 
-// Add services to the container.
 builder.Services.AddRazorPages();
-//builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 
 builder.Services.AddServerSideBlazor(options =>
@@ -42,9 +38,7 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<DbWebAppContext>();
 
 // AWS S3 클라이언트 등록
-//builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
-var awsOptions = builder.Configuration.GetAWSOptions();
-builder.Services.AddDefaultAWSOptions(awsOptions);
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
 
 builder.Services.AddScoped<BaseService>();

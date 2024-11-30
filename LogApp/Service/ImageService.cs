@@ -13,9 +13,6 @@ using Microsoft.Extensions.Configuration;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 using Microsoft.AspNetCore.Components.Forms;
-//inject IHttpClientFactory HttpClientFactory
-
-// Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
 
 namespace LogApp.Service;
 
@@ -59,7 +56,7 @@ public class ImageService : BaseService
         GetSecretValueRequest request = new GetSecretValueRequest
         {
             SecretId = secretName,
-            VersionStage = "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified.
+            VersionStage = "AWSCURRENT",
         };
 
         GetSecretValueResponse response;

@@ -16,10 +16,7 @@ namespace WebApp.Controller;
 [ApiController]
 public class ItemController : BaseController
 {
-    // TODO: 필요한 Service만 종속성 주입한다.
     private readonly ItemService _itemService;
-
-    // 로거는 어쩔 수 없이 선언해야 하나?
     private readonly ILogger<ItemController> _logger;
 
     public ItemController(
@@ -79,17 +76,6 @@ public class ItemController : BaseController
             {
                 throw new Exception("itemSimpleEntity Result is null");
             }
-
-            // string itemName = "평범검";
-            // var itemSimpleEntityList = await _itemService.GetItemSimpleInfoListByNameAsync(itemName);
-            // if (itemSimpleEntityList == null)
-            // {
-            //     // TODO: 이름으로 찾는데 목록으로 결과를 내는게 조금 어색하다.
-            //     throw new Exception("itemSimpleEntity Result is null");
-            // }
-
-            // 이곳은 표현 레이어 이므로 Entity를 직접 다루면 안된다.
-            // Entity를 직접 가져와서 편집등을 하면 안된다.
 
             // 컨버팅 작업
             itemSimpleInfoDto = itemSimpleEntity.EntityToDto();
