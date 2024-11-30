@@ -37,6 +37,8 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddScoped<DbWebAppContext>();
+builder.Services.AddScoped<DbLogAppContext>();
+
 
 // AWS S3 클라이언트 등록
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Service;
 using WepApp.DtoModels;
+using CoreDB.DBWebApp;
 using CoreLibrary.Controller;
 
 namespace WebApp.Controller;

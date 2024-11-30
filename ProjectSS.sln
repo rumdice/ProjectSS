@@ -7,13 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLibrary", "CoreLib\Core
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{1EE74322-04D6-40E1-977D-CB1065AAF4FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackOfficeApp", "BackOfficeApp\BackOfficeApp.csproj", "{C6B0C3EC-23F1-4AE7-8F38-1EA1CCBE1E34}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatConsoleApp", "ChatConsoleApp\ChatConsoleApp.csproj", "{AA11C97D-21F8-47A3-80B2-5844543795B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushApp", "PushApp\PushApp.csproj", "{51001E36-56C5-42B9-896A-4B402BA494AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Tests", "WebApp.Tests\WebApp.Tests.csproj", "{C93F9A0E-6742-4265-A871-ADD347A92381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogApp", "LogApp\LogApp.csproj", "{43AA13EE-12AA-479A-A695-A0278B53BD2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +48,9 @@ Global
 		{C93F9A0E-6742-4265-A871-ADD347A92381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C93F9A0E-6742-4265-A871-ADD347A92381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C93F9A0E-6742-4265-A871-ADD347A92381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43AA13EE-12AA-479A-A695-A0278B53BD2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43AA13EE-12AA-479A-A695-A0278B53BD2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43AA13EE-12AA-479A-A695-A0278B53BD2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43AA13EE-12AA-479A-A695-A0278B53BD2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

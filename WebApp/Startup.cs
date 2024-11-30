@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
 using Microsoft.Extensions.Configuration;
-using CoreDB.Database;
+using CoreDB.DBLogApp;
+using CoreDB.DBWebApp;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 
@@ -31,7 +32,8 @@ public class Startup
         services.AddHttpContextAccessor();
 
         // Add DB Context
-        services.AddDbContext<DbWebAppContext>();
+        services.AddScoped<DbWebAppContext>();
+        services.AddScoped<DbLogAppContext>();
   
         // BASE
         // Add Repository

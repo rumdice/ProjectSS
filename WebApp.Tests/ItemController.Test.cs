@@ -1,7 +1,8 @@
 using Moq;
 using WebApp.Service;
 using WebApp.Controller;
-using CoreDB.Database;
+using CoreDB.DBLogApp;
+using CoreDB.DBWebApp;
 using WebApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
