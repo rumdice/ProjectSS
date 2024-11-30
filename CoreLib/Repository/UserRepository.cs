@@ -10,9 +10,8 @@ public class UserRepository : BaseRepository
     public UserRepository(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
-        ILogger<UserRepository> logger,
-        DbWebAppContext webAppContext)
-        : base (serviceProvider, httpContextAccessor, logger, webAppContext)
+        ILogger<UserRepository> logger)
+        : base (serviceProvider, httpContextAccessor, logger)
     {
     }
 
