@@ -4,6 +4,7 @@
 @using LogApp.Service
 @using System.Threading.Tasks
 @inject ImageService ImageService
+@inject AccountService AccountService
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 
@@ -39,6 +40,16 @@
 @code {
     private int progress = 0;
     private List<IBrowserFile> files = new List<IBrowserFile>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 인증 상태 확인
+        bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
+        if (!isAuthenticated)
+        {
+            Navigation.NavigateTo("/login");
+        }
+    }
 
     // 업로드 진행 상태
     private void OnProgress(UploadProgressArgs args)

@@ -11,6 +11,8 @@ public class AccountService : BaseService
     private readonly AccountRepository _accountRepository;
     private readonly ILogger<AccountService> _logger;
 
+    private readonly Dictionary<string, object> _state = new(); // 로그인 상태 
+
     public AccountService(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
@@ -19,6 +21,21 @@ public class AccountService : BaseService
     {
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
         _logger = logger;
+        
+    }
+
+    public T GetState<T>(string key)
+    {
+        if (_state.TryGetValue(key, out var value) && value is T tValue)
+        {
+            return tValue;
+        }
+        return default!;
+    }
+
+    public void SetState<T>(string key, T value)
+    {
+        _state[key] = value!;
     }
 
     public async Task<AccountEntity?> GetInfoByName(string name)

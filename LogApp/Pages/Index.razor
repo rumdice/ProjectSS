@@ -2,6 +2,7 @@
 
 @using LogApp.Service
 @inject ImageService ImageService
+@inject AccountService AccountService
 
 <PageTitle>Photo Gallery</PageTitle>
 
@@ -18,12 +19,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // 인증 상태 확인 (예시로 false 설정)
-        bool isAuthenticated = false;
-
+        // 인증 상태 확인
+        bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
         if (!isAuthenticated)
         {
-            // 로그인 페이지로 이동
             Navigation.NavigateTo("/login");
         }
     }

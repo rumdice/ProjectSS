@@ -3,6 +3,7 @@
 @using LogApp.Service
 @using System.Threading.Tasks
 @inject ImageService ImageService
+@inject AccountService AccountService
 
 <PageTitle>Photo Gallery</PageTitle>
 
@@ -52,12 +53,22 @@
 </style>
 
 @code {
+
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        // 페이지가 초기화 될 때 이미지 로드
-        //ImageService.LoadImages();
         try
         {
+            // 로그인 체크
+            bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
+            if (!isAuthenticated)
+            {
+                Navigation.NavigateTo("/login");
+            }
+
+            // 페이지가 초기화 될 때 이미지 로드
             await ImageService.LoadImagesByS3();
             StateHasChanged();
         }

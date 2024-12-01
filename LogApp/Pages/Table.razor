@@ -1,4 +1,8 @@
 @page "/Table"
+@using Radzen.Blazor
+@using LogApp.Service
+@using System.Threading.Tasks
+@inject AccountService AccountService
 
 <RadzenButton Click="@ButtonClicked" Text="Hi3"></RadzenButton>
 
@@ -9,13 +13,11 @@
 
   protected override async Task OnInitializedAsync()
   {
-    // 인증 상태 확인 (예시로 false 설정)
-    bool isAuthenticated = false;
-
-    if (!isAuthenticated)
+    // 인증 상태 확인 (세션 값 체크)
+    string isAuthenticated = AccountService.GetState<string>("IsAuthenticated");
+    if (string.IsNullOrEmpty(isAuthenticated))
     {
-      // 로그인 페이지로 이동
-      Navigation.NavigateTo("/login");
+        Navigation.NavigateTo("/login");
     }
   }
 

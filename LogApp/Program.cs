@@ -18,7 +18,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     WebRootPath = "wwwroot"
 });
 
-builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpContextAccessor(); // 클라이언트 측(razor)에서 HTTPContext에 접근하기 위해 사용
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -29,11 +29,20 @@ builder.Services.AddServerSideBlazor(options =>
     options.DetailedErrors = true;
 });
 
+// 업로드 파일 허용 크기 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.Limits.MaxRequestBodySize = 100 * 1024 * 1024; // 100MB
 });
 
+// 로그인 및 세션의 개념을 사용하기 위함.
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // 유지시간 30분
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddRadzenComponents();
 
@@ -67,6 +76,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseSession(); // 세션을 사용한다.
 
 app.UseRouting();
 app.MapControllers();

@@ -16,22 +16,29 @@
 
 
 @code {
-    
+
     // 기본 계정 정보 셋팅
     string username = "admin";
     string password = "admin";
     bool rememberMe = true;
+
+    [Inject]
+    private NavigationManager Navigation { get; set; }
 
     private async Task OnLogin(LoginArgs args, string name)
     {
         Console.WriteLine($"{name} -> Username: {args.Username}, password: {args.Password}, remember me: {args.RememberMe}");
 
         var result = await AccountService.CheckAccountPassword(args.Username, args.Password);
-
-        // TODO: 로그인 체크 후 전역변수에 적용
         if (result)
         {
-
+            AccountService.SetState<bool>("IsAuthenticated", true);
+            Navigation.NavigateTo("/gallery");
+        }
+        else
+        {
+            AccountService.SetState<bool>("IsAuthenticated", false);
+            Navigation.NavigateTo("/login");
         }
     }
 
