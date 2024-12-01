@@ -13,12 +13,7 @@
 
   protected override async Task OnInitializedAsync()
   {
-    // 인증 상태 확인 (세션 값 체크)
-    bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
-    if (!isAuthenticated)
-    {
-        Navigation.NavigateTo("/login");
-    }
+    AccountService.EnsureAuthenticated();
   }
 
 

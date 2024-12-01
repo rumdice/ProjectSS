@@ -13,18 +13,10 @@
 
 @code {
     private string itemName;
-
-    [Inject]
-    private NavigationManager Navigation { get; set; }
-
+    
     protected override async Task OnInitializedAsync()
     {
-        // 인증 상태 확인
-        bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
-        if (!isAuthenticated)
-        {
-            Navigation.NavigateTo("/login");
-        }
+        AccountService.EnsureAuthenticated();
     }
 
     private async Task GetItem()

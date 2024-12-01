@@ -2,12 +2,15 @@ using System.Transactions;
 using CoreDB.DBLogApp;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
+using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LogApp.Service;
 
 
 public class AccountService : BaseService
 {
+    private readonly NavigationManager _navigation;
     private readonly AccountRepository _accountRepository;
     private readonly ILogger<AccountService> _logger;
 
@@ -16,12 +19,13 @@ public class AccountService : BaseService
     public AccountService(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
-        ILogger<AccountService> logger)
+        ILogger<AccountService> logger,
+        NavigationManager navigation)
         : base (serviceProvider, httpContextAccessor, logger)
     {
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
         _logger = logger;
-        
+        _navigation = navigation;
     }
 
     public T GetState<T>(string key)
@@ -36,6 +40,15 @@ public class AccountService : BaseService
     public void SetState<T>(string key, T value)
     {
         _state[key] = value!;
+    }
+
+    public void EnsureAuthenticated()
+    {
+        bool isAuthenticated = this.GetState<bool>("IsAuthenticated");
+        if (!isAuthenticated)
+        {
+            _navigation.NavigateTo("/login");
+        }
     }
 
     public async Task<AccountEntity?> GetInfoByName(string name)
