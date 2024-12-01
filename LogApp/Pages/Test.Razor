@@ -20,10 +20,10 @@
   protected override async Task OnInitializedAsync()
   {
     // 인증 상태 확인 (세션 값 체크)
-    string isAuthenticated = AccountService.GetState<string>("IsAuthenticated");
-    if (string.IsNullOrEmpty(isAuthenticated))
+    bool isAuthenticated = AccountService.GetState<bool>("IsAuthenticated");
+    if (!isAuthenticated)
     {
-        Navigation.NavigateTo("/login");
+      Navigation.NavigateTo("/login");
     }
   }
 }
