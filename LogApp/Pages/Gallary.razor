@@ -1,13 +1,11 @@
-@page "/gallery"
+@page "/gallary"
 @using Radzen.Blazor
 @using LogApp.Service
 @using System.Threading.Tasks
-@inject ImageService ImageService
-@inject AccountService AccountService
 
-<PageTitle>Photo Gallery</PageTitle>
+<PageTitle>Photo Gallary</PageTitle>
 
-<h1>Photo Gallery</h1>
+<h1>Photo Gallary</h1>
 
 @{
     if (ImageService.IsLoading)
@@ -51,22 +49,3 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 추가 */
     }
 </style>
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            // 로그인 체크
-            AccountService.EnsureAuthenticated();
-
-            // 페이지가 초기화 될 때 이미지 로드
-            await ImageService.LoadImagesByS3();
-            StateHasChanged();
-        }
-        catch(Exception e)
-        {
-            var msg = e.Message;
-        }
-    }
-}
