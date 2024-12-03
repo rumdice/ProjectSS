@@ -1,5 +1,4 @@
 using CoreDB.DBWebApp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -9,9 +8,8 @@ public class UserRepository : BaseRepository
 {
     public UserRepository(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<UserRepository> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
     }
 

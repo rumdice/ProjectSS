@@ -11,7 +11,7 @@ namespace WebApp.Controller;
 
 [Route("[Controller]/[action]")]
 [ApiController]
-public class UserController : BaseController
+public class UserController : ControllerBase
 {
     private readonly UserService _userService;
     private readonly ItemService _itemService;
@@ -21,7 +21,6 @@ public class UserController : BaseController
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
         ILogger<UserController> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
     {
         _userService = serviceProvider.GetRequiredService<UserService>();
         _itemService = serviceProvider.GetRequiredService<ItemService>();

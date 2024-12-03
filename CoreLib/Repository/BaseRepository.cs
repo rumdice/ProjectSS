@@ -1,7 +1,6 @@
 using CoreDB.DBWebApp;
 using CoreDB.DBLogApp;
 using CoreLibrary.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,10 +17,9 @@ public class BaseRepository : BaseService
 
     public BaseRepository( 
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<BaseRepository> logger
         )
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
         _webDbContext = serviceProvider.GetRequiredService<DbWebAppContext>();
         _logDbContext = serviceProvider.GetRequiredService<DbLogAppContext>();

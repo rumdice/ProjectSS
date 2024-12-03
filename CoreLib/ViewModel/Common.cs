@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CoreLibrary.ViewModels;
 
@@ -78,10 +77,10 @@ public class CodeResponseViewModel<T> : CommonResponseViewModel where T: Enum
         this.error = exceoption.Message;
     }
 
-    public IActionResult GetActionResult(ControllerBase controller)
-    {
-        return controller.Ok(this);
-    }
+    //public IActionResult GetActionResult(ControllerBase controller)
+    //{
+    //    return controller.Ok(this);
+    //}
 }
 
 
@@ -90,26 +89,26 @@ public class CodeResponseViewModel<T> : CommonResponseViewModel where T: Enum
 /// </summary>
 public class ExceptionResponseViewModel
 {
-    public static IActionResult GetActionResult(ControllerBase controller, Exception exception)
-    {
-        return controller.Ok(new {
-            code = -1,
-            desc = "Exception",
-            error = exception.Message
-        });
-    }
+    //public static IActionResult GetActionResult(ControllerBase controller, Exception exception)
+    //{
+    //    return controller.Ok(new {
+    //        code = -1,
+    //        desc = "Exception",
+    //        error = exception.Message
+    //    });
+    //}
 
-    public static IActionResult GetActionResult<T>(T code, Exception exception) where T : Enum
-    {
-        var response = new CommonResponseViewModel
-        {
-            code = Convert.ToInt32(code),
-            desc = nameof( Exception ),
-            error = exception.Message
-        };
+    //public static IActionResult GetActionResult<T>(T code, Exception exception) where T : Enum
+    //{
+    //    var response = new CommonResponseViewModel
+    //    {
+    //        code = Convert.ToInt32(code),
+    //        desc = nameof( Exception ),
+    //        error = exception.Message
+    //    };
 
-        return new OkObjectResult( response );
-    }
+    //    return new OkObjectResult( response );
+    //}
 }
 
 

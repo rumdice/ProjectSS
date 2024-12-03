@@ -1,5 +1,4 @@
 using CoreDB.DBWebApp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -17,9 +16,8 @@ public class ItemRepository : BaseRepository
 {
     public ItemRepository(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<ItemRepository> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
     }
 

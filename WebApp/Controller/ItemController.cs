@@ -14,7 +14,7 @@ namespace WebApp.Controller;
 
 [Route("[Controller]/[action]")]
 [ApiController]
-public class ItemController : BaseController
+public class ItemController : ControllerBase
 {
     private readonly ItemService _itemService;
     private readonly ILogger<ItemController> _logger;
@@ -23,7 +23,6 @@ public class ItemController : BaseController
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
         ILogger<ItemController> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
     {
         _itemService = serviceProvider.GetRequiredService<ItemService>();
         _logger = logger;

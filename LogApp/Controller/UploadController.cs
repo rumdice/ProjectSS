@@ -9,7 +9,7 @@ using CoreLibrary.Controller;
 
 [Route("upload")]
 [ApiController]
-public class UploadController : BaseController
+public class UploadController : ControllerBase
 {
     private readonly ImageService _imageService;
     private readonly ILogger<UploadController> _logger;
@@ -18,7 +18,6 @@ public class UploadController : BaseController
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor,
         ILogger<UploadController> logger)
-        : base(serviceProvider, httpContextAccessor, logger)
     {
         _imageService = serviceProvider.GetRequiredService<ImageService>();
         _logger = logger;
