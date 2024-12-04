@@ -29,6 +29,7 @@ public partial class DbWebAppContext : DbContext
 
             entity.HasIndex(e => e.pid, "pk");
 
+            entity.Property(e => e.grade).HasColumnType("int(11)");
             entity.Property(e => e.name).HasMaxLength(50);
             entity.Property(e => e.pid).HasColumnType("bigint(20)");
             entity.Property(e => e.tid).HasColumnType("bigint(20)");

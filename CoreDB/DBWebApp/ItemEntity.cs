@@ -12,4 +12,6 @@ public partial class ItemEntity
     public string? name { get; set; }
 
     public long? uid { get; set; }
+
+    public int? grade { get; set; }
 }
