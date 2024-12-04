@@ -1,9 +1,5 @@
 ﻿@page "/"
 
-@using LogApp.Service
-@inject ImageService ImageService
-@inject AccountService AccountService
-
 <PageTitle>Photo Gallary</PageTitle>
 
 <h1>Photo Gallary</h1>
@@ -12,11 +8,4 @@
     <RadzenImage Path="https://rumdice-projectss.s3.ap-northeast-2.amazonaws.com/images/bike.jpeg" Style="width: 15rem;"
         AlternateText="bike" />
 </RadzenStack>
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        AccountService.EnsureAuthenticated();
-    }
-}
 

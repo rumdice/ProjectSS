@@ -21,6 +21,9 @@ spec:
         image: rumdice/log-app:latest # docker hub 아이디/repository경로
         ports:
         - containerPort: 8080 # 컨테이너의 포트
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
       imagePullSecrets:
       - name: rumdice-dockerhub-secret # docker hub private에 접근 하기 위한 kubectl secret 이름
         
