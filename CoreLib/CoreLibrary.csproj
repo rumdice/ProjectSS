@@ -14,6 +14,10 @@
 		<ProjectReference Include="..\CoreDB\CoreDB.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="ViewModel\" />
+	</ItemGroup>
+
 	<Target Name="RunScriptAfterBuild" AfterTargets="Build">
 		<Exec Command="sh DeployDll.sh" Condition="'$(OS)' == 'Unix'" />
 		<Exec Command="DeployDll.bat" Condition="'$(OS)' == 'Windows_NT'" />

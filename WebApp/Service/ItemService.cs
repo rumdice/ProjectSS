@@ -14,31 +14,30 @@ public class ItemService : BaseService
 
     public ItemService( 
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<ItemService> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;
     }
 
-    public virtual async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
+    public virtual async Task<ItemEntity?> GetSimpleItemResultAsync(long itemTid)
     {
-        // 서비스의 역활 - repo를 사용할 뿐 그 이상의 비즈니스 로직 수행.
+        // 서비스의 역활 - repo를 사용할 뿐 그 이상의 비즈니스 로직 수행 필요하다.
         return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
 
-    public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByNameAsync(string name)
+    public async Task<List<ItemEntity>> GetItemSimpleInfoListByNameAsync(string name)
     {
         return await _itemRepository.GetItemSimpleInfoByNameList(name);
     }
 
-    public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByUserIdAsync(long userUid)
+    public async Task<List<ItemEntity>> GetItemSimpleInfoListByUserIdAsync(long userUid)
     {
         return await _itemRepository.GetItemSimpleInfoListByUserId(userUid);
     }
 
-    public async Task<ItemSimpleEntity?> GetItemSimpleResultByName(string name)
+    public async Task<ItemEntity?> GetItemSimpleResultByName(string name)
     {
         return await _itemRepository.GetItemSimpleEntityByName(name);
     }

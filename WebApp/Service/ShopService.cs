@@ -11,9 +11,8 @@ public class ShopService : BaseService
 
     public ShopService( 
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<ShopService> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
         _logger = logger;

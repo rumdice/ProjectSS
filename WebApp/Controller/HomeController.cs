@@ -1,11 +1,8 @@
 
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CoreLibrary;
-using WebApp.Models;
-using WepApp.DtoModels;
 using WebApp.ViewModels;
-using CoreLibrary.ViewModels;
 
 namespace WebApp.Controller;
 

@@ -1,9 +1,8 @@
-using CoreLibrary.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Service;
+using WebApp.ViewModels;
 using WepApp.DtoModels;
-using CoreDB.DBWebApp;
 
 namespace WebApp.Controller;
 

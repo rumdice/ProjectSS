@@ -16,9 +16,8 @@ public class UserService : BaseService
 
     public UserService(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<UserService> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
         _userRepository = serviceProvider.GetRequiredService<UserRepository>();
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
@@ -43,7 +42,7 @@ public class UserService : BaseService
             throw new Exception("user Entity is Null");
         }
 
-        userEntity.Name = name;
+        userEntity.name = name;
 
         await _userRepository.UpdateAsync(userEntity);
     }
@@ -53,7 +52,7 @@ public class UserService : BaseService
         await _userRepository.InsertAsync(userEntity);
     }
 
-    public async Task DeleteUser(UserEntity userEntity, IEnumerable<ItemSimpleEntity> itemEntity)
+    public async Task DeleteUser(UserEntity userEntity, IEnumerable<ItemEntity> itemEntity)
     {
         using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 

@@ -1,6 +1,4 @@
 using CoreDB.DBWebApp;
-using CoreLibrary.ViewModels;
-using CoreLibrary.Controller;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Converter;
 using WebApp.Models;
@@ -29,7 +27,7 @@ public class ItemController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ItemSimpleEntity?> Get(long itemTid)
+    public async Task<ItemEntity?> Get(long itemTid)
     {
         var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
         if (itemSimpleEntity == null)
