@@ -1,8 +1,6 @@
 using Moq;
 using WebApp.Service;
 using WebApp.Controller;
-using CoreDB.DBLogApp;
-using CoreDB.DBWebApp;
 using WebApp.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -10,7 +8,7 @@ using WepApp.DtoModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
-using CoreLibrary.ViewModels;
+using CoreDB.DBWebApp;
 
 namespace WebApiProject.Tests
 {
@@ -49,11 +47,10 @@ namespace WebApiProject.Tests
 
             _mockItemService.Setup(service => service.GetSimpleItemResultAsync(It.IsAny<long>()))
             //_mockItemService.Setup(service => service.GetSimpleItemResultAsync(expectedItemTid))
-                .ReturnsAsync(new ItemSimpleEntity
+                .ReturnsAsync(new ItemEntity
                 {
-                    ItemTid = expectedItemTid,
-                    Name = "테스트 아이템",
-                    Grade = 1
+                    tid = expectedItemTid,
+                    name = "테스트 아이템",
                 });
 
             var serviceProvider = new ServiceCollection()

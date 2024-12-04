@@ -3,19 +3,21 @@ using System.Text.Json.Serialization;
 
 namespace WebApp.ViewModels;
 
+// TODO: 모든 통신 엡애 쓸 수 있게 추상화 시킬려면? 
+
 /// <summary>
 /// 일반적인 에러코드. 성공. 실패
 /// </summary>
 public enum ServiceResponseCode
 {
     InternalError = -1,
-	None = 0, 
-	Success = 1, 
-	BadRequest = 2, 
-	PermissionDenied = 3, 
-	NoChanges = 4, 
-	AccessDenied = 5, 
-	InvalidUserId = 6,
+    None = 0,
+    Success = 1,
+    BadRequest = 2,
+    PermissionDenied = 3,
+    NoChanges = 4,
+    AccessDenied = 5,
+    InvalidUserId = 6,
 
     InvatildItemIid = 7,
 }
@@ -44,14 +46,15 @@ public class CommonResponseViewModel
 /// API response 기본 모델
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class CodeResponseViewModel<T> : CommonResponseViewModel where T: Enum
+public class CodeResponseViewModel<T> : CommonResponseViewModel where T : Enum
 {
     [JsonIgnore]
     public T? ResponesCode
     {
         get
         {
-            if(code < 0) {
+            if (code < 0)
+            {
                 return default(T);
             }
 
@@ -62,7 +65,7 @@ public class CodeResponseViewModel<T> : CommonResponseViewModel where T: Enum
     }
 
     [JsonConstructor]
-    public CodeResponseViewModel() {}
+    public CodeResponseViewModel() { }
 
     public CodeResponseViewModel(T code)
     {
