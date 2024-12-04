@@ -5,11 +5,11 @@ namespace CoreDB.DBLogApp;
 
 public partial class AccountEntity
 {
-    public decimal Uid { get; set; }
+    public long? pid { get; set; }
 
-    public string Aid { get; set; } = null!;
+    public long? aid { get; set; }
 
-    public string Password { get; set; } = null!;
+    public string? name { get; set; }
 
-    public string? Name { get; set; }
+    public string? password { get; set; }
 }

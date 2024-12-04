@@ -5,9 +5,11 @@ namespace CoreDB.DBWebApp;
 
 public partial class UserEntity
 {
-    public long UserUid { get; set; }
+    public long? pid { get; set; }
 
-    public int? Level { get; set; }
+    public long? uid { get; set; }
 
-    public string? Name { get; set; }
+    public string? name { get; set; }
+
+    public int? level { get; set; }
 }
