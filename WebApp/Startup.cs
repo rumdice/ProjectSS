@@ -31,6 +31,15 @@ public class Startup
         services.AddControllers();
         services.AddHttpContextAccessor();
 
+        // db 연결 셋팅
+        var connectionStringWeb = "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234";
+        services.AddDbContext<DbWebAppContext>(options =>
+            options.UseMySql(connectionStringWeb, new MariaDbServerVersion(new Version(11, 6, 2))));
+
+        var connectionStringLog = "Server=localhost;Port=3306;Database=db_LogApp;User=root;Password=pass1234";
+        services.AddDbContext<DbLogAppContext>(options =>
+            options.UseMySql(connectionStringLog, new MariaDbServerVersion(new Version(11, 6, 2))));
+
         // Add DB Context
         services.AddScoped<DbWebAppContext>();
         services.AddScoped<DbLogAppContext>();

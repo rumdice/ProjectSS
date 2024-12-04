@@ -2,7 +2,7 @@
 setlocal
 
 :: 원본 DLL 파일 경로
-set SOURCE=bin\Debug\net9.0\CoreLibrary.dll
+set SOURCE=bin\Debug\net8.0\CoreLibrary.dll
 
 :: 복사 대상 디렉토리
 set DEST1=..\PushApp\Dll\

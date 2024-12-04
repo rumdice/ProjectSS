@@ -1,10 +1,5 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Threading.Tasks;
 using LogApp.Service;
-using System;
-using CoreLibrary.Controller;
 
 
 [Route("upload")]

@@ -1,16 +1,12 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using LogApp.Service;
 using Radzen;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
+using Amazon.S3;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using CoreDB.DBLogApp;
 using CoreDB.DBWebApp;
-using Amazon;
-using Amazon.S3;
-using Amazon.Extensions.NETCore.Setup;   
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using LogApp.Service;
+using Microsoft.EntityFrameworkCore;
 
 // 웹루트 파일 지정
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -45,6 +41,15 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddRadzenComponents();
+
+// DB 연결 셋팅
+var connectionStringWeb = "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234";
+builder.Services.AddDbContext<DbWebAppContext>(options =>
+    options.UseMySql(connectionStringWeb, new MariaDbServerVersion(new Version(11, 6, 2))));
+
+var connectionStringLog = "Server=localhost;Port=3306;Database=db_LogApp;User=root;Password=pass1234";
+builder.Services.AddDbContext<DbLogAppContext>(options =>
+    options.UseMySql(connectionStringLog, new MariaDbServerVersion(new Version(11, 6, 2))));
 
 builder.Services.AddScoped<DbWebAppContext>();
 builder.Services.AddScoped<DbLogAppContext>();

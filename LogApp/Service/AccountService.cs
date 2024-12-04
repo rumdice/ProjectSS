@@ -18,10 +18,9 @@ public class AccountService : BaseService
 
     public AccountService(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<AccountService> logger,
         NavigationManager navigation)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider, logger)
     {
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
         _logger = logger;
@@ -56,20 +55,20 @@ public class AccountService : BaseService
         return await _accountRepository.GetByName(name);
     }
 
-    public async Task<AccountEntity?> GetInfoByAUid(string accountId)
+    public async Task<AccountEntity?> GetInfoByAUid(long accountId)
     {
         return await _accountRepository.GetById(accountId);
     }
 
-    public async Task<bool> CheckAccountPassword(string accountId, string password)
+    public async Task<bool> CheckAccountPassword(string name, string password)
     {
-        var accountInfo = await _accountRepository.GetById(accountId);
+        var accountInfo = await _accountRepository.GetByName(name);
         if (accountInfo == null)
         {
             return false;
         }
 
-        return accountInfo.Password == password;
+        return accountInfo.password == password;
     }
 
     public async Task UpdateUserPassword(long accountId, string name, string password)

@@ -20,17 +20,17 @@ public class AccountRepository : BaseRepository
     /// <returns></returns>
     public Task<AccountEntity?> GetByName(string name)
     {
-        return _logDbContext.AccountEntities
+        return _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.Name == name)
+            .Where(e => e.name == name)
             .SingleOrDefaultAsync();
     }
 
-    public async Task<AccountEntity?> GetById(string aid)
+    public async Task<AccountEntity?> GetById(long aid)
     {
-        return await _logDbContext.AccountEntities
+        return await _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.Aid == aid)
+            .Where(e => e.aid == aid)
             .FirstOrDefaultAsync();
     }
     

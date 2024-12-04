@@ -23,6 +23,6 @@
     {
         // ItemRepository를 통해 데이터 가져오기
         var item = await ItemRepository.GetSimpleItemInfoByItemTId(1002);
-        itemName = item?.Name ?? "No item found";
+        itemName = item?.name ?? "No item found";
     }
 }

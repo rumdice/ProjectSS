@@ -22,11 +22,10 @@ public class ImageService : BaseService
 
     public ImageService(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
         ILogger<ImageService> logger,
         IAmazonS3 s3Client,
         IConfiguration configuration)
-        : base(serviceProvider, httpContextAccessor, logger)
+        : base(serviceProvider, logger)
     {
         _logger = logger;
         _s3Client = s3Client;
