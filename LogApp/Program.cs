@@ -15,11 +15,10 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 builder.Services.AddHttpContextAccessor(); // 클라이언트 측(razor)에서 HTTPContext에 접근하기 위해 사용
+builder.Services.AddHttpClient();
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHttpClient();
-
 builder.Services.AddServerSideBlazor(options =>
 {
     options.DetailedErrors = true;
@@ -32,22 +31,29 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 });
 
 // 로그인 및 세션의 개념을 사용하기 위함.
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // 유지시간 30분
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+//builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddSession(options =>
+//{
+//    options.IdleTimeout = TimeSpan.FromMinutes(30); // 유지시간 30분
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true;
+//});
 
 builder.Services.AddRadzenComponents();
 
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+string dbAddress = "localhost";
+if (environment != "Development")
+{
+    dbAddress = "host.docker.internal";
+}
+
 // DB 연결 셋팅
-var connectionStringWeb = "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234";
+var connectionStringWeb = $"Server={dbAddress};Port=3306;Database=db_WebApp;User=root;Password=pass1234";
 builder.Services.AddDbContext<DbWebAppContext>(options =>
     options.UseMySql(connectionStringWeb, new MariaDbServerVersion(new Version(11, 6, 2))));
 
-var connectionStringLog = "Server=localhost;Port=3306;Database=db_LogApp;User=root;Password=pass1234";
+var connectionStringLog = $"Server={dbAddress};Port=3306;Database=db_LogApp;User=root;Password=pass1234";
 builder.Services.AddDbContext<DbLogAppContext>(options =>
     options.UseMySql(connectionStringLog, new MariaDbServerVersion(new Version(11, 6, 2))));
 
@@ -81,7 +87,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseSession(); // 세션을 사용한다.
+//app.UseSession(); // 세션을 사용한다.
 
 app.UseRouting();
 app.MapControllers();

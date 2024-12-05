@@ -1,32 +1,27 @@
 @page "/gallary"
-@using Radzen.Blazor
-@using LogApp.Service
-@using System.Threading.Tasks
 
 <PageTitle>Photo Gallary</PageTitle>
 
 <h1>Photo Gallary</h1>
 
-@{
-    if (ImageService.IsLoading)
-    {
-        <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
-    }
-    else if (!string.IsNullOrEmpty(ImageService.ErrorMessage))
-    {
-        <RadzenAlert Severity="Error" Summary="Error" Detail="@ImageService.ErrorMessage" />
-    }
-    if (ImageService.ImageUrls.Any())
-    {
-        <div class="image-grid">
-            @foreach (var imageUrl in ImageService.ImageUrls)
-            {
-                <div class="image-item">
-                    <RadzenImage Path="@imageUrl" Style="width: 15rem;" />
-                </div>
-            }
-        </div>   
-    }
+@if (ImageService.IsLoading)
+{
+    <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" />
+}
+else if (!string.IsNullOrEmpty(ImageService.ErrorMessage))
+{
+    <RadzenAlert Severity="Error" Summary="Error" Detail="ImageService.ErrorMessage" />
+}
+@if (ImageService.ImageUrls.Any())
+{
+    <div class="image-grid">
+        @foreach (var imageUrl in ImageService.ImageUrls)
+        {
+            <div class="image-item">
+                <RadzenImage Path="@imageUrl" Style="width: 15rem;" />
+            </div>
+        }
+    </div>
 }
 
 <style>

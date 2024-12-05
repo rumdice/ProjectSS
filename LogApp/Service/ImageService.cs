@@ -37,9 +37,8 @@ public class ImageService : BaseService
     private static async Task<BasicAWSCredentials> GetSecret()
     {
         string secretName = "rumdice-aws-acesss-key";
-        string region = "ap-northeast-2";
-
-        IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
+        
+        IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.APNortheast2);
 
         GetSecretValueRequest request = new GetSecretValueRequest
         {
@@ -83,7 +82,7 @@ public class ImageService : BaseService
         var credentials = await ImageService.GetSecret();
         var clientConfig = new AmazonS3Config
         {
-            RegionEndpoint = RegionEndpoint.GetBySystemName("ap-northeast-2")
+            RegionEndpoint = RegionEndpoint.APNortheast2
         };
 
         _s3Client = new AmazonS3Client(credentials, clientConfig);
