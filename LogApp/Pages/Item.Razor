@@ -1,6 +1,17 @@
 @page "/item"
 
-<h3>ItemRepository Example</h3>
 
-<p>Item: @itemName</p>
-<button @onclick="GetItem">Fetch Item</button>
+<PageTitle>ItemSearch</PageTitle>
+
+<RadzenCard Style="max-width: 400px; margin: auto; padding: 16px;">
+    <RadzenLabel Text="Enter Item Name" Style="margin-bottom: 8px; display: block;" />
+    <RadzenTextBox @bind-Value="itemName" Placeholder="Item name" Style="width: 100%;" />
+    <RadzenButton Click=@(args => OnClick(itemName)) Text="Search" ButtonStyle="ButtonStyle.Info" Style="margin-top: 16px;" />
+
+    <p style="margin-top: 16px;">Search Result (item name): @itemEntity.name</p>
+    <p style="margin-top: 16px;">Search Result (item grade): @itemEntity.grade</p>
+    <p style="margin-top: 16px;">Search Result (item pid): @itemEntity.pid</p>
+    <p style="margin-top: 16px;">Search Result (item tid) @itemEntity.tid</p>
+    <p style="margin-top: 16px;">Search Result (item uid) @itemEntity.uid</p>
+
+</RadzenCard>

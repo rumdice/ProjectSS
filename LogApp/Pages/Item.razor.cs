@@ -1,4 +1,5 @@
-﻿using CoreLibrary.Repository;
+﻿using CoreDB.DBWebApp;
+using CoreLibrary.Repository;
 using LogApp.Service;
 using Microsoft.AspNetCore.Components;
 
@@ -12,7 +13,9 @@ namespace LogApp.Pages
         [Inject]
         private AccountService AccountService { get; set; }
 
-        private string? itemName { get; set; }
+        private string itemName { get; set; } = "";
+
+        private ItemEntity itemEntity { get; set; } = new ItemEntity();
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,11 +24,18 @@ namespace LogApp.Pages
             AccountService.EnsureAuthenticated();
         }
 
-        private async Task GetItem()
+        private async Task<ItemEntity> OnClick(string _itemName)
         {
             // ItemRepository를 통해 데이터 가져오기
-            var item = await ItemRepository.GetSimpleItemInfoByItemTId(1002);
-            itemName = item?.name ?? "No item found";
+            
+            var item = await ItemRepository.GetItemSimpleEntityByName(_itemName);
+            if (item != null)
+            {
+                itemEntity = item;
+            }
+
+            return new ItemEntity();
+
         }
     }
 }
