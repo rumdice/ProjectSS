@@ -21,14 +21,15 @@ public partial class DbLogAppContext : DbContext
 
         modelBuilder.Entity<AccountEntity>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.pid).HasName("PRIMARY");
 
-            entity.HasIndex(e => e.pid, "pk");
+            entity.HasIndex(e => e.name, "idx_name");
 
-            entity.Property(e => e.aid).HasColumnType("bigint(20)");
+            entity.Property(e => e.pid)
+                .ValueGeneratedNever()
+                .HasColumnType("bigint(20)");
             entity.Property(e => e.name).HasMaxLength(50);
             entity.Property(e => e.password).HasMaxLength(50);
-            entity.Property(e => e.pid).HasColumnType("bigint(20)");
         });
 
         OnModelCreatingPartial(modelBuilder);
