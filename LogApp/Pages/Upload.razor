@@ -1,12 +1,5 @@
 @page "/upload"
-@* @using Radzen.Blazor
-@using LogApp.Service
-@using System.Threading.Tasks
-@inject ImageService ImageService
-@inject AccountService AccountService
-@inject NavigationManager Navigation
-@inject IJSRuntime JSRuntime
- *@
+
 <PageTitle>Photo Gallary</PageTitle>
 
 <h1>Upload Photo</h1>
@@ -14,18 +7,19 @@
 <RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
     <RadzenColumn Size="12" SizeMD="4">
         <RadzenCard Variant="Variant.Outlined">
-            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Single File Upload</RadzenText>
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Files Upload</RadzenText>
 
             <!-- RadzenUpload 컴포넌트 -->
             <RadzenUpload 
-            Url="upload/single" 
-            Progress="@(args => OnProgress(args))" 
-            Style="width: 100%;" 
-            InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })"
-            Auto="true"
-            Accept="image/*"
-            @bind-Value="files"
-            Complete="@(args => OnUploadComplete(args))">
+                Multiple="true"
+                Url="upload/multiple" 
+                Progress="@(args => OnProgress(args))" 
+                Style="width: 100%;" 
+                InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })"
+                Auto="true"
+                Accept="image/*"
+                @bind-Value="files"
+                Complete="@(args => OnUploadComplete(args))">
             </RadzenUpload>
         </RadzenCard>
 
