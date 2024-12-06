@@ -20,23 +20,32 @@ namespace LogApp.Pages
         {
             Console.WriteLine($"{name} -> Username: {args.Username}, password: {args.Password}, remember me: {args.RememberMe}");
 
-            var result = await AccountService.CheckAccountPassword(args.Username, args.Password);
-            if (result)
+            // 계정존재확인
+            if (await AccountService.IsExistAccount(args.Username) == true)
             {
-                AccountService.SetState<bool>("IsAuthenticated", true);
-                Navigation.NavigateTo("/gallary");
+                // 패스워드 일치확인
+                var result = await AccountService.CheckAccountPassword(args.Username, args.Password);
+                if (result)
+                {
+                    AccountService.SetState<bool>("IsAuthenticated", true);
+                    Navigation.NavigateTo("/gallary");
+                }
+                else
+                {
+                    AccountService.SetState<bool>("IsAuthenticated", false);
+                    Navigation.NavigateTo("/Error");
+                }
             }
             else
             {
-                AccountService.SetState<bool>("IsAuthenticated", false);
-                Navigation.NavigateTo("/login");
+                // 신규 계정을 생성해줌
+                await AccountService.AddNewAccount(args.Username, args.Password);
+                
+                // 인증 완료 처리
+                AccountService.SetState<bool>("IsAuthenticated", true);
+
+                Navigation.NavigateTo("/gallary");
             }
-        }
-
-
-        private void OnRegister(string name)
-        {
-            Console.WriteLine($"{name} -> Register");
         }
 
         private void OnResetPassword(string value, string name)

@@ -30,16 +30,6 @@ namespace LogApp.Pages
         {
             Console.WriteLine("Upload Complete!");
             Navigation.NavigateTo("/gallary");
-
-            // TODO: 호출이 안되는 이유? - 알았다.
-            //await ImageService.UploadFileAsync();
-            // 업로드가 완료되면, 업로드된 파일의 URL을 가져오고 싶다면
-            //if (args.Files != null && args.Files.Count > 0)
-            //{
-            //    var uploadedFile = args.Files[0]; // 업로드된 첫 번째 파일
-            //    var fileUrl = await ImageService.UploadFileAsync(uploadedFile);
-            //    Console.WriteLine($"File uploaded successfully. URL: {fileUrl}");
-            //}
         }
 
     }

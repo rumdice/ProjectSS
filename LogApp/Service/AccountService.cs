@@ -60,6 +60,17 @@ public class AccountService : BaseService
         return await _accountRepository.GetById(accountId);
     }
 
+    public async Task<bool> IsExistAccount(string name)
+    {
+        var accountInfo = await _accountRepository.GetByName(name);
+        if (accountInfo == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public async Task<bool> CheckAccountPassword(string name, string password)
     {
         var accountInfo = await _accountRepository.GetByName(name);
@@ -84,8 +95,14 @@ public class AccountService : BaseService
         // await _userRepository.UpdateAsync(userEntity);
     }
 
-    public async Task AddNewAccount(AccountEntity accountEntity)
-    {   
+    public async Task AddNewAccount(string _name, string _password)
+    {
+        var accountEntity = new AccountEntity
+        {
+            name = _name,
+            password = _password
+        };
+
         await _accountRepository.InsertAsync(accountEntity);
     }
 

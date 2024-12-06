@@ -25,9 +25,7 @@ public partial class DbLogAppContext : DbContext
 
             entity.HasIndex(e => e.name, "idx_name");
 
-            entity.Property(e => e.pid)
-                .ValueGeneratedNever()
-                .HasColumnType("bigint(20)");
+            entity.Property(e => e.pid).HasColumnType("bigint(20)");
             entity.Property(e => e.name).HasMaxLength(50);
             entity.Property(e => e.password).HasMaxLength(50);
         });
