@@ -16,6 +16,8 @@ namespace LogApp.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await base.OnInitializedAsync();
+
             AccountService.EnsureAuthenticated();
         }
 

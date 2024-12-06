@@ -14,6 +14,9 @@ namespace LogApp.Pages
         {
             try
             {
+                await base.OnInitializedAsync();
+
+
                 AccountService.EnsureAuthenticated();
 
                 await ImageService.LoadImagesByS3();

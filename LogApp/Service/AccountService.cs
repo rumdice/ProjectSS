@@ -50,14 +50,14 @@ public class AccountService : BaseService
         }
     }
 
+    public async Task<List<AccountEntity>> GetInfoAll()
+    {
+        return await _accountRepository.GetAll();
+    }
+
     public async Task<AccountEntity?> GetInfoByName(string name)
     {
         return await _accountRepository.GetByName(name);
-    }
-
-    public async Task<AccountEntity?> GetInfoByAUid(long accountId)
-    {
-        return await _accountRepository.GetById(accountId);
     }
 
     public async Task<bool> IsExistAccount(string name)

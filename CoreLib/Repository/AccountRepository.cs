@@ -26,12 +26,11 @@ public class AccountRepository : BaseRepository
             .SingleOrDefaultAsync();
     }
 
-    public async Task<AccountEntity?> GetById(long aid)
+    public async Task<List<AccountEntity>> GetAll()
     {
         return await _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.aid == aid)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
     }
     
     public async Task UpdateAsync(AccountEntity entity)
