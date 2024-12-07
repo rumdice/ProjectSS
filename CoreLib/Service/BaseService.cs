@@ -8,15 +8,15 @@ namespace CoreLibrary.Service;
 public class BaseService
 {
     private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<BaseService> _logger;
+    //private readonly ILogger<BaseService> _logger;
 
     public BaseService(
-        IServiceProvider serviceProvider,
-        ILogger<BaseService> logger
+        IServiceProvider serviceProvider
+        //ILogger<BaseService> logger
     )
     {
         this._serviceProvider = serviceProvider;
-        this._logger = logger;
+        //this._logger = logger;
     }
 
     protected IServiceProvider GetServiceProvider()
@@ -24,10 +24,10 @@ public class BaseService
         return this._serviceProvider;
     }
 
-    protected ILogger<BaseService> GetLogger()
-    {
-        return this._logger;
-    }
+    //protected ILogger<BaseService> GetLogger()
+    //{
+    //    return this._logger;
+    //}
 
 
 }

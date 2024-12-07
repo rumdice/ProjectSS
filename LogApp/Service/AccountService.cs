@@ -1,9 +1,7 @@
-using System.Transactions;
 using CoreDB.DBLogApp;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LogApp.Service;
 
@@ -12,18 +10,16 @@ public class AccountService : BaseService
 {
     private readonly NavigationManager _navigation;
     private readonly AccountRepository _accountRepository;
-    private readonly ILogger<AccountService> _logger;
-
+    private readonly Logger<AccountService> _logger;
     private readonly Dictionary<string, object> _state = new(); // 로그인 상태 
 
     public AccountService(
         IServiceProvider serviceProvider,
-        ILogger<AccountService> logger,
         NavigationManager navigation)
-        : base (serviceProvider, logger)
+        : base (serviceProvider)
     {
+        _logger = serviceProvider.GetRequiredService<Logger<AccountService>>();
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
-        _logger = logger;
         _navigation = navigation;
     }
 
@@ -50,7 +46,8 @@ public class AccountService : BaseService
         }
 
         // 로거 기반의 로깅 시스템
-        //_logger.LogInformation("EnsureAuthenticated()!!!!!!!!");
+        _logger.LogInformation("EnsureAuthenticated()!!!!!!!!");
+        _logger.LogInformation("MyLoggger system");
     }
 
     public async Task<List<AccountEntity>> GetInfoAll()

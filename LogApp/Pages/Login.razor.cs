@@ -16,9 +16,12 @@ namespace LogApp.Pages
         [Inject]
         private AccountService AccountService { get; set; }
 
+        [Inject]
+        private Logger<Item> _logger {  get; set; }
+
         private async Task OnLogin(LoginArgs args, string name)
         {
-            Console.WriteLine($"{name} -> Username: {args.Username}, password: {args.Password}, remember me: {args.RememberMe}");
+            _logger.LogInformation($"{name} -> Username: {args.Username}, password: {args.Password}");
 
             // 계정존재확인
             if (await AccountService.IsExistAccount(args.Username) == true)

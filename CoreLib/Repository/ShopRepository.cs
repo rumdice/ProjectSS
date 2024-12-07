@@ -5,10 +5,8 @@ namespace CoreLibrary.Repository;
 
 public class ShopRepository : BaseRepository
 {
-    public ShopRepository(
-        IServiceProvider serviceProvider,
-        ILogger<ItemRepository> logger)
-        : base (serviceProvider, logger)
+    public ShopRepository(IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
     }
 

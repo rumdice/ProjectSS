@@ -7,9 +7,8 @@ namespace CoreLibrary.Repository;
 public class UserRepository : BaseRepository
 {
     public UserRepository(
-        IServiceProvider serviceProvider,
-        ILogger<UserRepository> logger)
-        : base (serviceProvider, logger)
+        IServiceProvider serviceProvider) 
+        : base (serviceProvider)
     {
     }
 

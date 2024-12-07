@@ -14,10 +14,8 @@ namespace CoreLibrary.Repository;
 
 public class ItemRepository : BaseRepository
 {
-    public ItemRepository(
-        IServiceProvider serviceProvider,
-        ILogger<ItemRepository> logger)
-        : base (serviceProvider, logger)
+    public ItemRepository(IServiceProvider serviceProvider) 
+        : base (serviceProvider)
     {
     }
 

@@ -3,7 +3,6 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.Runtime;
 using CoreLibrary.Service;
-using CoreLibrary.Repository;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
 
@@ -11,7 +10,6 @@ namespace LogApp.Service;
 
 public class ImageService : BaseService
 {
-    private readonly ILogger<ImageService> _logger;
     private IAmazonS3 _s3Client { get; set; }  // S3 클라이언트 추가
 
     public List<string> ImageUrls { get; private set; } = new();
@@ -19,15 +17,15 @@ public class ImageService : BaseService
     public string? ErrorMessage { get; private set; }
 
     private readonly RegionEndpoint _region = RegionEndpoint.APNortheast2;
+    private readonly Logger<ImageService> _logger;
 
     public ImageService(
         IServiceProvider serviceProvider,
-        ILogger<ImageService> logger,
         IAmazonS3 s3Client,
         IConfiguration configuration)
-        : base(serviceProvider, logger)
+        : base(serviceProvider)
     {
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<Logger<ImageService>>();
         _s3Client = s3Client;
     }
 

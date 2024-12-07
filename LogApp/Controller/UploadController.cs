@@ -7,15 +7,14 @@ using LogApp.Service;
 public class UploadController : ControllerBase
 {
     private readonly ImageService _imageService;
-    private readonly ILogger<UploadController> _logger;
+    private readonly Logger<UploadController> _logger;
 
     public UploadController(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<UploadController> logger)
+        IHttpContextAccessor httpContextAccessor)
     {
+        _logger = serviceProvider.GetRequiredService<Logger<UploadController>>();
         _imageService = serviceProvider.GetRequiredService<ImageService>();
-        _logger = logger;
     }
 
     [HttpPost("single")]

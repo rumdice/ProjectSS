@@ -48,6 +48,7 @@ if (environment != "Development")
     dbAddress = "host.docker.internal";
 }
 
+// Core.DB
 // DB 연결 셋팅
 var connectionStringWeb = $"Server={dbAddress};Port=3306;Database=db_WebApp;User=root;Password=pass1234";
 builder.Services.AddDbContext<DbWebAppContext>(options =>
@@ -60,18 +61,23 @@ builder.Services.AddDbContext<DbLogAppContext>(options =>
 builder.Services.AddScoped<DbWebAppContext>();
 builder.Services.AddScoped<DbLogAppContext>();
 
+// Core.lib
+builder.Services.AddScoped<BaseService>();
+builder.Services.AddScoped<BaseRepository>();
+builder.Services.AddScoped<ItemRepository>();
+builder.Services.AddScoped<AccountRepository>();
+
+//builder.Services.AddScoped<Logger<BaseService>>();
+builder.Services.AddSingleton(typeof(Logger<>)); // 커스텀 구현체로 등록
+
 
 // AWS S3 클라이언트 등록
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
 
-builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<AccountService>();
 
-builder.Services.AddScoped<BaseRepository>();
-builder.Services.AddScoped<ItemRepository>();
-builder.Services.AddScoped<AccountRepository>();
 
 
 var app = builder.Build();

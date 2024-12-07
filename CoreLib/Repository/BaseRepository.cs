@@ -13,17 +13,14 @@ public class BaseRepository : BaseService
     protected readonly DbWebAppContext _webDbContext;
     protected readonly DbLogAppContext _logDbContext;
 
-    private readonly ILogger<BaseRepository> _logger;
-
+   
     public BaseRepository( 
-        IServiceProvider serviceProvider,
-        ILogger<BaseRepository> logger
+        IServiceProvider serviceProvider
         )
-        : base (serviceProvider, logger)
+        : base (serviceProvider)
     {
         _webDbContext = serviceProvider.GetRequiredService<DbWebAppContext>();
         _logDbContext = serviceProvider.GetRequiredService<DbLogAppContext>();
-        _logger = logger;
     }
 
     // TODO: 모든 repository에 공통적인 요소?

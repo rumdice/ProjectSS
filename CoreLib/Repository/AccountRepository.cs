@@ -1,15 +1,14 @@
 using CoreDB.DBLogApp;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace CoreLibrary.Repository;
 
 public class AccountRepository : BaseRepository
 {
-    public AccountRepository(
-        IServiceProvider serviceProvider,
-        ILogger<AccountRepository> logger)
-        : base (serviceProvider, logger)
+    public AccountRepository(IServiceProvider serviceProvider) 
+        : base(serviceProvider)
     {
     }
 
