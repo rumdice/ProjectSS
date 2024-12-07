@@ -48,6 +48,9 @@ public class AccountService : BaseService
         {
             _navigation.NavigateTo("/login");
         }
+
+        // 로거 기반의 로깅 시스템
+        //_logger.LogInformation("EnsureAuthenticated()!!!!!!!!");
     }
 
     public async Task<List<AccountEntity>> GetInfoAll()
