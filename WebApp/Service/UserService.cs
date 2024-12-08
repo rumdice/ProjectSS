@@ -1,5 +1,6 @@
 using System.Transactions;
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 
@@ -12,16 +13,15 @@ public class UserService : BaseService
     private readonly UserRepository _userRepository;
     private readonly ItemRepository _itemRepository;
 
-    private readonly ILogger<UserService> _logger;
+    private readonly BaseLogger<UserService> _logger;
 
     public UserService(
-        IServiceProvider serviceProvider,
-        ILogger<UserService> logger)
-        : base (serviceProvider, logger)
+        IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
         _userRepository = serviceProvider.GetRequiredService<UserRepository>();
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<UserService>>();
     }
 
     public async Task<UserEntity?> GetUserInfoByName(string name)

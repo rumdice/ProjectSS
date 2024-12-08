@@ -1,4 +1,5 @@
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 
@@ -10,15 +11,14 @@ namespace WebApp.Service;
 public class ItemService : BaseService
 {
     private readonly ItemRepository _itemRepository;
-    private readonly ILogger<ItemService> _logger;
+    private readonly BaseLogger<ItemService> _logger;
 
     public ItemService( 
-        IServiceProvider serviceProvider,
-        ILogger<ItemService> logger)
-        : base (serviceProvider, logger)
+        IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ItemService>>();
     }
 
     public virtual async Task<ItemEntity?> GetSimpleItemResultAsync(long itemTid)

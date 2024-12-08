@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
-using Microsoft.Extensions.Configuration;
 using CoreDB.DBLogApp;
 using CoreDB.DBWebApp;
 using CoreLibrary.Repository;
@@ -31,6 +30,7 @@ public class Startup
         services.AddControllers();
         services.AddHttpContextAccessor();
 
+        // Core.DB
         // db 연결 셋팅
         var connectionStringWeb = "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234";
         services.AddDbContext<DbWebAppContext>(options =>
@@ -44,16 +44,21 @@ public class Startup
         services.AddScoped<DbWebAppContext>();
         services.AddScoped<DbLogAppContext>();
   
-        // BASE
+
+
+        // Core.Lib
+        // Add Service
+        services.AddTransient<BaseService>();
+        
         // Add Repository
         services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
         services.AddTransient<UserRepository>();
         services.AddTransient<ShopRepository>();
 
-        // Add Service
-        services.AddTransient<BaseService>();
-        
+        services.AddSingleton(typeof(BaseLogger<>)); // 커스텀 구현체로 등록
+
+        // App Service
         services.AddTransient<ItemService>();
         services.AddTransient<UserService>();
         services.AddTransient<ShopService>();

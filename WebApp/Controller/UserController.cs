@@ -1,3 +1,4 @@
+using CoreLibrary;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Service;
@@ -13,16 +14,15 @@ public class UserController : ControllerBase
 {
     private readonly UserService _userService;
     private readonly ItemService _itemService;
-    private readonly ILogger<UserController> _logger; // 필요한가?
+    private readonly BaseLogger<UserController> _logger;
 
     public UserController(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<UserController> logger)
+        IHttpContextAccessor httpContextAccessor)
     {
         _userService = serviceProvider.GetRequiredService<UserService>();
         _itemService = serviceProvider.GetRequiredService<ItemService>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<UserController>>();
     }
 
     [HttpPost]

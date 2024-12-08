@@ -1,4 +1,5 @@
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Converter;
 using WebApp.Models;
@@ -15,15 +16,14 @@ namespace WebApp.Controller;
 public class ItemController : ControllerBase
 {
     private readonly ItemService _itemService;
-    private readonly ILogger<ItemController> _logger;
-
+    private readonly BaseLogger<ItemController> _logger;
+    
     public ItemController(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<ItemController> logger)
+        IHttpContextAccessor httpContextAccessor)
     {
         _itemService = serviceProvider.GetRequiredService<ItemService>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ItemController>>();
     }
 
     [HttpGet]

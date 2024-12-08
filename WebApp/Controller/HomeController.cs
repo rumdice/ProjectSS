@@ -8,7 +8,7 @@ namespace WebApp.Controller;
 
 public class HomeController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<HomeController> _logger; // 기본로거
 
     public HomeController(ILogger<HomeController> logger)
     {

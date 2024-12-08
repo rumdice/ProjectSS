@@ -1,4 +1,5 @@
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 
@@ -7,15 +8,14 @@ namespace WebApp.Service;
 public class ShopService : BaseService
 {
     private readonly ItemRepository _itemRepository;
-    private readonly ILogger<ShopService> _logger;
+    private readonly BaseLogger<ShopService> _logger;
 
     public ShopService( 
-        IServiceProvider serviceProvider,
-        ILogger<ShopService> logger)
-        : base (serviceProvider, logger)
+        IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ShopService>>();
     }
 
 }
