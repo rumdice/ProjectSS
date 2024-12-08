@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CoreLibrary
 {
-    public class Logger<T> : ILogger<T>
+    public class BaseLogger<T> : ILogger<T>
     {
         private readonly string _categoryName;
 
-        public Logger()
+        public BaseLogger()
         {
             _categoryName = typeof(T).FullName ?? "Unknown";
         }

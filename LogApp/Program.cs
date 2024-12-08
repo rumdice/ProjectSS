@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using CoreDB.DBLogApp;
 using CoreDB.DBWebApp;
 using Microsoft.EntityFrameworkCore;
+using CoreLibrary;
 
 // 웹루트 파일 지정
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -68,13 +69,14 @@ builder.Services.AddScoped<ItemRepository>();
 builder.Services.AddScoped<AccountRepository>();
 
 //builder.Services.AddScoped<Logger<BaseService>>();
-builder.Services.AddSingleton(typeof(Logger<>)); // 커스텀 구현체로 등록
+builder.Services.AddSingleton(typeof(BaseLogger<>)); // 커스텀 구현체로 등록
 
 
 // AWS S3 클라이언트 등록
 builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();
 
+// App Service
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<AccountService>();
 

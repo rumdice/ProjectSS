@@ -1,4 +1,5 @@
 using CoreDB.DBLogApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 using Microsoft.AspNetCore.Components;
@@ -10,7 +11,7 @@ public class AccountService : BaseService
 {
     private readonly NavigationManager _navigation;
     private readonly AccountRepository _accountRepository;
-    private readonly Logger<AccountService> _logger;
+    private readonly BaseLogger<AccountService> _logger;
     private readonly Dictionary<string, object> _state = new(); // 로그인 상태 
 
     public AccountService(
@@ -18,7 +19,7 @@ public class AccountService : BaseService
         NavigationManager navigation)
         : base (serviceProvider)
     {
-        _logger = serviceProvider.GetRequiredService<Logger<AccountService>>();
+        _logger = serviceProvider.GetRequiredService<BaseLogger<AccountService>>();
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
         _navigation = navigation;
     }

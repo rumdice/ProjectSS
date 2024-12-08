@@ -1,4 +1,5 @@
-﻿using LogApp.Service;
+﻿using CoreLibrary;
+using LogApp.Service;
 using Microsoft.AspNetCore.Components;
 using Radzen;
 
@@ -17,7 +18,7 @@ namespace LogApp.Pages
         private AccountService AccountService { get; set; }
 
         [Inject]
-        private Logger<Item> _logger {  get; set; }
+        private BaseLogger<Item> _logger {  get; set; }
 
         private async Task OnLogin(LoginArgs args, string name)
         {

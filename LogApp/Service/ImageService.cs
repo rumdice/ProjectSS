@@ -5,6 +5,7 @@ using Amazon.Runtime;
 using CoreLibrary.Service;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
+using CoreLibrary;
 
 namespace LogApp.Service;
 
@@ -17,7 +18,7 @@ public class ImageService : BaseService
     public string? ErrorMessage { get; private set; }
 
     private readonly RegionEndpoint _region = RegionEndpoint.APNortheast2;
-    private readonly Logger<ImageService> _logger;
+    private readonly BaseLogger<ImageService> _logger;
 
     public ImageService(
         IServiceProvider serviceProvider,
@@ -25,7 +26,7 @@ public class ImageService : BaseService
         IConfiguration configuration)
         : base(serviceProvider)
     {
-        _logger = serviceProvider.GetRequiredService<Logger<ImageService>>();
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ImageService>>();
         _s3Client = s3Client;
     }
 

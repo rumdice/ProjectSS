@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using LogApp.Service;
+using CoreLibrary;
 
 
 [Route("upload")]
@@ -7,13 +8,13 @@ using LogApp.Service;
 public class UploadController : ControllerBase
 {
     private readonly ImageService _imageService;
-    private readonly Logger<UploadController> _logger;
+    private readonly BaseLogger<UploadController> _logger;
 
     public UploadController(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor)
     {
-        _logger = serviceProvider.GetRequiredService<Logger<UploadController>>();
+        _logger = serviceProvider.GetRequiredService<BaseLogger<UploadController>>();
         _imageService = serviceProvider.GetRequiredService<ImageService>();
     }
 
