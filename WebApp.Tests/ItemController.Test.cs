@@ -60,8 +60,7 @@ namespace WebApiProject.Tests
             
             var controller = new ItemController(
                 serviceProvider,
-                _mockHttpContextAccessor.Object,
-                _mockLogger.Object);
+                _mockHttpContextAccessor.Object);
 
             // Act
             var result = await controller.GetItemSimpleInfo(request);

@@ -79,6 +79,7 @@ builder.Services.AddAWSService<IAmazonS3>();
 // App Service
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<MessageService>();
 
 
 

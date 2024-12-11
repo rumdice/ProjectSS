@@ -20,5 +20,8 @@
 	</ItemGroup>
 
 
+	<ItemGroup>
+		<PackageReference Include="RabbitMQ.Stream.Client" Version="1.8.3" />
+	</ItemGroup>
 
 </Project>

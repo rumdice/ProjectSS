@@ -29,10 +29,7 @@
   <ItemGroup>
     <PackageReference Include="Sentry" Version="4.13.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
-  </ItemGroup> 
-
-  <!-- <ItemGroup>
-  </ItemGroup> -->
-
+	<PackageReference Include="RabbitMQ.Stream.Client" Version="1.8.3" />
+  </ItemGroup>
 
 </Project>

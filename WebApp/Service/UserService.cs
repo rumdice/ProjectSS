@@ -9,7 +9,6 @@ namespace WebApp.Service;
 
 public class UserService : BaseService
 {
-    // TODO: 경우에 따라선 서비스가 여러가지 종류의 repository 를 들고 있을 수 있다.
     private readonly UserRepository _userRepository;
     private readonly ItemRepository _itemRepository;
 

@@ -1,20 +1,4 @@
 @page "/test"
-@using Radzen.Blazor
-@using LogApp.Service
-@using System.Threading.Tasks
-@inject AccountService AccountService
 
-<RadzenButton Click="@ButtonClicked" Text="Hi3"></RadzenButton>
+<RadzenButton Click="@ButtonClicked" Text="Send Message"></RadzenButton>
 
-@code {
-  void ButtonClicked()
-  {
-    // Handle the Click event of RadzenButton
-  }
-
-
-  protected override async Task OnInitializedAsync()
-  {
-    AccountService.EnsureAuthenticated();
-  }
-}
