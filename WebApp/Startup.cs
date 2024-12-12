@@ -50,6 +50,7 @@ public class Startup
         // Add Service
         services.AddTransient<BaseService>();
         
+        
         // Add Repository
         services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
@@ -62,6 +63,10 @@ public class Startup
         services.AddTransient<ItemService>();
         services.AddTransient<UserService>();
         services.AddTransient<ShopService>();
+
+        // background service
+        services.AddScoped<MessageConsumeService>();
+        services.AddSingleton<MessageBackgroundService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

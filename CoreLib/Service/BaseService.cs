@@ -17,13 +17,13 @@ public class BaseService : IDisposable, IAsyncDisposable
         this._serviceProvider = serviceProvider;
     }
 
-    protected virtual void Dispose()
+    public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this); // Finalizer 호출 방지
     }
 
-    protected virtual async ValueTask DisposeAsync()
+    public async ValueTask DisposeAsync()
     {
         await DisposeAsyncCore();
         Dispose(false);

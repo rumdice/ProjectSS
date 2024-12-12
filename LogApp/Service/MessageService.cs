@@ -3,6 +3,7 @@ using RabbitMQ.Stream.Client;
 using System.Text;
 using CoreLibrary.Service;
 using CoreLibrary;
+using System.Net;
 
 
 namespace LogApp.Service
@@ -29,14 +30,25 @@ namespace LogApp.Service
             if (_initialized) return;
             _initialized = true;
 
-            _streamSystem = await StreamSystem.Create(new StreamSystemConfig());
-
-            await _streamSystem.CreateStream(new StreamSpec("hello-stream")
+            try
             {
-                MaxLengthBytes = 5_000_000_000
-            });
+                
+                _streamSystem = await StreamSystem.Create(new StreamSystemConfig
+                {
+                    Endpoints = new List<EndPoint> { new IPEndPoint(IPAddress.Loopback, 5552) },
+                });
 
-            _producer = await Producer.Create(new ProducerConfig(_streamSystem, "hello-stream"));
+                await _streamSystem.CreateStream(new StreamSpec("hello-stream")
+                {
+                    MaxLengthBytes = 5_000_000_000
+                });
+
+                _producer = await Producer.Create(new ProducerConfig(_streamSystem, "hello-stream"));
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogInformation($"{ex.Message}");
+            }
         }
         public async Task Send()
         {
