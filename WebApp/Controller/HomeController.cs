@@ -3,16 +3,18 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CoreLibrary;
 using WebApp.ViewModels;
+using WebApp.Service;
 
 namespace WebApp.Controller;
 
 public class HomeController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger; // 기본로거
+    
+    private readonly BaseLogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController()
     {
-        _logger = logger;
+        //_logger = logger;
     }
 
     [HttpPost("[action]")]
@@ -28,9 +30,9 @@ public class HomeController : ControllerBase
         Debug.WriteLine(emptyRes);
         Debug.WriteLine(emptyRes);
 
-        _logger.LogDebug("디버깅 로그");
-        _logger.LogInformation("인포 로깅");
-        _logger.LogCritical("크리티컬한 로그 - 시스템 에러");
+        //_logger.LogDebug("디버깅 로그");
+        //_logger.LogInformation("인포 로깅");
+        //_logger.LogCritical("크리티컬한 로그 - 시스템 에러");
         
         return new CodeResponseViewModel<ServiceResponseCode>(
                 ServiceResponseCode.Success

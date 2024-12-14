@@ -48,7 +48,7 @@ public class Startup
 
         // Core.Lib
         // Add Service
-        services.AddTransient<BaseService>();
+        services.AddSingleton<BaseService>();
         
         
         // Add Repository
@@ -60,13 +60,13 @@ public class Startup
         services.AddSingleton(typeof(BaseLogger<>)); // 커스텀 구현체로 등록
 
         // App Service
-        services.AddTransient<ItemService>();
+        services.AddScoped<ItemService>();
         services.AddTransient<UserService>();
         services.AddTransient<ShopService>();
 
         // background service
-        services.AddScoped<MessageConsumeService>();
-        services.AddSingleton<MessageBackgroundService>();
+        services.AddHostedService<MessageBackgroundService>();
+        services.AddSingleton<MessageConsumeService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

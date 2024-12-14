@@ -1,6 +1,7 @@
 using CoreDB.DBWebApp;
 using CoreLibrary;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using WebApp.Converter;
 using WebApp.Models;
 using WebApp.Service;
@@ -17,18 +18,27 @@ public class ItemController : ControllerBase
 {
     private readonly ItemService _itemService;
     private readonly BaseLogger<ItemController> _logger;
-    
+
+
     public ItemController(
         IServiceProvider serviceProvider,
         IHttpContextAccessor httpContextAccessor)
     {
         _itemService = serviceProvider.GetRequiredService<ItemService>();
+
         _logger = serviceProvider.GetRequiredService<BaseLogger<ItemController>>();
+        if (_logger == null)
+        {
+            Console.WriteLine("conseo");
+        }
+
     }
 
     [HttpGet]
     public async Task<ItemEntity?> Get(long itemTid)
     {
+        _logger.LogInformation("ItemContorller Get()");
+
         var itemSimpleEntity = await _itemService.GetSimpleItemResultAsync(itemTid);
         if (itemSimpleEntity == null)
         {
@@ -77,7 +87,7 @@ public class ItemController : ControllerBase
             // 컨버팅 작업
             itemSimpleInfoDto = itemSimpleEntity.EntityToDto();
 
-            _logger.LogInformation("아이템을 가져온다");
+            //_logger.LogInformation("아이템을 가져온다");
 
             return new GetItemSimpleInfoViewModelResponse(
                 ServiceResponseCode.Success,
@@ -86,7 +96,7 @@ public class ItemController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogCritical(e.Message);
+           // _logger.LogCritical(e.Message);
 
             // 일반적인 에러에 대한 viewModel 처리
             return ExceptionResponseViewModel.GetActionResult(this, e);

@@ -9,15 +9,17 @@ namespace WebApp.Service
     public class MessageBackgroundService : BackgroundService
     {
         private readonly MessageConsumeService _consumeService;
-        private readonly BaseLogger<MessageConsumeService> _logger;
+        private readonly BaseLogger<MessageBackgroundService> _logger;
         private readonly BaseService _baseService;
 
         public MessageBackgroundService(
             IServiceProvider serviceProvider)
         {
-            _logger = serviceProvider.GetRequiredService<BaseLogger<MessageConsumeService>>();
             _consumeService = serviceProvider.GetRequiredService<MessageConsumeService>();
-            _baseService = serviceProvider.GetRequiredService<BaseService>();   
+            _baseService = serviceProvider.GetRequiredService<BaseService>();
+
+            _logger = serviceProvider.GetRequiredService<BaseLogger<MessageBackgroundService>>();
+            _logger.LogInformation("MessageBackgroundService()");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

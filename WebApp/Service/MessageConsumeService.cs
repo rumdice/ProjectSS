@@ -21,7 +21,6 @@ namespace WebApp.Service
             : base(serviceProvider)
         {
             _logger = serviceProvider.GetRequiredService<BaseLogger<MessageConsumeService>>();
-            //_streamSystem = streamSystem;
             var config = new StreamSystemConfig
             {
                 // 필요한 설정 추가
@@ -30,26 +29,50 @@ namespace WebApp.Service
             _streamSystem = StreamSystem.Create(config).GetAwaiter().GetResult(); // 
 
             // 비동기 함수 호출
-            //Init().GetAwaiter().GetResult();
-            
+            Init().GetAwaiter().GetResult();
+
             // 동기 함수 호출
-            Init();
+            //Init();
+            _logger.LogInformation($"Init()!~~");
+
         }
 
-        public void Init()
+        //public async Task Init()
+        //{
+        //    // Consumer 설정
+        //    _consumer = Consumer.Create(new ConsumerConfig(_streamSystem, "hello-stream")
+        //    {
+        //        MessageHandler = async (messageContext, _, _, message) =>
+        //        {
+        //            string receivedMessage = Encoding.UTF8.GetString(message.Data.Contents.ToArray());
+        //            _logger.LogInformation($"Message received: {receivedMessage}");
+
+        //            // 메시지 처리 로직
+        //            await ProcessMessage(receivedMessage);
+        //        }
+        //    }).GetAwaiter().GetResult();
+        //}
+
+        public async Task Init()
         {
-            // Consumer 설정
-            _consumer = Consumer.Create(new ConsumerConfig(_streamSystem, "hello-stream")
+            await _streamSystem.CreateStream(new StreamSpec("hello-stream")
+            {
+                MaxLengthBytes = 5_000_000_000
+            });
+
+            _consumer = await Consumer.Create(new ConsumerConfig(_streamSystem, "hello-stream")
             {
                 MessageHandler = async (messageContext, _, _, message) =>
                 {
                     string receivedMessage = Encoding.UTF8.GetString(message.Data.Contents.ToArray());
                     _logger.LogInformation($"Message received: {receivedMessage}");
 
-                    // 메시지 처리 로직
                     await ProcessMessage(receivedMessage);
                 }
-            }).Result;
+            });
+
+            _logger.LogInformation($"Init()!");
+
         }
 
         private Task ProcessMessage(string message)

@@ -23,6 +23,7 @@ public class ItemService : BaseService
 
     public virtual async Task<ItemEntity?> GetSimpleItemResultAsync(long itemTid)
     {
+        _logger.LogInformation("1234");
         // 서비스의 역활 - repo를 사용할 뿐 그 이상의 비즈니스 로직 수행 필요하다.
         return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
