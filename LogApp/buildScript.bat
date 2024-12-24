@@ -2,7 +2,6 @@
 cd ../CoreLib/
 dotnet build CoreLibrary.csproj
 
-
 cd ../LogApp/
 
 # 도커 빌드를 하여 이미지 생성
@@ -18,8 +17,8 @@ docker login
 docker push rumdice/log-app:latest 
 
 # 쿠버네티스 배포 강제 적용
-kubectl rollout restart deployment/log-app-deployment
-kubectl apply -f log-app.yaml      
+#kubectl rollout restart deployment/log-app-deployment
+#kubectl apply -f log-app.yaml      
 
 # docker hub에 올라갔으니 로컬에 생성된 docker image 정리하기
 docker rmi logapp

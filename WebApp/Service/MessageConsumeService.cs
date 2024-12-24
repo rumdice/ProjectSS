@@ -31,27 +31,8 @@ namespace WebApp.Service
             // 비동기 함수 호출
             Init().GetAwaiter().GetResult();
 
-            // 동기 함수 호출
-            //Init();
             _logger.LogInformation($"Init()!~~");
-
         }
-
-        //public async Task Init()
-        //{
-        //    // Consumer 설정
-        //    _consumer = Consumer.Create(new ConsumerConfig(_streamSystem, "hello-stream")
-        //    {
-        //        MessageHandler = async (messageContext, _, _, message) =>
-        //        {
-        //            string receivedMessage = Encoding.UTF8.GetString(message.Data.Contents.ToArray());
-        //            _logger.LogInformation($"Message received: {receivedMessage}");
-
-        //            // 메시지 처리 로직
-        //            await ProcessMessage(receivedMessage);
-        //        }
-        //    }).GetAwaiter().GetResult();
-        //}
 
         public async Task Init()
         {

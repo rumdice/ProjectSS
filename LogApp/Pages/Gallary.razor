@@ -17,7 +17,7 @@ else if (!string.IsNullOrEmpty(ImageService.ErrorMessage))
     <div class="image-grid">
         @foreach (var imageUrl in ImageService.ImageUrls)
         {
-            <div class="image-item">
+            <div class="image-item" @onclick="() => ShowImagePopup(imageUrl)">
                 <RadzenImage Path="@imageUrl" Style="width: 15rem;" />
             </div>
         }

@@ -62,6 +62,9 @@ builder.Services.AddDbContext<DbLogAppContext>(options =>
 builder.Services.AddScoped<DbWebAppContext>();
 builder.Services.AddScoped<DbLogAppContext>();
 
+// 
+builder.Services.AddScoped<DialogService>();
+
 // Core.lib
 builder.Services.AddScoped<BaseService>();
 builder.Services.AddScoped<BaseRepository>();
