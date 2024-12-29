@@ -14,6 +14,8 @@ public class ImageService : BaseService
     private IAmazonS3 _s3Client { get; set; }  // S3 클라이언트 추가
 
     public List<string> ImageUrls { get; private set; } = new();
+
+
     public bool IsLoading { get; private set; } = false;
     public string? ErrorMessage { get; private set; }
 
@@ -167,5 +169,76 @@ public class ImageService : BaseService
 
         return "";
     }
+
+    public async Task<List<string>> LoadFoldersAsync()
+    {
+        List<string> folders = new();
+
+        try
+        {
+            var request = new ListObjectsV2Request
+            {
+                BucketName = "rumdice-projectss", // S3 버킷 이름
+                Prefix = "images/",              // 최상위 디렉터리
+                Delimiter = "/"                  // 디렉터리 구분자로 사용
+            };
+
+            var response = await _s3Client.ListObjectsV2Async(request);
+
+            // CommonPrefixes를 통해 S3에서 발견된 디렉터리를 추출
+            folders = response.CommonPrefixes.Select(prefix => prefix.TrimEnd('/')).ToList();
+        }
+        catch (AmazonS3Exception ex)
+        {
+            ErrorMessage = $"AWS S3 Error: {ex.Message}";
+            _logger.LogError(ex, "Error accessing S3 for folder listing");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"An error occurred: {ex.Message}";
+            _logger.LogError(ex, "Unexpected error during folder listing");
+        }
+
+        return folders;
+    }
+
+    public async Task<List<string>> GetImagesByFolder(string folder)
+    {
+        var imageUrls = new List<string>();
+
+        try
+        {
+            // 요청 설정: 선택된 폴더의 객체만 가져오기
+            var request = new ListObjectsV2Request
+            {
+                BucketName = "rumdice-projectss", // S3 버킷 이름
+                Prefix = $"{folder.TrimEnd('/')}/", // 선택된 폴더 경로
+            };
+
+            // S3에서 객체 목록 가져오기
+            var response = await _s3Client.ListObjectsV2Async(request);
+
+            // 이미지 URL 생성
+            imageUrls = response.S3Objects
+                .Where(obj => !string.IsNullOrEmpty(obj.Key) && obj.Key != request.Prefix) // 폴더 자체는 제외
+                .Select(obj => $"https://{request.BucketName}.s3.{_region.SystemName}.amazonaws.com/{obj.Key}")
+                .ToList();
+        }
+        catch (AmazonS3Exception ex)
+        {
+            ErrorMessage = $"AWS S3 Error: {ex.Message}";
+            _logger.LogError(ex, $"Error fetching images from folder: {folder}");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"An error occurred: {ex.Message}";
+            _logger.LogError(ex, $"Unexpected error fetching images from folder: {folder}");
+        }
+
+        ImageUrls = imageUrls;  
+        return imageUrls;
+
+    }
+
 
 }

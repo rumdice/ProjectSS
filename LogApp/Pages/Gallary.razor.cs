@@ -15,6 +15,14 @@ namespace LogApp.Pages
         [Inject]
         private DialogService DialogService { get; set; }
 
+
+        private string SelectedFolder { get; set; } = string.Empty;
+
+        public List<string> Folders { get; private set; } = new();
+
+       
+
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -24,7 +32,10 @@ namespace LogApp.Pages
 
                 AccountService.EnsureAuthenticated();
 
-                await ImageService.LoadImagesByS3();
+                //await ImageService.LoadImagesByS3();
+
+                Folders = await ImageService.LoadFoldersAsync();
+                
                 StateHasChanged();
             }
             catch(Exception e)
@@ -40,6 +51,13 @@ namespace LogApp.Pages
                 "Image Viewer",
                 new Dictionary<string, object> { { "ImageUrl", imageUrl } },
                 new DialogOptions { Width = "768px", Height = "1024px" });
+        }
+
+       
+        private async void SelectFolder(string folder)
+        {
+            SelectedFolder = folder;
+            await ImageService.GetImagesByFolder(SelectedFolder);
         }
     }
 
