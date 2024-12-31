@@ -59,6 +59,21 @@ namespace LogApp.Pages
             SelectedFolder = folder;
             await ImageService.GetImagesByFolder(SelectedFolder);
         }
+
+        private async Task OnFolderSelected(object value)
+        {
+            if (value is string selectedFolder && !string.IsNullOrWhiteSpace(selectedFolder))
+            {
+                SelectedFolder = selectedFolder;
+
+                // 선택한 폴더의 이미지를 로드
+                await ImageService.GetImagesByFolder(SelectedFolder);
+
+                // 상태 변경에 따른 UI 업데이트 강제
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
     }
 
 }

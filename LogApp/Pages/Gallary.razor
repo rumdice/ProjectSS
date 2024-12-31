@@ -14,14 +14,11 @@ else if (!string.IsNullOrEmpty(ImageService.ErrorMessage))
 }
 else if (Folders.Any())
 {
-    <div class="folder-bar">
-        @foreach (var folder in Folders)
-        {
-            <button class="folder-button" @onclick="() => SelectFolder(folder)">
-                @folder
-            </button>
-        }
-    </div>
+    <RadzenDropDown Data="@Folders"
+                    @bind-Value="SelectedFolder"
+                    Change="OnFolderSelected"
+                    Placeholder="Select a folder"
+                    Style="width: 300px;" />
 }
 
 <div class="image-grid">
@@ -32,8 +29,6 @@ else if (Folders.Any())
         </div>
     }
 </div>
-
-
 
 
 <style>
@@ -55,33 +50,5 @@ else if (Folders.Any())
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 추가 */
     }
-
-    /* 상단 폴더 바 스타일 */
-    .folder-bar {
-        display: flex;
-        justify-content: start;
-        padding: 10px;
-        gap: 10px;
-        background-color: #f5f5f5;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .folder-button {
-        padding: 8px 16px;
-        background-color: #0078d4;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-        .folder-button:hover {
-            background-color: #005a9e;
-        }
-
-        .folder-button.active {
-            background-color: #003e70;
-        }
 
 </style>
