@@ -126,11 +126,11 @@ public class ImageService : BaseService
         }
     }
 
-    public async Task<string> UploadFileAsync(IFormFile file)
+    public async Task<string> UploadFileAsync(IFormFile file, string folderName)
     {
         try
         {
-            var keyName = $"images/{Guid.NewGuid()}_{file.Name}.jpeg";
+            var keyName = $"{folderName}/{Guid.NewGuid()}_{file.Name}.jpeg";
 
             // 스트림 관리
             using (var memoryStream = new MemoryStream())

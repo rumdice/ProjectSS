@@ -4,6 +4,13 @@
 
 <h1>Upload Photo</h1>
 
+
+<RadzenDropDown Data="@Folders"
+                @bind-Value="SelectedFolder"
+                Change="OnFolderSelected"
+                Placeholder="Select a folder"
+                Style="width: 300px;" />
+
 <RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
     <RadzenColumn Size="12" SizeMD="4">
         <RadzenCard Variant="Variant.Outlined">
@@ -12,7 +19,7 @@
             <!-- RadzenUpload 컴포넌트 -->
             <RadzenUpload 
                 Multiple="true"
-                Url="upload/multiple" 
+                Url="@GetUploadUrl()" 
                 Progress="@(args => OnProgress(args))" 
                 Style="width: 100%;" 
                 InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })"

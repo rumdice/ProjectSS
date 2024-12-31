@@ -27,16 +27,21 @@ public class UploadController : ControllerBase
         }
 
         // S3에 업로드
-        await _imageService.UploadFileAsync(file);
+        //await _imageService.UploadFileAsync(file);
         return Ok();
     }
 
     [HttpPost("multiple")]
-    public async Task<IActionResult> UploadMultiple([FromForm] List<IFormFile> files)
+    public async Task<IActionResult> UploadMultiple([FromQuery] string folderName, [FromForm] List<IFormFile> files)
     {
         if (files == null || !files.Any())
         {
             return BadRequest("No files received.");
+        }
+
+        if (string.IsNullOrWhiteSpace(folderName))
+        {
+            return BadRequest("Folder name is required.");
         }
 
         var uploadResults = new List<string>();
@@ -48,7 +53,7 @@ public class UploadController : ControllerBase
                 try
                 {
                     // S3에 업로드
-                    var result = await _imageService.UploadFileAsync(file);
+                    var result = await _imageService.UploadFileAsync(file, folderName);
                     uploadResults.Add(result);
                 }
                 catch (Exception ex)

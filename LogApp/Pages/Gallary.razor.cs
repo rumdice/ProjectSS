@@ -10,8 +10,10 @@ namespace LogApp.Pages
     {
         [Inject] 
         private ImageService ImageService { get; set; }
+        
         [Inject] 
         private AccountService AccountService { get; set; }
+        
         [Inject]
         private DialogService DialogService { get; set; }
 
