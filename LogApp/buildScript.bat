@@ -1,26 +1,47 @@
-# 코어 빌드를 하여 dll을 갱신 받는다
+@echo off
+
+:: 1. CoreLibrary 빌드
 cd ../CoreLib/
 dotnet build CoreLibrary.csproj
+if errorlevel 1 (
+    echo CoreLibrary 빌드 실패. 스크립트를 종료합니다.
+    exit /b 1
+)
 
+:: 2. LogApp 디렉토리로 이동
 cd ../LogApp/
 
-# 도커 빌드를 하여 이미지 생성
-docker build -t logapp:latest -f Dockerfile ..
+:: 3. Docker 빌드 및 태그 생성
+docker buildx create --name multiarch-builder --use >nul 2>&1
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
-# 도커 hub로 push 하기전 올바른 경로 형태로 빌드된 이미지에 대하여 태깅
-docker tag logapp:latest rumdice/log-app:latest 
+docker buildx build --platform linux/amd64,linux/arm64 -t logapp:latest -f Dockerfile .. --push
+if errorlevel 1 (
+    echo Docker 이미지 빌드 실패. 스크립트를 종료합니다.
+    exit /b 1
+)
 
-# 도커 hub 로그인 - credential 처리가 작업자 pc에 되어 있어야 함
+:: 4. Docker Hub 로그인
 docker login
+if errorlevel 1 (
+    echo Docker Hub 로그인 실패. 스크립트를 종료합니다.
+    exit /b 1
+)
 
-# 지정된 docker hub으로 이미지 푸쉬
-docker push rumdice/log-app:latest 
+:: 5. Docker 이미지 태깅 및 푸쉬
+docker tag logapp:latest rumdice/log-app:latest
+docker push rumdice/log-app:latest
+if errorlevel 1 (
+    echo Docker 이미지 푸쉬 실패. 스크립트를 종료합니다.
+    exit /b 1
+)
 
-# 쿠버네티스 배포 강제 적용
-#kubectl rollout restart deployment/log-app-deployment
-#kubectl apply -f log-app.yaml      
+:: 6. 쿠버네티스 배포 (필요 시 주석 해제)
+:: kubectl rollout restart deployment/log-app-deployment
+:: kubectl apply -f log-app.yaml
 
-# docker hub에 올라갔으니 로컬에 생성된 docker image 정리하기
-docker rmi logapp
-docker rmi rumdice/log-app
+:: 7. 로컬 Docker 이미지 정리
+docker rmi logapp >nul 2>&1
+docker rmi rumdice/log-app >nul 2>&1
 
+echo 빌드 및 배포 완료!

@@ -18,9 +18,9 @@ namespace LogApp.Pages
             await MessageService.Init();
         }
 
-        async Task  ButtonClicked()
+        async Task ButtonClicked()
         {
-            await MessageService.Send();   
+            await MessageService.Send();
         }
 
         public async ValueTask DisposeAsync()

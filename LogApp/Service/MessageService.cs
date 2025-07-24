@@ -32,7 +32,6 @@ namespace LogApp.Service
 
             try
             {
-                
                 _streamSystem = await StreamSystem.Create(new StreamSystemConfig
                 {
                     Endpoints = new List<EndPoint> { new IPEndPoint(IPAddress.Loopback, 5552) },
