@@ -1,17 +1,14 @@
 using CoreDB.DBLogApp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace CoreLibrary.Repository;
 
 public class AccountRepository : BaseRepository
 {
-    public AccountRepository(
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<AccountRepository> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+    public AccountRepository(IServiceProvider serviceProvider) 
+        : base(serviceProvider)
     {
     }
 
@@ -22,18 +19,17 @@ public class AccountRepository : BaseRepository
     /// <returns></returns>
     public Task<AccountEntity?> GetByName(string name)
     {
-        return _logDbContext.AccountEntities
+        return _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.Name == name)
+            .Where(e => e.name == name)
             .SingleOrDefaultAsync();
     }
 
-    public async Task<AccountEntity?> GetById(string aid)
+    public async Task<List<AccountEntity>> GetAll()
     {
-        return await _logDbContext.AccountEntities
+        return await _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.Aid == aid)
-            .FirstOrDefaultAsync();
+            .ToListAsync();
     }
     
     public async Task UpdateAsync(AccountEntity entity)

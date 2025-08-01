@@ -1,0 +1,28 @@
+﻿@inherits ComponentBase
+
+<div style="text-align: center; padding: 20px;">
+    <!-- 이미지 표시 -->
+    <img src="@ImageUrl" style="max-width: 100%; max-height: 100%;" />
+
+    <!-- 다운로드 버튼 -->
+    <div style="margin-top: 20px;">
+        <a href="@ImageUrl" download="OriginalImage.jpg" style="text-decoration: none;">
+            <RadzenButton Text="Download" Icon="download" Style="margin-top: 10px;" />
+        </a>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public string ImageUrl { get; set; } // [Parameter]로 올바르게 선언
+
+    private void DownloadImage()
+    {
+        var anchor = new MarkupString($@"
+            <a href='{ImageUrl}' download='Image.jpg' style='display:none' id='download-link'></a>
+            <script>document.getElementById('download-link').click();</script>
+        ");
+        StateHasChanged(); // 렌더링 트리거
+    }
+}

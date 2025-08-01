@@ -1,7 +1,8 @@
+using LogApp.Component;
 using LogApp.Service;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Rendering;
+using Radzen;
 
 namespace LogApp.Pages
 {
@@ -9,25 +10,71 @@ namespace LogApp.Pages
     {
         [Inject] 
         private ImageService ImageService { get; set; }
+        
         [Inject] 
         private AccountService AccountService { get; set; }
+        
+        [Inject]
+        private DialogService DialogService { get; set; }
+
+
+        private string SelectedFolder { get; set; } = string.Empty;
+
+        public List<string> Folders { get; private set; } = new();
+
+       
+
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                // ë¡œê·¸ì¸ ì²´í¬
+                await base.OnInitializedAsync();
+
                 AccountService.EnsureAuthenticated();
 
-                // í˜ì´ì§€ê°€ ì´ˆê¸°í™” ë  ë•Œ ì´ë¯¸ì§€ ë¡œë“œ
-                await ImageService.LoadImagesByS3();
+                //await ImageService.LoadImagesByS3();
+
+                Folders = await ImageService.LoadFoldersAsync();
+                
                 StateHasChanged();
             }
             catch(Exception e)
             {
                 var msg = e.Message;
-                // ì˜ˆì™¸ ì²˜ë¦¬ ë¡œì§ ì¶”ê°€ ê°€ëŠ¥
+                Console.WriteLine(msg);
             }
         }
+
+        private async Task ShowImagePopup(string imageUrl)
+        {
+            await DialogService.OpenAsync<DialogContent>(
+                "Image Viewer",
+                new Dictionary<string, object> { { "ImageUrl", imageUrl } },
+                new DialogOptions { Width = "768px", Height = "1024px" });
+        }
+
+       
+        private async void SelectFolder(string folder)
+        {
+            SelectedFolder = folder;
+            await ImageService.GetImagesByFolder(SelectedFolder);
+        }
+
+        private async Task OnFolderSelected(object value)
+        {
+            if (value is string selectedFolder && !string.IsNullOrWhiteSpace(selectedFolder))
+            {
+                SelectedFolder = selectedFolder;
+
+                // ¼±ÅÃÇÑ Æú´õÀÇ ÀÌ¹ÌÁö¸¦ ·Îµå
+                await ImageService.GetImagesByFolder(SelectedFolder);
+
+                // »óÅÂ º¯°æ¿¡ µû¸¥ UI ¾÷µ¥ÀÌÆ® °­Á¦
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
     }
+
 }

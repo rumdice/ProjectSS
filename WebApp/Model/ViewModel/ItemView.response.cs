@@ -1,4 +1,4 @@
-using CoreLibrary.ViewModels;
+using WebApp.ViewModels;
 using WepApp.DtoModels;
 
 namespace WebApp.Models;

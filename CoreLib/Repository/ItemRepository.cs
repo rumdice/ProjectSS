@@ -1,5 +1,4 @@
 using CoreDB.DBWebApp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -15,76 +14,73 @@ namespace CoreLibrary.Repository;
 
 public class ItemRepository : BaseRepository
 {
-    public ItemRepository(
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<ItemRepository> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+    public ItemRepository(IServiceProvider serviceProvider) 
+        : base (serviceProvider)
     {
     }
 
     // 모든 아이템 간단 정보를 리스트로 
-    public Task<List<ItemSimpleEntity>> GetItemSimpleInfoByNameList(string name)
+    public Task<List<ItemEntity>> GetItemSimpleInfoByNameList(string name)
     {
-        return _webDbContext.ItemSimpleEntities
+        return _webDbContext.ItemEntity
             .AsNoTracking()
-            .Where(n => n.Name == name)
+            .Where(n => n.name == name)
             .ToListAsync();
     }
 
-    public Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByUserId(long userId)
+    public Task<List<ItemEntity>> GetItemSimpleInfoListByUserId(long userId)
     {
-        return _webDbContext.ItemSimpleEntities
+        return _webDbContext.ItemEntity
             .AsNoTracking()
-            .Where(n => n.UserUid == userId)
+            .Where(n => n.uid == userId)
             .ToListAsync();
     }
 
-    public Task<ItemSimpleEntity?> GetItemSimpleEntityByName(string name)
+    public Task<ItemEntity?> GetItemSimpleEntityByName(string name)
     {
-        return _webDbContext.ItemSimpleEntities
+        return _webDbContext.ItemEntity
             .AsNoTracking()
-            .Where(n => n.Name == name)
+            .Where(n => n.name == name)
             .SingleOrDefaultAsync();
     }
 
     // 특정 아이템 간단 정보 단일
-    public Task<ItemSimpleEntity?> GetSimpleItemInfoByItemTId(long itemTid)
+    public Task<ItemEntity?> GetSimpleItemInfoByItemTId(long itemTid)
     {
-        return _webDbContext.ItemSimpleEntities
+        return _webDbContext.ItemEntity
             .AsNoTracking()
-            .Where(i => i.ItemTid == itemTid)
+            .Where(i => i.tid == itemTid)
             .SingleOrDefaultAsync();
     }
 
-    public Task<List<ItemSimpleEntity>> GetSimpleItemAllList()
+    public Task<List<ItemEntity>> GetSimpleItemAllList()
     {
-        return _webDbContext.ItemSimpleEntities
+        return _webDbContext.ItemEntity
             .AsNoTracking()
             .ToListAsync();
     }
 
-    public Task UpdateRangeAsync( IEnumerable<ItemSimpleEntity> entities )
+    public Task UpdateRangeAsync( IEnumerable<ItemEntity> entities )
     {
-        _webDbContext.ItemSimpleEntities.UpdateRange( entities );
+        _webDbContext.ItemEntity.UpdateRange( entities );
         return _webDbContext.SaveChangesAsync();
     }
 
-    public Task RemoveRangeAsync( IEnumerable<ItemSimpleEntity> entities )
+    public Task RemoveRangeAsync( IEnumerable<ItemEntity> entities )
     {
-        _webDbContext.ItemSimpleEntities.RemoveRange( entities );
+        _webDbContext.ItemEntity.RemoveRange( entities );
         return _webDbContext.SaveChangesAsync();
     }
 
-    public Task InsertRangeAsync( IEnumerable<ItemSimpleEntity> entities )
+    public Task InsertRangeAsync( IEnumerable<ItemEntity> entities )
     {
-        _webDbContext.ItemSimpleEntities.AddRange( entities );
+        _webDbContext.ItemEntity.AddRange( entities );
         return _webDbContext.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(ItemSimpleEntity entity)
+    public Task DeleteAsync(ItemEntity entity)
     {
-        _webDbContext.ItemSimpleEntities.Remove(entity);
+        _webDbContext.ItemEntity.Remove(entity);
         return _webDbContext.SaveChangesAsync();
     }
     

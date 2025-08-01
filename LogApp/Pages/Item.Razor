@@ -1,28 +1,17 @@
 @page "/item"
-@using CoreDB.DBWebApp
-@using CoreLibrary.Repository
-@using LogApp.Service
 
-@inject ItemRepository ItemRepository
-@inject AccountService AccountService
 
-<h3>ItemRepository Example</h3>
+<PageTitle>ItemSearch</PageTitle>
 
-<p>Item: @itemName</p>
-<button @onclick="GetItem">Fetch Item</button>
+<RadzenCard Style="max-width: 400px; margin: auto; padding: 16px;">
+    <RadzenLabel Text="Enter Item Name" Style="margin-bottom: 8px; display: block;" />
+    <RadzenTextBox @bind-Value="itemName" Placeholder="Item name" Style="width: 100%;" />
+    <RadzenButton Click=@(args => OnClick(itemName)) Text="Search" ButtonStyle="ButtonStyle.Info" Style="margin-top: 16px;" />
 
-@code {
-    private string itemName;
-    
-    protected override async Task OnInitializedAsync()
-    {
-        AccountService.EnsureAuthenticated();
-    }
+    <p style="margin-top: 16px;">Search Result (item name): @itemEntity.name</p>
+    <p style="margin-top: 16px;">Search Result (item grade): @itemEntity.grade</p>
+    <p style="margin-top: 16px;">Search Result (item pid): @itemEntity.pid</p>
+    <p style="margin-top: 16px;">Search Result (item tid) @itemEntity.tid</p>
+    <p style="margin-top: 16px;">Search Result (item uid) @itemEntity.uid</p>
 
-    private async Task GetItem()
-    {
-        // ItemRepository를 통해 데이터 가져오기
-        var item = await ItemRepository.GetSimpleItemInfoByItemTId(1002);
-        itemName = item?.Name ?? "No item found";
-    }
-}
+</RadzenCard>

@@ -323,3 +323,6 @@ Moq는 비가상 메서드를 오버라이드 할 수 없으므로, 해당 메�
 ItemService 클래스의 메서드에 virtual 키워드를 추가하여 가상 메서드로 만듭니다.
 
 
+
+로컬 환경의 메시지 큐 서비스 실행
+docker run -it --rm --name rabbitmq -p 5552:5552 -p 15672:15672 -p 5672:5672  -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS='-rabbitmq_stream advertised_host localhost' rabbitmq:3.13    

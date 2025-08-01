@@ -6,18 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <!-- 상대경로 프로젝트 참조 -->
-  <!-- <ItemGroup>
-    <ProjectReference Include="..\..\CoreSystem\CoreLibrary\CoreLibrary.csproj" />
-  </ItemGroup> -->
-
-  <!-- 프로젝트 참조에서 DLL 참조로 변경 -->
-  <!-- <ItemGroup>
-    <Reference Include="CoreSystem">
-      <HintPath>..\..\CoreSystem\CoreLibrary\bin\Debug\net8.0\CoreLibrary.dll</HintPath>
-    </Reference>
-  </ItemGroup> -->
-
   <!-- Docker 빌드를 위해 참조디는 DLL을 상위 프로젝트에서 하위로 강제 복사로 내림 -->
   <ItemGroup>
     <Reference Include="CoreSystem">
@@ -29,22 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Sentry" Version="4.10.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup> 
-
-  <!-- TODO:이 페키지가 꼭 있어야 하는데 코어시스템에도 있는 것을 쓸 수 는 없는 건가? -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.8" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
-  </ItemGroup>
+    <PackageReference Include="Sentry" Version="4.13.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.1.0" />
+	<PackageReference Include="RabbitMQ.Stream.Client" Version="1.8.3" />
 
+  </ItemGroup> 
 </Project>

@@ -3,32 +3,32 @@ using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.Runtime;
 using CoreLibrary.Service;
-using CoreLibrary.Repository;
 using Amazon.SecretsManager;
 using Amazon.SecretsManager.Model;
+using CoreLibrary;
 
 namespace LogApp.Service;
 
 public class ImageService : BaseService
 {
-    private readonly ILogger<ImageService> _logger;
     private IAmazonS3 _s3Client { get; set; }  // S3 클라이언트 추가
 
     public List<string> ImageUrls { get; private set; } = new();
+
+
     public bool IsLoading { get; private set; } = false;
     public string? ErrorMessage { get; private set; }
 
     private readonly RegionEndpoint _region = RegionEndpoint.APNortheast2;
+    private readonly BaseLogger<ImageService> _logger;
 
     public ImageService(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<ImageService> logger,
         IAmazonS3 s3Client,
         IConfiguration configuration)
-        : base(serviceProvider, httpContextAccessor, logger)
+        : base(serviceProvider)
     {
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ImageService>>();
         _s3Client = s3Client;
     }
 
@@ -38,9 +38,8 @@ public class ImageService : BaseService
     private static async Task<BasicAWSCredentials> GetSecret()
     {
         string secretName = "rumdice-aws-acesss-key";
-        string region = "ap-northeast-2";
-
-        IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.GetBySystemName(region));
+        
+        IAmazonSecretsManager client = new AmazonSecretsManagerClient(RegionEndpoint.APNortheast2);
 
         GetSecretValueRequest request = new GetSecretValueRequest
         {
@@ -84,7 +83,7 @@ public class ImageService : BaseService
         var credentials = await ImageService.GetSecret();
         var clientConfig = new AmazonS3Config
         {
-            RegionEndpoint = RegionEndpoint.GetBySystemName("ap-northeast-2")
+            RegionEndpoint = RegionEndpoint.APNortheast2
         };
 
         _s3Client = new AmazonS3Client(credentials, clientConfig);
@@ -127,11 +126,11 @@ public class ImageService : BaseService
         }
     }
 
-    public async Task<string> UploadFileAsync(IFormFile file)
+    public async Task<string> UploadFileAsync(IFormFile file, string folderName)
     {
         try
         {
-            var keyName = $"images/{Guid.NewGuid()}_{file.Name}.jpeg";
+            var keyName = $"{folderName}/{Guid.NewGuid()}_{file.Name}.jpeg";
 
             // 스트림 관리
             using (var memoryStream = new MemoryStream())
@@ -170,5 +169,76 @@ public class ImageService : BaseService
 
         return "";
     }
+
+    public async Task<List<string>> LoadFoldersAsync()
+    {
+        List<string> folders = new();
+
+        try
+        {
+            var request = new ListObjectsV2Request
+            {
+                BucketName = "rumdice-projectss", // S3 버킷 이름
+                Prefix = "images/",              // 최상위 디렉터리
+                Delimiter = "/"                  // 디렉터리 구분자로 사용
+            };
+
+            var response = await _s3Client.ListObjectsV2Async(request);
+
+            // CommonPrefixes를 통해 S3에서 발견된 디렉터리를 추출
+            folders = response.CommonPrefixes.Select(prefix => prefix.TrimEnd('/')).ToList();
+        }
+        catch (AmazonS3Exception ex)
+        {
+            ErrorMessage = $"AWS S3 Error: {ex.Message}";
+            _logger.LogError(ex, "Error accessing S3 for folder listing");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"An error occurred: {ex.Message}";
+            _logger.LogError(ex, "Unexpected error during folder listing");
+        }
+
+        return folders;
+    }
+
+    public async Task<List<string>> GetImagesByFolder(string folder)
+    {
+        var imageUrls = new List<string>();
+
+        try
+        {
+            // 요청 설정: 선택된 폴더의 객체만 가져오기
+            var request = new ListObjectsV2Request
+            {
+                BucketName = "rumdice-projectss", // S3 버킷 이름
+                Prefix = $"{folder.TrimEnd('/')}/", // 선택된 폴더 경로
+            };
+
+            // S3에서 객체 목록 가져오기
+            var response = await _s3Client.ListObjectsV2Async(request);
+
+            // 이미지 URL 생성
+            imageUrls = response.S3Objects
+                .Where(obj => !string.IsNullOrEmpty(obj.Key) && obj.Key != request.Prefix) // 폴더 자체는 제외
+                .Select(obj => $"https://{request.BucketName}.s3.{_region.SystemName}.amazonaws.com/{obj.Key}")
+                .ToList();
+        }
+        catch (AmazonS3Exception ex)
+        {
+            ErrorMessage = $"AWS S3 Error: {ex.Message}";
+            _logger.LogError(ex, $"Error fetching images from folder: {folder}");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"An error occurred: {ex.Message}";
+            _logger.LogError(ex, $"Unexpected error fetching images from folder: {folder}");
+        }
+
+        ImageUrls = imageUrls;  
+        return imageUrls;
+
+    }
+
 
 }

@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using CoreLibrary;
-using Microsoft.Extensions.Configuration;
 using CoreDB.DBLogApp;
 using CoreDB.DBWebApp;
 using CoreLibrary.Repository;
@@ -31,23 +30,43 @@ public class Startup
         services.AddControllers();
         services.AddHttpContextAccessor();
 
+        // Core.DB
+        // db 연결 셋팅
+        var connectionStringWeb = "Server=localhost;Port=3306;Database=db_WebApp;User=root;Password=pass1234";
+        services.AddDbContext<DbWebAppContext>(options =>
+            options.UseMySql(connectionStringWeb, new MariaDbServerVersion(new Version(11, 6, 2))));
+
+        var connectionStringLog = "Server=localhost;Port=3306;Database=db_LogApp;User=root;Password=pass1234";
+        services.AddDbContext<DbLogAppContext>(options =>
+            options.UseMySql(connectionStringLog, new MariaDbServerVersion(new Version(11, 6, 2))));
+
         // Add DB Context
         services.AddScoped<DbWebAppContext>();
         services.AddScoped<DbLogAppContext>();
   
-        // BASE
+
+
+        // Core.Lib
+        // Add Service
+        services.AddSingleton<BaseService>();
+        
+        
         // Add Repository
         services.AddTransient<BaseRepository>();
         services.AddTransient<ItemRepository>();
         services.AddTransient<UserRepository>();
         services.AddTransient<ShopRepository>();
 
-        // Add Service
-        services.AddTransient<BaseService>();
-        
-        services.AddTransient<ItemService>();
+        services.AddSingleton(typeof(BaseLogger<>)); // 커스텀 구현체로 등록
+
+        // App Service
+        services.AddScoped<ItemService>();
         services.AddTransient<UserService>();
         services.AddTransient<ShopService>();
+
+        // background service
+        services.AddHostedService<MessageBackgroundService>();
+        services.AddSingleton<MessageConsumeService>();
         
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();

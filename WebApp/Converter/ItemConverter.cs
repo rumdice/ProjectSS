@@ -10,13 +10,13 @@ namespace WebApp.Converter;
 
 public static class ItemConverter
 {
-    public static ItemSimpleInfoDto EntityToDto(this ItemSimpleEntity itemSimpleEntity) 
+    public static ItemSimpleInfoDto EntityToDto(this ItemEntity itemSimpleEntity) 
     {
         return new ItemSimpleInfoDto
         {
-            ItemTid = itemSimpleEntity.ItemTid,
-            Name = itemSimpleEntity.Name,
-            Grade = itemSimpleEntity.Grade
+            ItemTid = itemSimpleEntity.tid,
+            Name = itemSimpleEntity.name,
+            Grade = 0
         };
     }
 
@@ -26,13 +26,12 @@ public static class ItemConverter
     // 일단은 Dto가 가지고 있는 값을 entity로 덮어 쓴다.
     // Update때 사용 할 듯
 
-    public static ItemSimpleEntity DtoToEntity(this ItemSimpleInfoDto itemDto)
+    public static ItemEntity DtoToEntity(this ItemSimpleInfoDto itemDto)
     {
-        return new ItemSimpleEntity
+        return new ItemEntity
         {
-            ItemTid = itemDto.ItemTid,
-            Name = itemDto.Name,
-            Grade = itemDto.Grade  
+            tid = itemDto.ItemTid,
+            name = itemDto.Name,
         };
     }
 }

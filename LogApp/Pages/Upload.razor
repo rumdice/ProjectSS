@@ -1,0 +1,37 @@
+@page "/upload"
+
+<PageTitle>Photo Gallary</PageTitle>
+
+<h1>Upload Photo</h1>
+
+
+<RadzenDropDown Data="@Folders"
+                @bind-Value="SelectedFolder"
+                Change="OnFolderSelected"
+                Placeholder="Select a folder"
+                Style="width: 300px;" />
+
+<RadzenRow Gap="2rem" RowGap="2rem" class="rz-m-0 rz-m-md-12">
+    <RadzenColumn Size="12" SizeMD="4">
+        <RadzenCard Variant="Variant.Outlined">
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Files Upload</RadzenText>
+
+            <!-- RadzenUpload 컴포넌트 -->
+            <RadzenUpload 
+                Multiple="true"
+                Url="@GetUploadUrl()" 
+                Progress="@(args => OnProgress(args))" 
+                Style="width: 100%;" 
+                InputAttributes="@(new Dictionary<string, object>() { { "aria-label", "Select file" } })"
+                Auto="true"
+                Accept="image/*"
+                @bind-Value="files"
+                Complete="@(args => OnUploadComplete(args))">
+            </RadzenUpload>
+        </RadzenCard>
+
+    </RadzenColumn>
+</RadzenRow>
+
+<!-- 업로드 진행 상태 -->
+<RadzenProgressBar Value="@progress" ShowValue="true" Max="100" Style="width: 100%;" />

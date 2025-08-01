@@ -7,9 +7,9 @@ public static class UserConverter
     {
         return new UserDto
         {
-            Id = userEntity.UserUid,
-            Name = userEntity.Name,
-            Level = userEntity.Level
+            Id = userEntity.uid,
+            Name = userEntity.name,
+            Level = userEntity.level
         };
     }
 
@@ -17,9 +17,9 @@ public static class UserConverter
     {
         return new UserEntity
         {
-            UserUid = userDto.Id,
-            Level = userDto.Level,
-            Name = userDto.Name
+            uid = userDto.Id,
+            level = userDto.Level,
+            name = userDto.Name
         };
     }
 }

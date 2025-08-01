@@ -55,3 +55,18 @@ PushApp
 LogApp
 - 사진을 다루는 앱 기반 이것저것 기능 제작중 (운영툴)
 
+
+rabbit mq 설치
+docker run -it --rm --name rabbitmq -p 5552:5552 -p 15672:15672 -p 5672:5672  -e RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS='-rabbitmq_stream advertised_host localhost' rabbitmq:3.13    
+
+확장 설치
+docker exec rabbitmq rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_management 
+
+마리아 DB 설치
+docker run -d \
+  --name mariadb \
+  -e MARIADB_ROOT_PASSWORD=pass1234 \
+  -p 3306:3306 \
+  mariadb:latest
+
+

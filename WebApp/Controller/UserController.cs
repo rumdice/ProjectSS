@@ -1,31 +1,28 @@
-using CoreLibrary.ViewModels;
+using CoreLibrary;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using WebApp.Service;
+using WebApp.ViewModels;
 using WepApp.DtoModels;
-using CoreDB.DBWebApp;
-using CoreLibrary.Controller;
 
 namespace WebApp.Controller;
 
 
 [Route("[Controller]/[action]")]
 [ApiController]
-public class UserController : BaseController
+public class UserController : ControllerBase
 {
     private readonly UserService _userService;
     private readonly ItemService _itemService;
-    private readonly ILogger<UserController> _logger; // 필요한가?
+    private readonly BaseLogger<UserController> _logger;
 
     public UserController(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<UserController> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        IHttpContextAccessor httpContextAccessor)
     {
         _userService = serviceProvider.GetRequiredService<UserService>();
         _itemService = serviceProvider.GetRequiredService<ItemService>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<UserController>>();
     }
 
     [HttpPost]

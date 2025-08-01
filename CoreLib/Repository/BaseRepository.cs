@@ -1,7 +1,6 @@
 using CoreDB.DBWebApp;
 using CoreDB.DBLogApp;
 using CoreLibrary.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,18 +13,14 @@ public class BaseRepository : BaseService
     protected readonly DbWebAppContext _webDbContext;
     protected readonly DbLogAppContext _logDbContext;
 
-    private readonly ILogger<BaseRepository> _logger;
-
+   
     public BaseRepository( 
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<BaseRepository> logger
+        IServiceProvider serviceProvider
         )
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider)
     {
         _webDbContext = serviceProvider.GetRequiredService<DbWebAppContext>();
         _logDbContext = serviceProvider.GetRequiredService<DbLogAppContext>();
-        _logger = logger;
     }
 
     // TODO: 모든 repository에 공통적인 요소?

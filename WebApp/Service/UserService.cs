@@ -1,5 +1,6 @@
 using System.Transactions;
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 
@@ -8,21 +9,18 @@ namespace WebApp.Service;
 
 public class UserService : BaseService
 {
-    // TODO: 경우에 따라선 서비스가 여러가지 종류의 repository 를 들고 있을 수 있다.
     private readonly UserRepository _userRepository;
     private readonly ItemRepository _itemRepository;
 
-    private readonly ILogger<UserService> _logger;
+    private readonly BaseLogger<UserService> _logger;
 
     public UserService(
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<UserService> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
         _userRepository = serviceProvider.GetRequiredService<UserRepository>();
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<UserService>>();
     }
 
     public async Task<UserEntity?> GetUserInfoByName(string name)
@@ -43,7 +41,7 @@ public class UserService : BaseService
             throw new Exception("user Entity is Null");
         }
 
-        userEntity.Name = name;
+        userEntity.name = name;
 
         await _userRepository.UpdateAsync(userEntity);
     }
@@ -53,7 +51,7 @@ public class UserService : BaseService
         await _userRepository.InsertAsync(userEntity);
     }
 
-    public async Task DeleteUser(UserEntity userEntity, IEnumerable<ItemSimpleEntity> itemEntity)
+    public async Task DeleteUser(UserEntity userEntity, IEnumerable<ItemEntity> itemEntity)
     {
         using TransactionScope scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 

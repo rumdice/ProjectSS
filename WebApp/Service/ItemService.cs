@@ -1,7 +1,7 @@
 using CoreDB.DBWebApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
-using Microsoft.AspNetCore.JsonPatch.Internal;
 
 // Service : 비즈니스 로직을 처리하는 단계. 간단히 자료를 가져오는 것 부터 복잡한 쿼리 연계까지
 
@@ -11,35 +11,34 @@ namespace WebApp.Service;
 public class ItemService : BaseService
 {
     private readonly ItemRepository _itemRepository;
-    private readonly ILogger<ItemService> _logger;
+    private readonly BaseLogger<ItemService> _logger;
 
     public ItemService( 
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<ItemService> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        IServiceProvider serviceProvider)
+        : base (serviceProvider)
     {
         _itemRepository = serviceProvider.GetRequiredService<ItemRepository>();
-        _logger = logger;
+        _logger = serviceProvider.GetRequiredService<BaseLogger<ItemService>>();
     }
 
-    public virtual async Task<ItemSimpleEntity?> GetSimpleItemResultAsync(long itemTid)
+    public virtual async Task<ItemEntity?> GetSimpleItemResultAsync(long itemTid)
     {
-        // 서비스의 역활 - repo를 사용할 뿐 그 이상의 비즈니스 로직 수행.
+        _logger.LogInformation("1234");
+        // 서비스의 역활 - repo를 사용할 뿐 그 이상의 비즈니스 로직 수행 필요하다.
         return await _itemRepository.GetSimpleItemInfoByItemTId(itemTid);
     }
 
-    public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByNameAsync(string name)
+    public async Task<List<ItemEntity>> GetItemSimpleInfoListByNameAsync(string name)
     {
         return await _itemRepository.GetItemSimpleInfoByNameList(name);
     }
 
-    public async Task<List<ItemSimpleEntity>> GetItemSimpleInfoListByUserIdAsync(long userUid)
+    public async Task<List<ItemEntity>> GetItemSimpleInfoListByUserIdAsync(long userUid)
     {
         return await _itemRepository.GetItemSimpleInfoListByUserId(userUid);
     }
 
-    public async Task<ItemSimpleEntity?> GetItemSimpleResultByName(string name)
+    public async Task<ItemEntity?> GetItemSimpleResultByName(string name)
     {
         return await _itemRepository.GetItemSimpleEntityByName(name);
     }

@@ -1,5 +1,4 @@
 using CoreDB.DBWebApp;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -8,10 +7,8 @@ namespace CoreLibrary.Repository;
 public class UserRepository : BaseRepository
 {
     public UserRepository(
-        IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<UserRepository> logger)
-        : base (serviceProvider, httpContextAccessor, logger)
+        IServiceProvider serviceProvider) 
+        : base (serviceProvider)
     {
     }
 
@@ -22,17 +19,17 @@ public class UserRepository : BaseRepository
     /// <returns></returns>
     public Task<UserEntity?> GetUserInfoByName(string name)
     {
-        return _webDbContext.UserEntities
+        return _webDbContext.UserEntity
             .AsNoTracking()
-            .Where(e => e.Name == name)
+            .Where(e => e.name == name)
             .SingleOrDefaultAsync();
     }
 
     public Task<UserEntity?> GetUserInfoByUserId(long userId)
     {
-        return _webDbContext.UserEntities
+        return _webDbContext.UserEntity
             .AsNoTracking()
-            .Where(e => e.UserUid == userId)
+            .Where(e => e.uid == userId)
             .SingleOrDefaultAsync();
     }
 

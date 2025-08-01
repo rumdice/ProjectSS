@@ -21,6 +21,24 @@ spec:
         image: rumdice/log-app:latest # docker hub 아이디/repository경로
         ports:
         - containerPort: 8080 # 컨테이너의 포트
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-secrets
+              key: AWS_ACCESS_KEY_ID
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-secrets
+              key: AWS_SECRET_ACCESS_KEY
+        - name: AWS_DEFAULT_REGION
+          valueFrom:
+            secretKeyRef:
+              name: aws-secrets
+              key: AWS_DEFAULT_REGION
       imagePullSecrets:
       - name: rumdice-dockerhub-secret # docker hub private에 접근 하기 위한 kubectl secret 이름
         

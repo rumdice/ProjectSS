@@ -1,9 +1,8 @@
-using System.Transactions;
 using CoreDB.DBLogApp;
+using CoreLibrary;
 using CoreLibrary.Repository;
 using CoreLibrary.Service;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace LogApp.Service;
 
@@ -12,19 +11,16 @@ public class AccountService : BaseService
 {
     private readonly NavigationManager _navigation;
     private readonly AccountRepository _accountRepository;
-    private readonly ILogger<AccountService> _logger;
-
+    private readonly BaseLogger<AccountService> _logger;
     private readonly Dictionary<string, object> _state = new(); // 로그인 상태 
 
     public AccountService(
         IServiceProvider serviceProvider,
-        IHttpContextAccessor httpContextAccessor,
-        ILogger<AccountService> logger,
         NavigationManager navigation)
-        : base (serviceProvider, httpContextAccessor, logger)
+        : base (serviceProvider)
     {
+        _logger = serviceProvider.GetRequiredService<BaseLogger<AccountService>>();
         _accountRepository = serviceProvider.GetRequiredService<AccountRepository>();
-        _logger = logger;
         _navigation = navigation;
     }
 
@@ -49,6 +45,15 @@ public class AccountService : BaseService
         {
             _navigation.NavigateTo("/login");
         }
+
+        // 로거 기반의 로깅 시스템
+        _logger.LogInformation("EnsureAuthenticated()!!!!!!!!");
+        _logger.LogInformation("MyLoggger system");
+    }
+
+    public async Task<List<AccountEntity>> GetInfoAll()
+    {
+        return await _accountRepository.GetAll();
     }
 
     public async Task<AccountEntity?> GetInfoByName(string name)
@@ -56,20 +61,26 @@ public class AccountService : BaseService
         return await _accountRepository.GetByName(name);
     }
 
-    public async Task<AccountEntity?> GetInfoByAUid(string accountId)
+    public async Task<bool> IsExistAccount(string name)
     {
-        return await _accountRepository.GetById(accountId);
-    }
-
-    public async Task<bool> CheckAccountPassword(string accountId, string password)
-    {
-        var accountInfo = await _accountRepository.GetById(accountId);
+        var accountInfo = await _accountRepository.GetByName(name);
         if (accountInfo == null)
         {
             return false;
         }
 
-        return accountInfo.Password == password;
+        return true;
+    }
+
+    public async Task<bool> CheckAccountPassword(string name, string password)
+    {
+        var accountInfo = await _accountRepository.GetByName(name);
+        if (accountInfo == null)
+        {
+            return false;
+        }
+
+        return accountInfo.password == password;
     }
 
     public async Task UpdateUserPassword(long accountId, string name, string password)
@@ -85,8 +96,14 @@ public class AccountService : BaseService
         // await _userRepository.UpdateAsync(userEntity);
     }
 
-    public async Task AddNewAccount(AccountEntity accountEntity)
-    {   
+    public async Task AddNewAccount(string _name, string _password)
+    {
+        var accountEntity = new AccountEntity
+        {
+            name = _name,
+            password = _password
+        };
+
         await _accountRepository.InsertAsync(accountEntity);
     }
 
