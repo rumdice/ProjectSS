@@ -1,14 +1,17 @@
-cd ../
-pwd
+#!/bin/bash
+
+cd ../CoreDB || exit 1
 
 rm -rf Migrations/
 
-dotnet ef database drop --force
+dotnet ef migrations add InitialCreate \
+  --context CoreDB.DBLogApp.DbLogAppContext \
+  --project CoreDB \
+  --startup-project CoreDB
 
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+dotnet ef database update \
+  --context CoreDB.DBLogApp.DbLogAppContext \
+  --project CoreDB \
+  --startup-project CoreDB
 
-dotnet build
-
-
-
+docker exec -it mariadb-container mysql -uroot -ppass -e "USE db_LogApp; SHOW TABLES;"
