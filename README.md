@@ -66,7 +66,7 @@ docker exec rabbitmq rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_man
 docker run -d \
   --name mariadb \
   -e MARIADB_ROOT_PASSWORD=pass1234 \
-  -p 3306:3306 \
+  -p 13306:3306 \
   mariadb:latest
 
 

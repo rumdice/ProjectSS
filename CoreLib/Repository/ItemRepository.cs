@@ -40,7 +40,7 @@ public class ItemRepository : BaseRepository
     {
         return _webDbContext.ItemEntity
             .AsNoTracking()
-            .Where(n => n.name == name)
+            .Where(n => n.Name == name)
             .SingleOrDefaultAsync();
     }
 

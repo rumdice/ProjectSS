@@ -5,9 +5,9 @@ namespace CoreDB.DBLogApp;
 
 public partial class AccountEntity
 {
-    public long pid { get; set; }
+    public long Pid { get; set; }
 
-    public string? name { get; set; }
+    public string? Name { get; set; }
 
-    public string? password { get; set; }
+    public string? Password { get; set; }
 }
