@@ -21,7 +21,7 @@ public class AccountRepository : BaseRepository
     {
         return _logDbContext.AccountEntity
             .AsNoTracking()
-            .Where(e => e.Name == name)
+            .Where(e => e.name == name)
             .SingleOrDefaultAsync();
     }
 

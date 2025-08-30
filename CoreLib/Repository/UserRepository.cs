@@ -21,7 +21,7 @@ public class UserRepository : BaseRepository
     {
         return _webDbContext.UserEntity
             .AsNoTracking()
-            .Where(e => e.Name == name)
+            .Where(e => e.name == name)
             .SingleOrDefaultAsync();
     }
 
