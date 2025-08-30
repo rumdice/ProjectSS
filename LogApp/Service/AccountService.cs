@@ -80,7 +80,7 @@ public class AccountService : BaseService
             return false;
         }
 
-        return accountInfo.Password == password;
+        return accountInfo.password == password;
     }
 
     public async Task UpdateUserPassword(long accountId, string name, string password)
@@ -100,8 +100,8 @@ public class AccountService : BaseService
     {
         var accountEntity = new AccountEntity
         {
-            Name = _name,
-            Password = _password
+            name = _name,
+            password = _password
         };
 
         await _accountRepository.InsertAsync(accountEntity);
